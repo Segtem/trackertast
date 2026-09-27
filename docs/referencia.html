@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Referencia del CLI (tasks) — trackertast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&family=Silkscreen&display=swap">
+<link rel="stylesheet" href="./assets/sitio.css">
+<link rel="icon" href="./assets/emblema.svg" type="image/svg+xml">
+</head>
+<body class="doc">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="barra">
+  <a class="marca" href="./"><img src="./assets/emblema.svg" alt="" width="28" height="28"> trackertast</a>
+  <nav aria-label="Principal">
+    <a href="./">Inicio</a>
+    <a href="./guia.html">Guía</a>
+    <a href="./agentes.html">Para agentes</a>
+    <a href="./oracle.html">Con Oracle</a>
+    <a href="./referencia.html">Referencia</a>
+    <a href="https://github.com/Segtem/trackertast" rel="noopener">GitHub</a>
+  </nav>
+</header>
+<div class="doc-rejilla">
+  <details class="menu" open>
+    <summary>Documentación</summary>
+    <nav aria-label="Documentación"><p class="menu-grupo">Empezar</p><ul><li><a href="guia.html">Guía paso a paso</a></li></ul><p class="menu-grupo">Uso e integración</p><ul><li><a href="agentes.html">Para agentes</a></li><li><a href="oracle.html">Con Oracle</a></li></ul><p class="menu-grupo">Referencia</p><ul><li><a href="referencia.html" aria-current=page>Referencia del CLI</a></li><li><a href="tareas.html">Especificación y contrato</a></li></ul></nav>
+  </details>
+  <main id="contenido" class="prosa">
+<h1 id="referencia-del-cli-tasks">Referencia del CLI (tasks)<a class="ancla" href="#referencia-del-cli-tasks" aria-label="Enlace a esta sección">#</a></h1>
+<p>El comando principal de <strong>trackertast</strong> es <code>tasks</code>. Los verbos canónicos son en inglés, con alias en español para mantener compatibilidad.</p>
+<h2 id="resumen-de-comandos">Resumen de comandos<a class="ancla" href="#resumen-de-comandos" aria-label="Enlace a esta sección">#</a></h2>
+<div class="tabla"><table><thead><tr><th>Canónico</th><th>Alias</th><th>Descripción</th></tr></thead><tbody><tr><td><a href="#tasks-init"><code>init</code></a></td><td>—</td><td>Inicializa el tracker de tareas en tareas/</td></tr><tr><td><a href="#tasks-new"><code>new</code></a></td><td><code>nueva</code></td><td>Crea una nueva tarea con plantilla lista</td></tr><tr><td><a href="#tasks-list"><code>list</code></a></td><td><code>listar</code>, <code>ls</code></td><td>Lista tareas del proyecto (alias: listar, ls)</td></tr><tr><td><a href="#tasks-show"><code>show</code></a></td><td><code>ver</code></td><td>Muestra detalles de una tarea o su ruta</td></tr><tr><td><a href="#tasks-close"><code>close</code></a></td><td><code>cerrar</code></td><td>Marca una tarea como CERRADA de forma atómica</td></tr><tr><td><a href="#tasks-reopen"><code>reopen</code></a></td><td><code>reabrir</code></td><td>Marca una tarea como ABIERTA de forma atómica</td></tr><tr><td><a href="#tasks-review"><code>review</code></a></td><td><code>revisar</code></td><td>Audita la integridad del directorio tareas/</td></tr><tr><td><a href="#tasks-note"><code>note</code></a></td><td><code>anotar</code></td><td>Agrega una nota, URL o marca temporal a una tarea existente</td></tr><tr><td><a href="#tasks-attach"><code>attach</code></a></td><td><code>adjuntar</code></td><td>Copia un adjunto al directorio de la tarea y lo vincula en TAREA.md</td></tr><tr><td><a href="#tasks-search"><code>search</code></a></td><td><code>buscar</code></td><td>Busca texto de forma literal e insensible a mayúsculas en tareas y notas</td></tr><tr><td><a href="#tasks-refs"><code>refs</code></a></td><td><code>referencias</code></td><td>Busca menciones textuales del ID canónico en tareas, notas y código del proyecto</td></tr><tr><td><a href="#tasks-summary"><code>summary</code></a></td><td><code>resumen</code></td><td>Muestra cantidades agregadas por estado y etiquetas a partir de registros válidos</td></tr><tr><td><a href="#tasks-follow"><code>follow</code></a></td><td><code>seguimiento</code></td><td>Compara archivos del tracker con el índice y HEAD de Git, sin escribir</td></tr><tr><td><a href="#tasks-facts"><code>facts</code></a></td><td><code>hechos</code></td><td>Emite hechos relacionales del tracker de tareas en formato JSON</td></tr><tr><td><a href="#tasks-tag"><code>tag</code></a></td><td><code>etiquetar</code></td><td>Agrega una o más etiquetas a tareas existentes</td></tr><tr><td><a href="#tasks-untag"><code>untag</code></a></td><td><code>desetiquetar</code></td><td>Quita una o más etiquetas de tareas</td></tr><tr><td><a href="#tasks-graph"><code>graph</code></a></td><td><code>grafo</code></td><td>Emite el grafo de referencias entre tareas en formato DOT o JSON</td></tr></tbody></table></div>
+<h2 id="opciones-comunes">Opciones comunes<a class="ancla" href="#opciones-comunes" aria-label="Enlace a esta sección">#</a></h2>
+<p>Todos los comandos aceptan las siguientes opciones generales:</p>
+<ul><li><code>--proyecto &lt;ruta&gt;</code>: apunta a la raíz de un proyecto explícito en lugar del directorio actual.</li><li><code>-h, --help</code>: muestra la ayuda del comando.</li><li><code>-V, --version</code>: muestra la versión instalada de <code>tasks</code>.</li></ul>
+<h2 id="tasks-init">tasks init<a class="ancla" href="#tasks-init" aria-label="Enlace a esta sección">#</a></h2>
+<p>Inicializa el tracker de tareas en tareas/.</p>
+<ul><li><strong>Alias:</strong> ninguno</li></ul>
+<pre data-lenguaje="text"><code>tasks tasks init [-h] [--proyecto PROYECTO] [--sin-readme] [ruta]</code></pre>
+<h3 id="argumentos">Argumentos<a class="ancla" href="#argumentos" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  ruta                 Ruta del proyecto (por defecto: directorio actual)</code></pre>
+<h3 id="opciones">Opciones<a class="ancla" href="#opciones" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help           show this help message and exit
+  --proyecto PROYECTO  Ruta al proyecto
+  --sin-readme         Inicializa el tracker sin crear README.md</code></pre>
+<h2 id="tasks-new">tasks new<a class="ancla" href="#tasks-new" aria-label="Enlace a esta sección">#</a></h2>
+<p>Crea una nueva tarea con plantilla lista.</p>
+<ul><li><strong>Alias:</strong> <code>nueva</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks new [-h] [--etiqueta ETIQUETA] [--prioridad PRIORIDAD] [--sufijo SUFIJO] [--json] [--proyecto PROYECTO] titulo</code></pre>
+<h3 id="argumentos-1">Argumentos<a class="ancla" href="#argumentos-1" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  titulo                Título de la tarea</code></pre>
+<h3 id="opciones-1">Opciones<a class="ancla" href="#opciones-1" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help            show this help message and exit
+  --etiqueta, -e ETIQUETA
+                        Etiqueta para la tarea (repetible o separada por
+                        comas)
+  --prioridad PRIORIDAD
+                        Prioridad numérica entera (defecto: 50)
+  --sufijo SUFIJO       Sufijo del ID; sin él se deriva del título, hasta 16
+                        caracteres
+  --json                Salida en formato JSON
+  --proyecto PROYECTO   Ruta al proyecto</code></pre>
+<h2 id="tasks-list">tasks list<a class="ancla" href="#tasks-list" aria-label="Enlace a esta sección">#</a></h2>
+<p>Lista tareas del proyecto (alias: listar, ls).</p>
+<ul><li><strong>Alias:</strong> <code>listar</code>, <code>ls</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks list [-h] [--cerradas] [--todas] [--etiqueta ETIQUETA] [--texto TEXTO] [--por-id] [--invertir] [--explicar] [--json] [--proyecto PROYECTO] [consulta ...]</code></pre>
+<h3 id="argumentos-2">Argumentos<a class="ancla" href="#argumentos-2" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  consulta              Consulta TQL opcional</code></pre>
+<h3 id="opciones-2">Opciones<a class="ancla" href="#opciones-2" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help            show this help message and exit
+  --cerradas            Muestra sólo tareas cerradas
+  --todas               Muestra abiertas y cerradas
+  --etiqueta, -e ETIQUETA
+                        Filtra por etiqueta exacta
+  --texto, -t TEXTO     Busca texto en título o descripción
+  --por-id              Ordena por ID descendente (más nuevas primero)
+  --invertir            Invierte el orden de la lista
+  --explicar            Muestra tokens y forma compilada sin listar ni
+                        requerir tracker
+  --json                Salida en formato JSON
+  --proyecto PROYECTO   Ruta al proyecto</code></pre>
+<h2 id="tasks-show">tasks show<a class="ancla" href="#tasks-show" aria-label="Enlace a esta sección">#</a></h2>
+<p>Muestra detalles de una tarea o su ruta.</p>
+<ul><li><strong>Alias:</strong> <code>ver</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks show [-h] [--ruta] [--json] [--proyecto PROYECTO] id</code></pre>
+<h3 id="argumentos-3">Argumentos<a class="ancla" href="#argumentos-3" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  id                   Identificador, prefijo o sufijo inequívoco de la tarea</code></pre>
+<h3 id="opciones-3">Opciones<a class="ancla" href="#opciones-3" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help           show this help message and exit
+  --ruta               Imprime sólo la ruta a TAREA.md
+  --json               Salida en formato JSON
+  --proyecto PROYECTO  Ruta al proyecto</code></pre>
+<h2 id="tasks-close">tasks close<a class="ancla" href="#tasks-close" aria-label="Enlace a esta sección">#</a></h2>
+<p>Marca una tarea como CERRADA de forma atómica.</p>
+<ul><li><strong>Alias:</strong> <code>cerrar</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks close [-h] [--proyecto PROYECTO] id</code></pre>
+<h3 id="argumentos-4">Argumentos<a class="ancla" href="#argumentos-4" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  id                   Identificador, prefijo o sufijo inequívoco de la tarea</code></pre>
+<h3 id="opciones-4">Opciones<a class="ancla" href="#opciones-4" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help           show this help message and exit
+  --proyecto PROYECTO  Ruta al proyecto</code></pre>
+<h2 id="tasks-reopen">tasks reopen<a class="ancla" href="#tasks-reopen" aria-label="Enlace a esta sección">#</a></h2>
+<p>Marca una tarea como ABIERTA de forma atómica.</p>
+<ul><li><strong>Alias:</strong> <code>reabrir</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks reopen [-h] [--proyecto PROYECTO] id</code></pre>
+<h3 id="argumentos-5">Argumentos<a class="ancla" href="#argumentos-5" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  id                   Identificador, prefijo o sufijo inequívoco de la tarea</code></pre>
+<h3 id="opciones-5">Opciones<a class="ancla" href="#opciones-5" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help           show this help message and exit
+  --proyecto PROYECTO  Ruta al proyecto</code></pre>
+<h2 id="tasks-review">tasks review<a class="ancla" href="#tasks-review" aria-label="Enlace a esta sección">#</a></h2>
+<p>Audita la integridad del directorio tareas/.</p>
+<ul><li><strong>Alias:</strong> <code>revisar</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks review [-h] [--json] [--proyecto PROYECTO]</code></pre>
+<h3 id="opciones-6">Opciones<a class="ancla" href="#opciones-6" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help           show this help message and exit
+  --json               Salida en formato JSON
+  --proyecto PROYECTO  Ruta al proyecto</code></pre>
+<h2 id="tasks-note">tasks note<a class="ancla" href="#tasks-note" aria-label="Enlace a esta sección">#</a></h2>
+<p>Agrega una nota, URL o marca temporal a una tarea existente.</p>
+<ul><li><strong>Alias:</strong> <code>anotar</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks note [-h] [--url URL] [--marca MARCA] [--json] [--proyecto PROYECTO] id [texto]</code></pre>
+<h3 id="argumentos-6">Argumentos<a class="ancla" href="#argumentos-6" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  id                   Identificador o prefijo inequívoco de la tarea
+  texto                Texto explicativo de la nota</code></pre>
+<h3 id="opciones-7">Opciones<a class="ancla" href="#opciones-7" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help           show this help message and exit
+  --url URL            URL absoluta de referencia (http/https)
+  --marca MARCA        Posición o marca temporal del recurso (ej. 01:32);
+                       exige --url
+  --json               Salida en formato JSON
+  --proyecto PROYECTO  Ruta al proyecto</code></pre>
+<h2 id="tasks-attach">tasks attach<a class="ancla" href="#tasks-attach" aria-label="Enlace a esta sección">#</a></h2>
+<p>Copia un adjunto al directorio de la tarea y lo vincula en TAREA.md.</p>
+<ul><li><strong>Alias:</strong> <code>adjuntar</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks attach [-h] [--permitir-grande] [--json] [--proyecto PROYECTO] id archivo</code></pre>
+<h3 id="argumentos-7">Argumentos<a class="ancla" href="#argumentos-7" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  id                   Identificador o prefijo inequívoco de la tarea
+  archivo              Ruta al archivo regular de origen</code></pre>
+<h3 id="opciones-8">Opciones<a class="ancla" href="#opciones-8" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help           show this help message and exit
+  --permitir-grande    Permite adjuntar archivos mayores a 20 MiB
+  --json               Salida en formato JSON
+  --proyecto PROYECTO  Ruta al proyecto</code></pre>
+<h2 id="tasks-search">tasks search<a class="ancla" href="#tasks-search" aria-label="Enlace a esta sección">#</a></h2>
+<p>Busca texto de forma literal e insensible a mayúsculas en tareas y notas.</p>
+<ul><li><strong>Alias:</strong> <code>buscar</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks search [-h] [--json] [--proyecto PROYECTO] texto</code></pre>
+<h3 id="argumentos-8">Argumentos<a class="ancla" href="#argumentos-8" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  texto                Texto literal a buscar</code></pre>
+<h3 id="opciones-9">Opciones<a class="ancla" href="#opciones-9" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help           show this help message and exit
+  --json               Salida en formato JSON
+  --proyecto PROYECTO  Ruta al proyecto</code></pre>
+<h2 id="tasks-refs">tasks refs<a class="ancla" href="#tasks-refs" aria-label="Enlace a esta sección">#</a></h2>
+<p>Busca menciones textuales del ID canónico en tareas, notas y código del proyecto.</p>
+<ul><li><strong>Alias:</strong> <code>referencias</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks refs [-h] [--json] [--proyecto PROYECTO] [id]</code></pre>
+<h3 id="argumentos-9">Argumentos<a class="ancla" href="#argumentos-9" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  id                   Identificador o prefijo inequívoco de la tarea</code></pre>
+<h3 id="opciones-10">Opciones<a class="ancla" href="#opciones-10" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help           show this help message and exit
+  --json               Salida en formato JSON
+  --proyecto PROYECTO  Ruta al proyecto</code></pre>
+<h2 id="tasks-summary">tasks summary<a class="ancla" href="#tasks-summary" aria-label="Enlace a esta sección">#</a></h2>
+<p>Muestra cantidades agregadas por estado y etiquetas a partir de registros válidos.</p>
+<ul><li><strong>Alias:</strong> <code>resumen</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks summary [-h] [--json] [--proyecto PROYECTO]</code></pre>
+<h3 id="opciones-11">Opciones<a class="ancla" href="#opciones-11" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help           show this help message and exit
+  --json               Salida en formato JSON
+  --proyecto PROYECTO  Ruta al proyecto</code></pre>
+<h2 id="tasks-follow">tasks follow<a class="ancla" href="#tasks-follow" aria-label="Enlace a esta sección">#</a></h2>
+<p>Compara archivos del tracker con el índice y HEAD de Git, sin escribir.</p>
+<ul><li><strong>Alias:</strong> <code>seguimiento</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks follow [-h] [--proyecto PROYECTO] [--json]</code></pre>
+<h3 id="opciones-12">Opciones<a class="ancla" href="#opciones-12" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help           show this help message and exit
+  --proyecto PROYECTO  Raíz explícita del proyecto
+  --json               Diagnóstico como JSON</code></pre>
+<h2 id="tasks-facts">tasks facts<a class="ancla" href="#tasks-facts" aria-label="Enlace a esta sección">#</a></h2>
+<p>Emite hechos relacionales del tracker de tareas en formato JSON.</p>
+<ul><li><strong>Alias:</strong> <code>hechos</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks facts [-h] [--git] [--json] [--proyecto PROYECTO]</code></pre>
+<h3 id="opciones-13">Opciones<a class="ancla" href="#opciones-13" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help           show this help message and exit
+  --git                Comprueba estado frente al índice y HEAD de Git
+  --json               Salida en formato JSON (siempre activo)
+  --proyecto PROYECTO  Ruta explícita a la raíz del proyecto</code></pre>
+<h2 id="tasks-tag">tasks tag<a class="ancla" href="#tasks-tag" aria-label="Enlace a esta sección">#</a></h2>
+<p>Agrega una o más etiquetas a tareas existentes.</p>
+<ul><li><strong>Alias:</strong> <code>etiquetar</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks tag [-h] [--etiqueta ETIQUETA] [--json] [--proyecto PROYECTO] [ids ...]</code></pre>
+<h3 id="argumentos-10">Argumentos<a class="ancla" href="#argumentos-10" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  ids                   Identificadores o prefijos inequívocos de tareas</code></pre>
+<h3 id="opciones-14">Opciones<a class="ancla" href="#opciones-14" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help            show this help message and exit
+  --etiqueta, -e ETIQUETA
+                        Etiqueta a agregar (repetible o separada por comas)
+  --json                Salida en formato JSON
+  --proyecto PROYECTO   Ruta al proyecto</code></pre>
+<h2 id="tasks-untag">tasks untag<a class="ancla" href="#tasks-untag" aria-label="Enlace a esta sección">#</a></h2>
+<p>Quita una o más etiquetas de tareas.</p>
+<ul><li><strong>Alias:</strong> <code>desetiquetar</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks untag [-h] [--etiqueta ETIQUETA] [--consulta CONSULTA] [--cerradas] [--todas] [--json] [--proyecto PROYECTO] [ids ...]</code></pre>
+<h3 id="argumentos-11">Argumentos<a class="ancla" href="#argumentos-11" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  ids                   Identificadores o prefijos inequívocos de tareas</code></pre>
+<h3 id="opciones-15">Opciones<a class="ancla" href="#opciones-15" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help            show this help message and exit
+  --etiqueta, -e ETIQUETA
+                        Etiqueta a quitar (repetible o separada por comas)
+  --consulta CONSULTA   Expresión de consulta TQL para filtrar tareas (modo
+                        masivo)
+  --cerradas            Aplica a tareas cerradas (modo masivo)
+  --todas               Aplica a tareas abiertas y cerradas (modo masivo)
+  --json                Salida en formato JSON
+  --proyecto PROYECTO   Ruta al proyecto</code></pre>
+<h2 id="tasks-graph">tasks graph<a class="ancla" href="#tasks-graph" aria-label="Enlace a esta sección">#</a></h2>
+<p>Emite el grafo de referencias entre tareas en formato DOT o JSON.</p>
+<ul><li><strong>Alias:</strong> <code>grafo</code></li></ul>
+<pre data-lenguaje="text"><code>tasks tasks graph [-h] [--json] [--proyecto PROYECTO]</code></pre>
+<h3 id="opciones-16">Opciones<a class="ancla" href="#opciones-16" aria-label="Enlace a esta sección">#</a></h3>
+<pre data-lenguaje="text"><code>  -h, --help           show this help message and exit
+  --json               Salida en formato JSON
+  --proyecto PROYECTO  Ruta al proyecto</code></pre>
+    <p class="fuente">Esta página se genera desde <a href="https://github.com/Segtem/trackertast/blob/main/docs/referencia.md" rel="noopener">docs/referencia.md</a>.</p>
+  </main>
+  <aside class="en-esta-pagina" aria-label="En esta página">
+    <p class='menu-grupo'>En esta página</p><ul><li class="n2"><a href="#resumen-de-comandos">Resumen de comandos</a></li><li class="n2"><a href="#opciones-comunes">Opciones comunes</a></li><li class="n2"><a href="#tasks-init">tasks init</a></li><li class="n3"><a href="#argumentos">Argumentos</a></li><li class="n3"><a href="#opciones">Opciones</a></li><li class="n2"><a href="#tasks-new">tasks new</a></li><li class="n3"><a href="#argumentos-1">Argumentos</a></li><li class="n3"><a href="#opciones-1">Opciones</a></li><li class="n2"><a href="#tasks-list">tasks list</a></li><li class="n3"><a href="#argumentos-2">Argumentos</a></li><li class="n3"><a href="#opciones-2">Opciones</a></li><li class="n2"><a href="#tasks-show">tasks show</a></li><li class="n3"><a href="#argumentos-3">Argumentos</a></li><li class="n3"><a href="#opciones-3">Opciones</a></li><li class="n2"><a href="#tasks-close">tasks close</a></li><li class="n3"><a href="#argumentos-4">Argumentos</a></li><li class="n3"><a href="#opciones-4">Opciones</a></li><li class="n2"><a href="#tasks-reopen">tasks reopen</a></li><li class="n3"><a href="#argumentos-5">Argumentos</a></li><li class="n3"><a href="#opciones-5">Opciones</a></li><li class="n2"><a href="#tasks-review">tasks review</a></li><li class="n3"><a href="#opciones-6">Opciones</a></li><li class="n2"><a href="#tasks-note">tasks note</a></li><li class="n3"><a href="#argumentos-6">Argumentos</a></li><li class="n3"><a href="#opciones-7">Opciones</a></li><li class="n2"><a href="#tasks-attach">tasks attach</a></li><li class="n3"><a href="#argumentos-7">Argumentos</a></li><li class="n3"><a href="#opciones-8">Opciones</a></li><li class="n2"><a href="#tasks-search">tasks search</a></li><li class="n3"><a href="#argumentos-8">Argumentos</a></li><li class="n3"><a href="#opciones-9">Opciones</a></li><li class="n2"><a href="#tasks-refs">tasks refs</a></li><li class="n3"><a href="#argumentos-9">Argumentos</a></li><li class="n3"><a href="#opciones-10">Opciones</a></li><li class="n2"><a href="#tasks-summary">tasks summary</a></li><li class="n3"><a href="#opciones-11">Opciones</a></li><li class="n2"><a href="#tasks-follow">tasks follow</a></li><li class="n3"><a href="#opciones-12">Opciones</a></li><li class="n2"><a href="#tasks-facts">tasks facts</a></li><li class="n3"><a href="#opciones-13">Opciones</a></li><li class="n2"><a href="#tasks-tag">tasks tag</a></li><li class="n3"><a href="#argumentos-10">Argumentos</a></li><li class="n3"><a href="#opciones-14">Opciones</a></li><li class="n2"><a href="#tasks-untag">tasks untag</a></li><li class="n3"><a href="#argumentos-11">Argumentos</a></li><li class="n3"><a href="#opciones-15">Opciones</a></li><li class="n2"><a href="#tasks-graph">tasks graph</a></li><li class="n3"><a href="#opciones-16">Opciones</a></li></ul>
+  </aside>
+</div>
+<script>
+if (matchMedia("(max-width: 760px)").matches) {
+  const m = document.querySelector(".menu");
+  if (m) m.removeAttribute("open");
+}
+document.querySelectorAll(".prosa pre:not(.salida)").forEach((pre) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "copiar"; b.textContent = "Copiar";
+  b.addEventListener("click", () => {
+    navigator.clipboard.writeText(pre.querySelector("code").innerText)
+      .then(() => { b.textContent = "Copiado"; setTimeout(() => { b.textContent = "Copiar"; }, 1500); })
+      .catch(() => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); });
+  });
+  pre.append(b);
+});
+</script>
+</body>
+</html>

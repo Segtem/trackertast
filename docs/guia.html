@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Guía paso a paso de trackertast — trackertast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&family=Silkscreen&display=swap">
+<link rel="stylesheet" href="./assets/sitio.css">
+<link rel="icon" href="./assets/emblema.svg" type="image/svg+xml">
+</head>
+<body class="doc">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="barra">
+  <a class="marca" href="./"><img src="./assets/emblema.svg" alt="" width="28" height="28"> trackertast</a>
+  <nav aria-label="Principal">
+    <a href="./">Inicio</a>
+    <a href="./guia.html">Guía</a>
+    <a href="./agentes.html">Para agentes</a>
+    <a href="./oracle.html">Con Oracle</a>
+    <a href="./referencia.html">Referencia</a>
+    <a href="https://github.com/Segtem/trackertast" rel="noopener">GitHub</a>
+  </nav>
+</header>
+<div class="doc-rejilla">
+  <details class="menu" open>
+    <summary>Documentación</summary>
+    <nav aria-label="Documentación"><p class="menu-grupo">Empezar</p><ul><li><a href="guia.html" aria-current=page>Guía paso a paso</a></li></ul><p class="menu-grupo">Uso e integración</p><ul><li><a href="agentes.html">Para agentes</a></li><li><a href="oracle.html">Con Oracle</a></li></ul><p class="menu-grupo">Referencia</p><ul><li><a href="referencia.html">Referencia del CLI</a></li><li><a href="tareas.html">Especificación y contrato</a></li></ul></nav>
+  </details>
+  <main id="contenido" class="prosa">
+<h1 id="guía-paso-a-paso-de-trackertast">Guía paso a paso de trackertast<a class="ancla" href="#guía-paso-a-paso-de-trackertast" aria-label="Enlace a esta sección">#</a></h1>
+<p>Esta guía recorre el ciclo completo de uso de <strong>trackertast</strong> (<code>tasks</code>), desde la inicialización hasta el cierre de una tarea, pasando por consultas avanzadas con TQL, notas de avance, adjuntos, referencias cruzadas, el grafo de dependencias y el seguimiento en Git.</p>
+<p>Cada paso muestra el comando ejecutado y la salida real obtenida.</p>
+<h2 id="1-inicializar-el-tracker">1. Inicializar el tracker<a class="ancla" href="#1-inicializar-el-tracker" aria-label="Enlace a esta sección">#</a></h2>
+<p>El comando <code>tasks init</code> crea la carpeta <code>tareas/</code> y su archivo <code>README.md</code> en la raíz del proyecto actual:</p>
+<pre data-lenguaje="bash"><code>tasks init</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Tracker de tareas inicializado en ./tareas</code></pre>
+<h2 id="2-crear-tareas">2. Crear tareas<a class="ancla" href="#2-crear-tareas" aria-label="Enlace a esta sección">#</a></h2>
+<p>Creamos tres tareas utilizando <code>--sufijo</code> explícito para asignarles nombres memorables y estables:</p>
+<pre data-lenguaje="bash"><code>tasks new &quot;Diseñar sensor de velocidad&quot; --etiqueta sensor --prioridad 70 --sufijo sensor</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Tarea creada: 20260927-120000-sensor
+Ruta: ./tareas/20260927-120000-sensor/TAREA.md</code></pre>
+<pre data-lenguaje="bash"><code>tasks new &quot;Escribir arnés de prueba&quot; --etiqueta sensor --etiqueta arnes --prioridad 80 --sufijo arnes</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Tarea creada: 20260927-120000-arnes
+Ruta: ./tareas/20260927-120000-arnes/TAREA.md</code></pre>
+<pre data-lenguaje="bash"><code>tasks new &quot;Corregir fuga en actuador&quot; --etiqueta bug --prioridad 40 --sufijo fuga</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Tarea creada: 20260927-120000-fuga
+Ruta: ./tareas/20260927-120000-fuga/TAREA.md</code></pre>
+<h2 id="3-consultas-y-filtrado-con-tql">3. Consultas y filtrado con TQL<a class="ancla" href="#3-consultas-y-filtrado-con-tql" aria-label="Enlace a esta sección">#</a></h2>
+<p>El comando <code>tasks list</code> (alias <code>listar</code> o <code>ls</code>) muestra por defecto las tareas abiertas, ordenadas por prioridad descendente:</p>
+<pre data-lenguaje="bash"><code>tasks list</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>20260927-120000-arnes  ABIERTA P80 [sensor, arnes] Escribir arnés de prueba
+20260927-120000-sensor ABIERTA P70 [sensor]        Diseñar sensor de velocidad
+20260927-120000-fuga   ABIERTA P40 [bug]           Corregir fuga en actuador</code></pre>
+<h3 id="filtrar-por-etiquetas">Filtrar por etiquetas<a class="ancla" href="#filtrar-por-etiquetas" aria-label="Enlace a esta sección">#</a></h3>
+<p>Podemos usar el prefijo <code>:etiqueta</code> para buscar tareas que tengan una etiqueta determinada:</p>
+<pre data-lenguaje="bash"><code>tasks list &quot;:sensor&quot;</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>20260927-120000-arnes  ABIERTA P80 [sensor, arnes] Escribir arnés de prueba
+20260927-120000-sensor ABIERTA P70 [sensor]        Diseñar sensor de velocidad</code></pre>
+<h3 id="filtrar-por-prioridad-numérica">Filtrar por prioridad numérica<a class="ancla" href="#filtrar-por-prioridad-numérica" aria-label="Enlace a esta sección">#</a></h3>
+<p>TQL admite comparadores relacionales en español (<code>desde</code>, <code>hasta</code>, <code>mayor</code>, <code>menor</code>, <code>igual</code>, <code>distinto</code>):</p>
+<pre data-lenguaje="bash"><code>tasks list &quot;prioridad desde 70&quot;</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>20260927-120000-arnes  ABIERTA P80 [sensor, arnes] Escribir arnés de prueba
+20260927-120000-sensor ABIERTA P70 [sensor]        Diseñar sensor de velocidad</code></pre>
+<h3 id="conectores-lógicos-y-o-no">Conectores lógicos: <code>y</code>, <code>o</code>, <code>no</code><a class="ancla" href="#conectores-lógicos-y-o-no" aria-label="Enlace a esta sección">#</a></h3>
+<p>Las expresiones se pueden combinar mediante operadores lógicos:</p>
+<pre data-lenguaje="bash"><code>tasks list &quot;:sensor y prioridad desde 75&quot;</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>20260927-120000-arnes ABIERTA P80 [sensor, arnes] Escribir arnés de prueba</code></pre>
+<p>Conector <code>o</code> (disyunción):</p>
+<pre data-lenguaje="bash"><code>tasks list &quot;:bug o :arnes&quot;</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>20260927-120000-arnes ABIERTA P80 [sensor, arnes] Escribir arnés de prueba
+20260927-120000-fuga  ABIERTA P40 [bug]           Corregir fuga en actuador</code></pre>
+<p>Operador <code>no</code> (negación):</p>
+<pre data-lenguaje="bash"><code>tasks list &quot;no :bug&quot;</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>20260927-120000-arnes  ABIERTA P80 [sensor, arnes] Escribir arnés de prueba
+20260927-120000-sensor ABIERTA P70 [sensor]        Diseñar sensor de velocidad</code></pre>
+<h3 id="explicar-la-consulta-compilada">Explicar la consulta compilada<a class="ancla" href="#explicar-la-consulta-compilada" aria-label="Enlace a esta sección">#</a></h3>
+<p>La bandera <code>--explicar</code> permite ver los tokens analizados y la estructura del árbol de sintaxis abstracta sin consultar el disco:</p>
+<pre data-lenguaje="bash"><code>tasks list &quot;:sensor y prioridad desde 75&quot; --explicar</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>TOKENS:
+  [0] :sensor
+  [8] y
+  [10] prioridad
+  [20] desde
+  [26] 75
+COMPILADO:
+  (:sensor y (prioridad desde 75))</code></pre>
+<h2 id="4-detalles-y-notas-de-trabajo">4. Detalles y notas de trabajo<a class="ancla" href="#4-detalles-y-notas-de-trabajo" aria-label="Enlace a esta sección">#</a></h2>
+<p>Podemos inspeccionar una tarea utilizando su identificador o sufijo con <code>tasks show</code> (alias <code>ver</code>):</p>
+<pre data-lenguaje="bash"><code>tasks show sensor</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>ID:        20260927-120000-sensor
+Título:    Diseñar sensor de velocidad
+Estado:    ABIERTA
+Prioridad: 70
+Etiquetas: sensor
+Ruta:      ./tareas/20260927-120000-sensor/TAREA.md
+
+(sin descripción adicional)</code></pre>
+<h3 id="registrar-notas-de-avance">Registrar notas de avance<a class="ancla" href="#registrar-notas-de-avance" aria-label="Enlace a esta sección">#</a></h3>
+<p>A medida que trabajamos, usamos <code>tasks note</code> (alias <code>anotar</code>) para asentar notas fechadas en UTC en el cuerpo de <code>TAREA.md</code>:</p>
+<pre data-lenguaje="bash"><code>tasks note sensor &quot;Medición preliminar en banco de pruebas&quot;</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Nota agregada a la tarea 20260927-120000-sensor
+Documento: ./tareas/20260927-120000-sensor/TAREA.md</code></pre>
+<p>También podemos incorporar enlaces y marcas de posición con <code>--url</code> y <code>--marca</code>:</p>
+<pre data-lenguaje="bash"><code>tasks note sensor &quot;Hoja de datos del fabricante&quot; --url &quot;https://ejemplo.com/sensor.pdf&quot; --marca &quot;página 12&quot;</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Nota agregada a la tarea 20260927-120000-sensor
+Documento: ./tareas/20260927-120000-sensor/TAREA.md</code></pre>
+<h2 id="5-adjuntar-evidencia-local">5. Adjuntar evidencia local<a class="ancla" href="#5-adjuntar-evidencia-local" aria-label="Enlace a esta sección">#</a></h2>
+<p>El comando <code>tasks attach</code> (alias <code>adjuntar</code>) copia archivos locales dentro de la carpeta de la tarea y genera el enlace relativo en <code>TAREA.md</code>:</p>
+<pre data-lenguaje="bash"><code>echo &quot;v,rpm\n0,0\n10,100&quot; &gt; calibracion.csv
+tasks attach sensor calibracion.csv</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Archivo adjuntado a la tarea 20260927-120000-sensor
+Ruta:      ./tareas/20260927-120000-sensor/calibracion.csv
+Documento: ./tareas/20260927-120000-sensor/TAREA.md</code></pre>
+<h2 id="6-búsqueda-en-notas-y-documentos">6. Búsqueda en notas y documentos<a class="ancla" href="#6-búsqueda-en-notas-y-documentos" aria-label="Enlace a esta sección">#</a></h2>
+<p>El comando <code>tasks search</code> (alias <code>buscar</code>) realiza búsquedas de texto literal e insensible a mayúsculas en todas las tareas y notas del tracker:</p>
+<pre data-lenguaje="bash"><code>tasks search &quot;calibracion&quot;</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>tareas/20260927-120000-sensor/TAREA.md:16: - Adjunto: [calibracion.csv](calibracion.csv)</code></pre>
+<h2 id="7-referencias-cruzadas-y-grafo">7. Referencias cruzadas y grafo<a class="ancla" href="#7-referencias-cruzadas-y-grafo" aria-label="Enlace a esta sección">#</a></h2>
+<p>Cuando una tarea depende de otra o la menciona, agregamos su identificador al cuerpo. Documentamos que el arnés depende del sensor:</p>
+<pre data-lenguaje="bash"><code>tasks note arnes &quot;Bloqueado por 20260927-120000-sensor&quot;</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Nota agregada a la tarea 20260927-120000-arnes
+Documento: ./tareas/20260927-120000-arnes/TAREA.md</code></pre>
+<h3 id="buscar-menciones-con-tasks-refs">Buscar menciones con <code>tasks refs</code><a class="ancla" href="#buscar-menciones-con-tasks-refs" aria-label="Enlace a esta sección">#</a></h3>
+<p>El comando <code>tasks refs</code> (alias <code>referencias</code>) localiza todas las menciones textuales del ID canónico en las tareas y en el código del proyecto:</p>
+<pre data-lenguaje="bash"><code>tasks refs sensor</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Referencias encontradas para «20260927-120000-sensor»:
+tareas/20260927-120000-arnes/TAREA.md:9: Bloqueado por 20260927-120000-sensor</code></pre>
+<h3 id="visualizar-dependencias-con-tasks-graph">Visualizar dependencias con <code>tasks graph</code><a class="ancla" href="#visualizar-dependencias-con-tasks-graph" aria-label="Enlace a esta sección">#</a></h3>
+<p>El comando <code>tasks graph</code> (alias <code>grafo</code>) construye el grafo dirigido de referencias existentes entre las tareas del tracker en formato DOT (Graphviz):</p>
+<pre data-lenguaje="bash"><code>tasks graph</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>digraph tareas {
+  &quot;20260927-120000-arnes&quot; [label=&quot;Escribir arnés de prueba (ABIERTA)&quot;];
+  &quot;20260927-120000-sensor&quot; [label=&quot;Diseñar sensor de velocidad (ABIERTA)&quot;];
+  &quot;20260927-120000-arnes&quot; -&gt; &quot;20260927-120000-sensor&quot;;
+}</code></pre>
+<h2 id="8-seguimiento-con-git">8. Seguimiento con Git<a class="ancla" href="#8-seguimiento-con-git" aria-label="Enlace a esta sección">#</a></h2>
+<p>El comando <code>tasks follow</code> (alias <code>seguimiento</code>) audita el estado de todos los archivos del tracker frente al índice y a <code>HEAD</code> de Git.</p>
+<p>Antes de confirmar en Git, los archivos figuran como <code>sin_seguimiento</code>:</p>
+<pre data-lenguaje="bash"><code>tasks follow</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Repositorio: . · HEAD: sin commits
+  sin_seguimiento: tareas/20260927-120000-arnes/TAREA.md (índice=False, HEAD=False, XY=??)
+  sin_seguimiento: tareas/20260927-120000-fuga/TAREA.md (índice=False, HEAD=False, XY=??)
+  sin_seguimiento: tareas/20260927-120000-sensor/TAREA.md (índice=False, HEAD=False, XY=??)
+  sin_seguimiento: tareas/20260927-120000-sensor/calibracion.csv (índice=False, HEAD=False, XY=??)
+  sin_seguimiento: tareas/README.md (índice=False, HEAD=False, XY=??)</code></pre>
+<p>Confirmamos las tareas en Git y volvemos a verificar:</p>
+<pre data-lenguaje="bash"><code>git add tareas/
+git commit -m &quot;docs: registrar tareas iniciales&quot;
+tasks follow</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>[main (root-commit) &lt;commit&gt;] docs: registrar tareas iniciales
+ 5 files changed, 36 insertions(+)
+ create mode 100644 tareas/20260927-120000-arnes/TAREA.md
+ create mode 100644 tareas/20260927-120000-fuga/TAREA.md
+ create mode 100644 tareas/20260927-120000-sensor/TAREA.md
+ create mode 100644 tareas/20260927-120000-sensor/calibracion.csv
+ create mode 100644 tareas/README.md
+Repositorio: . · HEAD: &lt;commit&gt;
+  sin_cambios: tareas/20260927-120000-arnes/TAREA.md (índice=True, HEAD=True, XY=  )
+  sin_cambios: tareas/20260927-120000-fuga/TAREA.md (índice=True, HEAD=True, XY=  )
+  sin_cambios: tareas/20260927-120000-sensor/TAREA.md (índice=True, HEAD=True, XY=  )
+  sin_cambios: tareas/20260927-120000-sensor/calibracion.csv (índice=True, HEAD=True, XY=  )
+  sin_cambios: tareas/README.md (índice=True, HEAD=True, XY=  )</code></pre>
+<p>Ahora todos los documentos figuran como <code>sin_cambios</code> e integrados en <code>HEAD</code>.</p>
+<h2 id="9-resumen-y-cierre-de-tareas">9. Resumen y cierre de tareas<a class="ancla" href="#9-resumen-y-cierre-de-tareas" aria-label="Enlace a esta sección">#</a></h2>
+<p>Podemos obtener un censo rápido del estado del tracker con <code>tasks summary</code> (alias <code>resumen</code>):</p>
+<pre data-lenguaje="bash"><code>tasks summary</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Resumen del tracker de tareas (./tareas):
+  Total tareas: 3
+  Abiertas:     3
+  Cerradas:     0
+  Sin etiquetas: 0
+  Etiquetas:
+    · arnes: 1
+    · bug: 1
+    · sensor: 2</code></pre>
+<h3 id="cerrar-una-tarea">Cerrar una tarea<a class="ancla" href="#cerrar-una-tarea" aria-label="Enlace a esta sección">#</a></h3>
+<p>Cuando el trabajo de una tarea termina, la marcamos como <code>CERRADA</code> mediante <code>tasks close</code> (alias <code>cerrar</code>):</p>
+<pre data-lenguaje="bash"><code>tasks close fuga</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Tarea cerrada: 20260927-120000-fuga</code></pre>
+<p>Podemos consultar el listado completo incluyendo tareas abiertas y cerradas pasando <code>--todas</code>:</p>
+<pre data-lenguaje="bash"><code>tasks list --todas</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>20260927-120000-arnes  ABIERTA P80 [sensor, arnes] Escribir arnés de prueba
+20260927-120000-sensor ABIERTA P70 [sensor]        Diseñar sensor de velocidad
+20260927-120000-fuga   CERRADA P40 [bug]           Corregir fuga en actuador</code></pre>
+    <p class="fuente">Esta página se genera desde <a href="https://github.com/Segtem/trackertast/blob/main/docs/guia.md" rel="noopener">docs/guia.md</a>.</p>
+  </main>
+  <aside class="en-esta-pagina" aria-label="En esta página">
+    <p class='menu-grupo'>En esta página</p><ul><li class="n2"><a href="#1-inicializar-el-tracker">1. Inicializar el tracker</a></li><li class="n2"><a href="#2-crear-tareas">2. Crear tareas</a></li><li class="n2"><a href="#3-consultas-y-filtrado-con-tql">3. Consultas y filtrado con TQL</a></li><li class="n3"><a href="#filtrar-por-etiquetas">Filtrar por etiquetas</a></li><li class="n3"><a href="#filtrar-por-prioridad-numérica">Filtrar por prioridad numérica</a></li><li class="n3"><a href="#conectores-lógicos-y-o-no">Conectores lógicos: y, o, no</a></li><li class="n3"><a href="#explicar-la-consulta-compilada">Explicar la consulta compilada</a></li><li class="n2"><a href="#4-detalles-y-notas-de-trabajo">4. Detalles y notas de trabajo</a></li><li class="n3"><a href="#registrar-notas-de-avance">Registrar notas de avance</a></li><li class="n2"><a href="#5-adjuntar-evidencia-local">5. Adjuntar evidencia local</a></li><li class="n2"><a href="#6-búsqueda-en-notas-y-documentos">6. Búsqueda en notas y documentos</a></li><li class="n2"><a href="#7-referencias-cruzadas-y-grafo">7. Referencias cruzadas y grafo</a></li><li class="n3"><a href="#buscar-menciones-con-tasks-refs">Buscar menciones con tasks refs</a></li><li class="n3"><a href="#visualizar-dependencias-con-tasks-graph">Visualizar dependencias con tasks graph</a></li><li class="n2"><a href="#8-seguimiento-con-git">8. Seguimiento con Git</a></li><li class="n2"><a href="#9-resumen-y-cierre-de-tareas">9. Resumen y cierre de tareas</a></li><li class="n3"><a href="#cerrar-una-tarea">Cerrar una tarea</a></li></ul>
+  </aside>
+</div>
+<script>
+if (matchMedia("(max-width: 760px)").matches) {
+  const m = document.querySelector(".menu");
+  if (m) m.removeAttribute("open");
+}
+document.querySelectorAll(".prosa pre:not(.salida)").forEach((pre) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "copiar"; b.textContent = "Copiar";
+  b.addEventListener("click", () => {
+    navigator.clipboard.writeText(pre.querySelector("code").innerText)
+      .then(() => { b.textContent = "Copiado"; setTimeout(() => { b.textContent = "Copiar"; }, 1500); })
+      .catch(() => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); });
+  });
+  pre.append(b);
+});
+</script>
+</body>
+</html>

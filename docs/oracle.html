@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Auditoría formal con Oracle — trackertast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&family=Silkscreen&display=swap">
+<link rel="stylesheet" href="./assets/sitio.css">
+<link rel="icon" href="./assets/emblema.svg" type="image/svg+xml">
+</head>
+<body class="doc">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="barra">
+  <a class="marca" href="./"><img src="./assets/emblema.svg" alt="" width="28" height="28"> trackertast</a>
+  <nav aria-label="Principal">
+    <a href="./">Inicio</a>
+    <a href="./guia.html">Guía</a>
+    <a href="./agentes.html">Para agentes</a>
+    <a href="./oracle.html">Con Oracle</a>
+    <a href="./referencia.html">Referencia</a>
+    <a href="https://github.com/Segtem/trackertast" rel="noopener">GitHub</a>
+  </nav>
+</header>
+<div class="doc-rejilla">
+  <details class="menu" open>
+    <summary>Documentación</summary>
+    <nav aria-label="Documentación"><p class="menu-grupo">Empezar</p><ul><li><a href="guia.html">Guía paso a paso</a></li></ul><p class="menu-grupo">Uso e integración</p><ul><li><a href="agentes.html">Para agentes</a></li><li><a href="oracle.html" aria-current=page>Con Oracle</a></li></ul><p class="menu-grupo">Referencia</p><ul><li><a href="referencia.html">Referencia del CLI</a></li><li><a href="tareas.html">Especificación y contrato</a></li></ul></nav>
+  </details>
+  <main id="contenido" class="prosa">
+<h1 id="auditoría-formal-con-oracle">Auditoría formal con Oracle<a class="ancla" href="#auditoría-formal-con-oracle" aria-label="Enlace a esta sección">#</a></h1>
+<p><strong>trackertast</strong> es un proyecto independiente de Oracle: no requiere motores de evaluación, catálogos de medidas ni dependencias complejas para operar en el día a día.</p>
+<p>Sin embargo, cuenta con un puente nativo de exportación de evidencia relacional: el comando <code>tasks facts</code> (alias <code>tasks hechos</code>). Esto permite que Oracle audite formalmente la integridad del tracker y de la historia de Git utilizando políticas declarativas.</p>
+<h2 id="1-evidencia-relacional-tasks-facts">1. Evidencia relacional: <code>tasks facts</code><a class="ancla" href="#1-evidencia-relacional-tasks-facts" aria-label="Enlace a esta sección">#</a></h2>
+<p>El comando:</p>
+<pre data-lenguaje="bash"><code>tasks facts --git &gt; hechos.json</code></pre>
+<p>inspecciona el directorio <code>tareas/</code>, los documentos Markdown, los adjuntos locales y el historial de commits en Git, emitiendo un objeto JSON estructurado directamente a la salida estándar con siete relaciones clave:</p>
+<ol><li><strong><code>lectura_seguimiento</code></strong>: indica si la lectura del árbol fue completa (<code>completa: true</code>) y el estado del repositorio (<code>comprobado</code>, <code>sin_repositorio</code> o <code>no_solicitado</code>).</li><li><strong><code>tarea_seguimiento</code></strong>: inventario ordenado de tareas válidas registradas, con su identificador canónico, título, estado (<code>ABIERTA</code> o <code>CERRADA</code>), prioridad, ruta relativa y hash SHA-256 de su <code>TAREA.md</code>.</li><li><strong><code>archivo_seguimiento</code></strong>: catálogo recursivo de todos los archivos bajo <code>tareas/</code>, clasificando su clase (<code>documento</code>, <code>adjunto</code>, <code>auxiliar</code>), tipo físico (<code>regular</code>, <code>enlace</code>, <code>especial</code>, <code>ausente</code>), tamaño en bytes y estado en Git (<code>en_indice</code>, <code>en_head</code>, <code>ignorado</code>, <code>indice</code>, <code>trabajo</code>).</li><li><strong><code>referencia_seguimiento</code></strong>: inventario de todos los enlaces y menciones detectados en los documentos Markdown, clasificando su clase (<code>local</code>, <code>remota</code>, <code>ancla</code>, <code>no_admitida</code>) y su estado de resolución en disco (<code>presente</code>, <code>ausente</code>, <code>fuera_del_proyecto</code>, <code>no_comprobado</code>).</li><li><strong><code>omision_seguimiento</code></strong>: registro de cualquier archivo o sintaxis que no haya podido procesarse (por ejemplo, adjuntos mayores a 2 MiB, enlaces simbólicos externos o bytes no UTF-8).</li><li><strong><code>commit_seguimiento</code></strong>: lista de los commits alcanzables desde <code>HEAD</code> de Git (con <code>--git</code>), identificando si el asunto nombra una tarea (<code>&lt;ID&gt;: …</code>), si la tarea existe hoy en disco, su estado actual y si el commit constituye un cierre formal (<code>&lt;ID&gt;: done</code>).</li><li><strong><code>tarea_cierre_medida</code></strong>: pares de tarea y medidas requeridas declaradas en la cabecera <code>- CIERRA CON:</code> de cada documento.</li></ol>
+<h2 id="2-el-catálogo-de-auditoría-ejemploseguimiento-tareas">2. El catálogo de auditoría: <code>ejemplo/seguimiento-tareas</code><a class="ancla" href="#2-el-catálogo-de-auditoría-ejemploseguimiento-tareas" aria-label="Enlace a esta sección">#</a></h2>
+<p>El repositorio incluye en <a href="https://github.com/Segtem/trackertast/tree/main/ejemplo/seguimiento-tareas" rel="noopener"><code>ejemplo/seguimiento-tareas</code></a> un proyecto completo de Oracle que define seis políticas de calidad sobre el tracker:</p>
+<pre data-lenguaje="bash"><code># 1. Exportar la evidencia del repositorio
+tasks facts --git &gt; hechos.json
+
+# 2. Juzgar contra el catálogo de seguimiento
+oracle juzgar --proyecto ejemplo/seguimiento-tareas --con hechos.json</code></pre>
+<h3 id="las-seis-políticas-de-seguimiento">Las seis políticas de seguimiento<a class="ancla" href="#las-seis-políticas-de-seguimiento" aria-label="Enlace a esta sección">#</a></h3>
+<ol><li><strong><code>seguimiento.referencias_locales_presentes</code></strong>: Verifica que ningún enlace relativo local (<code>[registro](calibracion.csv)</code>) dentro de un <code>TAREA.md</code> apunte a un archivo inexistente en disco. No se permiten enlaces rotos dentro del tracker.</li><li><strong><code>seguimiento.archivos_confirmados_sin_cambios</code></strong>: Comprueba que todos los archivos bajo <code>tareas/</code> estén debidamente confirmados en el commit de <code>HEAD</code> de Git y no tengan modificaciones pendientes en el índice ni en el árbol de trabajo.</li><li><strong><code>seguimiento.lectura_sin_omisiones</code></strong>: Exige que la extracción de evidencia haya sido 100% íntegra (<code>completa == true</code>), garantizando que ninguna regla se juzgue sobre un inventario incompleto.</li><li><strong><code>seguimiento.ningun_commit_nombra_una_tarea_inexistente</code></strong>: Si un mensaje de commit empieza con un identificador de tarea (<code>&lt;ID&gt;: …</code>), exige que esa tarea exista en <code>tareas/</code>. Evita atribuir cambios a tareas inventadas o mal escritas.</li><li><strong><code>seguimiento.toda_tarea_cerrada_tiene_su_commit_de_cierre</code></strong>: Toda tarea con estado <code>CERRADA</code> debe contar en el historial de Git con al menos un commit cuyo mensaje sea exactamente <code>&lt;ID&gt;: done</code>. Cerrar una tarea sin asentar el commit de cierre se diagnostica como un defecto de proceso.</li><li><strong><code>seguimiento.ningun_cierre_deja_la_tarea_abierta</code></strong>: Ningún commit con el texto <code>&lt;ID&gt;: done</code> puede apuntar a una tarea que hoy figure con estado <code>ABIERTA</code>. Evita que una tarea finalizada se reabra silenciosamente sin nuevo registro.</li></ol>
+<h2 id="3-comprobación-en-integración-continua-ci">3. Comprobación en integración continua (CI)<a class="ancla" href="#3-comprobación-en-integración-continua-ci" aria-label="Enlace a esta sección">#</a></h2>
+<p>En <code>.github/workflows/tracker.yml</code>, el proyecto de ejemplo se ejecuta para verificar la coherencia de las políticas del catálogo:</p>
+<pre data-lenguaje="yaml"><code>- name: Juzgar ejemplo de seguimiento
+  run: oracle test --proyecto ejemplo/seguimiento-tareas</code></pre>
+<p>De esta manera, si en tu equipo o empresa adoptás Oracle, el tracker de tareas se integra automáticamente con el sistema de verificación continua de especificaciones. Si no usás Oracle, <code>trackertast</code> sigue funcionando sin ninguna merma de funcionalidad.</p>
+    <p class="fuente">Esta página se genera desde <a href="https://github.com/Segtem/trackertast/blob/main/docs/oracle.md" rel="noopener">docs/oracle.md</a>.</p>
+  </main>
+  <aside class="en-esta-pagina" aria-label="En esta página">
+    <p class='menu-grupo'>En esta página</p><ul><li class="n2"><a href="#1-evidencia-relacional-tasks-facts">1. Evidencia relacional: tasks facts</a></li><li class="n2"><a href="#2-el-catálogo-de-auditoría-ejemploseguimiento-tareas">2. El catálogo de auditoría: ejemplo/seguimiento-tareas</a></li><li class="n3"><a href="#las-seis-políticas-de-seguimiento">Las seis políticas de seguimiento</a></li><li class="n2"><a href="#3-comprobación-en-integración-continua-ci">3. Comprobación en integración continua (CI)</a></li></ul>
+  </aside>
+</div>
+<script>
+if (matchMedia("(max-width: 760px)").matches) {
+  const m = document.querySelector(".menu");
+  if (m) m.removeAttribute("open");
+}
+document.querySelectorAll(".prosa pre:not(.salida)").forEach((pre) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "copiar"; b.textContent = "Copiar";
+  b.addEventListener("click", () => {
+    navigator.clipboard.writeText(pre.querySelector("code").innerText)
+      .then(() => { b.textContent = "Copiado"; setTimeout(() => { b.textContent = "Copiar"; }, 1500); })
+      .catch(() => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); });
+  });
+  pre.append(b);
+});
+</script>
+</body>
+</html>

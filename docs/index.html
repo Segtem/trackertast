@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>trackertast — El tracker de tareas en Markdown para personas y agentes</title>
+<meta name="description" content="Tracker local de tareas en archivos Markdown dentro del repositorio, pensado para que personas y agentes se pasen el trabajo sin perder contexto.">
+<link rel="canonical" href="https://segtem.github.io/trackertast/">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&family=Silkscreen&display=swap">
+<link rel="stylesheet" href="assets/sitio.css">
+<link rel="stylesheet" href="assets/portada.css">
+<link rel="icon" href="assets/emblema.svg" type="image/svg+xml">
+</head>
+<body>
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+
+<header class="barra">
+  <a class="marca" href="./">
+    <img src="assets/emblema.svg" alt="" width="28" height="28"> trackertast <span class="version pixel">0.1.0</span>
+  </a>
+  <nav aria-label="Principal">
+    <a href="guia.html">Guía</a>
+    <a href="agentes.html">Para agentes</a>
+    <a href="oracle.html">Con Oracle</a>
+    <a href="referencia.html">Referencia</a>
+    <a href="https://github.com/Segtem/trackertast" rel="noopener">GitHub</a>
+  </nav>
+</header>
+
+<main id="contenido">
+
+<section class="hero envoltura">
+  <div class="hero-texto">
+    <p class="ceja pixel">tracker local en markdown</p>
+    <h1>Tareas que viajan en tu repositorio.</h1>
+    <p class="bajada">
+      Un tracker de tareas en archivos Markdown dentro de tu proyecto, pensado para que personas y agentes
+      de programación se pasen el trabajo sin perder contexto, sin bases de datos y sin servicios externos.
+      Cada tarea vive en su propia carpeta bajo <code>tareas/</code> y Git guarda la historia.
+    </p>
+    <div class="acciones">
+      <a class="boton" href="guia.html">Recorrido completo</a>
+      <a class="boton secundario" href="agentes.html">Para agentes</a>
+    </div>
+    <p class="instalar">
+      <code>uv tool install trackertast</code>
+      <span>Python 3.11 o posterior · cero dependencias de runtime · MIT</span>
+    </p>
+  </div>
+  <div class="terminal" aria-label="Terminal de bienvenida a trackertast">
+    <div class="terminal-barra pixel">
+      <span>terminal · tasks</span>
+      <span class="t-cyan">bash</span>
+    </div>
+    <pre><code><span class="t-gris">$ tasks list</span>
+20260927-182033-web    <span class="t-verde">ABIERTA</span> P80 []       La web de trackertast
+20260911-180000-sensor <span class="t-verde">ABIERTA</span> P70 [sensor] Investigar defecto en sensor
+
+<span class="t-gris">$ tasks show web</span>
+<span class="t-cyan">ID:</span>        20260927-182033-web
+<span class="t-cyan">Título:</span>    La web de trackertast
+<span class="t-cyan">Estado:</span>    ABIERTA
+<span class="t-cyan">Prioridad:</span> 80
+<span class="t-cyan">Ruta:</span>      tareas/20260927-182033-web/TAREA.md</code></pre>
+  </div>
+</section>
+
+<section class="capitulo envoltura" aria-labelledby="t-recorrido-60s">
+  <div class="capitulo-cabeza">
+    <p class="ceja pixel">en marcha</p>
+    <h2 id="t-recorrido-60s">Recorrido de 60 segundos</h2>
+    <p class="bajada">
+      Seis comandos esenciales para inicializar, crear, documentar, listar, inspeccionar y cerrar tareas,
+      con salidas reales.
+    </p>
+  </div>
+
+  <div class="paso-60s">
+    <div class="paso-60s-cabeza">
+      <span class="lampara verde">1</span>
+      <h3>Inicializar el repositorio</h3>
+    </div>
+    <p>Crea el directorio <code>tareas/</code> con su archivo explicativo <code>README.md</code>.</p>
+    <div class="terminal">
+      <div class="terminal-barra pixel"><span>tasks init</span></div>
+      <pre><code>$ tasks init
+Tracker de tareas inicializado en ./tareas</code></pre>
+    </div>
+  </div>
+
+  <div class="paso-60s">
+    <div class="paso-60s-cabeza">
+      <span class="lampara verde">2</span>
+      <h3>Crear una tarea</h3>
+    </div>
+    <p>Crea una nueva carpeta con su plantilla <code>TAREA.md</code>, metadatos y sufijo determinista.</p>
+    <div class="terminal">
+      <div class="terminal-barra pixel"><span>tasks new</span></div>
+      <pre><code>$ tasks new "Investigar defecto en sensor" --etiqueta sensor --prioridad 70 --sufijo sensor
+Tarea creada: 20260927-120000-sensor
+Ruta: ./tareas/20260927-120000-sensor/TAREA.md</code></pre>
+    </div>
+  </div>
+
+  <div class="paso-60s">
+    <div class="paso-60s-cabeza">
+      <span class="lampara verde">3</span>
+      <h3>Asentar una nota de avance</h3>
+    </div>
+    <p>Agrega notas de progreso fechadas en UTC de forma atómica en el cuerpo de la tarea.</p>
+    <div class="terminal">
+      <div class="terminal-barra pixel"><span>tasks note</span></div>
+      <pre><code>$ tasks note sensor "Medición preliminar en banco de pruebas"
+Nota agregada a la tarea 20260927-120000-sensor
+Documento: ./tareas/20260927-120000-sensor/TAREA.md</code></pre>
+    </div>
+  </div>
+
+  <div class="paso-60s">
+    <div class="paso-60s-cabeza">
+      <span class="lampara verde">4</span>
+      <h3>Listar tareas abiertas</h3>
+    </div>
+    <p>Muestra las tareas con su ID, estado, prioridad y etiquetas, ordenadas dinámicamente.</p>
+    <div class="terminal">
+      <div class="terminal-barra pixel"><span>tasks list</span></div>
+      <pre><code>$ tasks list
+20260927-120000-sensor ABIERTA P70 [sensor] Investigar defecto en sensor</code></pre>
+    </div>
+  </div>
+
+  <div class="paso-60s">
+    <div class="paso-60s-cabeza">
+      <span class="lampara verde">5</span>
+      <h3>Inspeccionar el contexto completo</h3>
+    </div>
+    <p>Lee el estado, metadatos y todas las notas acumuladas para retomar el trabajo sin fricción.</p>
+    <div class="terminal">
+      <div class="terminal-barra pixel"><span>tasks show</span></div>
+      <pre><code>$ tasks show sensor
+ID:        20260927-120000-sensor
+Título:    Investigar defecto en sensor
+Estado:    ABIERTA
+Prioridad: 70
+Etiquetas: sensor
+Ruta:      ./tareas/20260927-120000-sensor/TAREA.md
+
+(sin descripción adicional)</code></pre>
+    </div>
+  </div>
+
+  <div class="paso-60s">
+    <div class="paso-60s-cabeza">
+      <span class="lampara verde">6</span>
+      <h3>Cerrar la tarea</h3>
+    </div>
+    <p>Actualiza el estado a <code>CERRADA</code> mediante reemplazo atómico, preservando el resto del archivo.</p>
+    <div class="terminal">
+      <div class="terminal-barra pixel"><span>tasks close</span></div>
+      <pre><code>$ tasks close sensor
+Tarea cerrada: 20260927-120000-sensor</code></pre>
+    </div>
+  </div>
+</section>
+
+<section class="capitulo envoltura" aria-labelledby="t-principios">
+  <div class="capitulo-cabeza">
+    <p class="ceja pixel">arquitectura</p>
+    <h2 id="t-principios">Diseñado para la colaboración real</h2>
+  </div>
+  <div class="tarjetas-3">
+    <div class="tarjeta">
+      <span class="lampara ambar">Markdown</span>
+      <strong>La tarea es la verdad</strong>
+      <p>
+        Sin servicios en la nube ni bases de datos desconectadas. Clonás el repositorio y tenés todas las tareas,
+        sus notas y sus adjuntos locales listos para leer con cualquier editor.
+      </p>
+    </div>
+    <div class="tarjeta">
+      <span class="lampara verde">Relevo</span>
+      <strong>Entre personas y agentes</strong>
+      <p>
+        El contexto no se pierde cuando se reinicia una sesión de chat o se llena la ventana de un modelo.
+        El agente lee <code>tasks show</code> y antes de terminar deja anotado el próximo paso con <code>tasks note</code>.
+      </p>
+    </div>
+    <div class="tarjeta">
+      <span class="lampara cyan">Git</span>
+      <strong>Auditoría y trazabilidad</strong>
+      <p>
+        Los commits nombran la tarea (<code>&lt;ID&gt;: …</code>) y <code>tasks follow</code> audita la cobertura.
+        Además, <code>tasks facts</code> emite evidencia estructurada para validar contra políticas de Oracle.
+      </p>
+    </div>
+  </div>
+</section>
+
+<section class="capitulo envoltura" aria-labelledby="t-recorridos">
+  <div class="capitulo-cabeza">
+    <p class="ceja pixel">documentación</p>
+    <h2 id="t-recorridos">Por dónde seguir</h2>
+  </div>
+  <div class="recorridos">
+    <a class="recorrido" href="guia.html">
+      <span class="pixel">paso a paso</span>
+      <strong>Guía completa</strong>
+      <span>Recorrido con consultas TQL, adjuntos locales, referencias cruzadas y grafo en DOT.</span>
+    </a>
+    <a class="recorrido" href="agentes.html">
+      <span class="pixel">agentes</span>
+      <strong>Para agentes</strong>
+      <span>El protocolo de relevo entre sesiones, ejemplo de AGENTS.md y convención de commits.</span>
+    </a>
+    <a class="recorrido" href="oracle.html">
+      <span class="pixel">auditoría</span>
+      <strong>Con Oracle</strong>
+      <span>Exportación con tasks facts y evaluación contra el catálogo de seguimiento-tareas.</span>
+    </a>
+    <a class="recorrido" href="referencia.html">
+      <span class="pixel">cli</span>
+      <strong>Referencia de comandos</strong>
+      <span>Todos los verbos canónicos, sus opciones detalladas y sus alias en español.</span>
+    </a>
+  </div>
+</section>
+
+</main>
+
+<footer class="pie envoltura">
+  <img src="assets/emblema.svg" alt="" width="28" height="28">
+  <span>trackertast 0.1.0</span>
+  <span>MIT · Python 3.11 o posterior · cero dependencias</span>
+  <a href="https://github.com/Segtem/trackertast" rel="noopener">GitHub</a>
+  <a href="guia.html">Guía</a>
+  <a href="agentes.html">Para agentes</a>
+  <a href="oracle.html">Con Oracle</a>
+  <a href="referencia.html">Referencia</a>
+</footer>
+
+</body>
+</html>

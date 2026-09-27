@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>El relevo entre sesiones: personas y agentes — trackertast</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&family=Silkscreen&display=swap">
+<link rel="stylesheet" href="./assets/sitio.css">
+<link rel="icon" href="./assets/emblema.svg" type="image/svg+xml">
+</head>
+<body class="doc">
+<a class="saltar" href="#contenido">Saltar al contenido</a>
+<header class="barra">
+  <a class="marca" href="./"><img src="./assets/emblema.svg" alt="" width="28" height="28"> trackertast</a>
+  <nav aria-label="Principal">
+    <a href="./">Inicio</a>
+    <a href="./guia.html">Guía</a>
+    <a href="./agentes.html">Para agentes</a>
+    <a href="./oracle.html">Con Oracle</a>
+    <a href="./referencia.html">Referencia</a>
+    <a href="https://github.com/Segtem/trackertast" rel="noopener">GitHub</a>
+  </nav>
+</header>
+<div class="doc-rejilla">
+  <details class="menu" open>
+    <summary>Documentación</summary>
+    <nav aria-label="Documentación"><p class="menu-grupo">Empezar</p><ul><li><a href="guia.html">Guía paso a paso</a></li></ul><p class="menu-grupo">Uso e integración</p><ul><li><a href="agentes.html" aria-current=page>Para agentes</a></li><li><a href="oracle.html">Con Oracle</a></li></ul><p class="menu-grupo">Referencia</p><ul><li><a href="referencia.html">Referencia del CLI</a></li><li><a href="tareas.html">Especificación y contrato</a></li></ul></nav>
+  </details>
+  <main id="contenido" class="prosa">
+<h1 id="el-relevo-entre-sesiones-personas-y-agentes">El relevo entre sesiones: personas y agentes<a class="ancla" href="#el-relevo-entre-sesiones-personas-y-agentes" aria-label="Enlace a esta sección">#</a></h1>
+<p>En proyectos donde colaboran personas y modelos de lenguaje (o agentes autónomos), el mayor riesgo no es escribir código incorrecto, sino <strong>perder el contexto de trabajo entre sesiones</strong>.</p>
+<p>Las ventanas de contexto se llenan, las sesiones de terminal o chat se reinician y los subagentes se destruyen al finalizar su turno. Si las notas, decisiones intermedias y próximos pasos quedan atrapados en el chat o en servicios externos, la siguiente sesión arranca a ciegas.</p>
+<p>En <strong>trackertast</strong>, la tarea es la <strong>fuente de verdad</strong> compartida: vive dentro del repositorio en archivos Markdown versionados con Git.</p>
+<h2 id="1-la-tarea-como-fuente-de-verdad">1. La tarea como fuente de verdad<a class="ancla" href="#1-la-tarea-como-fuente-de-verdad" aria-label="Enlace a esta sección">#</a></h2>
+<p>Cada tarea reside en su propio directorio dentro de <code>tareas/</code> (por ejemplo, <code>tareas/20260927-120000-sensor/</code>), compuesta por:</p>
+<ul><li><strong><code>TAREA.md</code></strong>: contiene el título, los metadatos estructurados (<code>ESTADO</code>, <code>PRIORIDAD</code>, <code>ETIQUETAS</code>) y el cuerpo libre en Markdown con notas fechadas en UTC.</li><li><strong>Adjuntos locales</strong>: capturas, registros, volcados de pruebas, especificaciones o scripts auxiliares.</li></ul>
+<p>Tanto un desarrollador humano con su editor habitual como un agente conectado mediante CLI o MCP leen y escriben exactamente los mismos archivos, sin bases de datos intermedias ni APIs propietarias.</p>
+<h2 id="2-el-ciclo-de-relevo">2. El ciclo de relevo<a class="ancla" href="#2-el-ciclo-de-relevo" aria-label="Enlace a esta sección">#</a></h2>
+<p>El flujo para tomar una tarea, avanzar y entregar el testigo consta de cuatro momentos:</p>
+<h3 id="retomar-con-tasks-show">Retomar con <code>tasks show</code><a class="ancla" href="#retomar-con-tasks-show" aria-label="Enlace a esta sección">#</a></h3>
+<p>Al iniciar una sesión, el agente o la persona consulta la tarea:</p>
+<pre data-lenguaje="bash"><code>tasks show sensor</code></pre>
+<p>Esto imprime el título, estado, prioridad, etiquetas, ruta al documento y todas las notas registradas en orden cronológico. Con <code>--json</code>, devuelve la estructura completa para procesamiento automatizado.</p>
+<h3 id="documentar-descubrimientos-con-tasks-note">Documentar descubrimientos con <code>tasks note</code><a class="ancla" href="#documentar-descubrimientos-con-tasks-note" aria-label="Enlace a esta sección">#</a></h3>
+<p>A medida que se investiga un defecto o se implementa una función, las decisiones no obvias se registran de inmediato:</p>
+<pre data-lenguaje="bash"><code>tasks note sensor &quot;El sensor responde con timeout cuando la frecuencia supera los 500 Hz&quot;</code></pre>
+<p>Si hay una referencia técnica externa, se adjunta con <code>--url</code> y <code>--marca</code>:</p>
+<pre data-lenguaje="bash"><code>tasks note sensor &quot;Documentación de registros de hardware&quot; --url &quot;https://hardware.ejemplo.com/doc&quot; --marca &quot;Sección 4.2&quot;</code></pre>
+<h3 id="dejar-el-próximo-paso-antes-de-cerrar-la-sesión">Dejar el próximo paso antes de cerrar la sesión<a class="ancla" href="#dejar-el-próximo-paso-antes-de-cerrar-la-sesión" aria-label="Enlace a esta sección">#</a></h3>
+<p>Antes de agotar la ventana de contexto o pausar el trabajo, la regla fundamental de relevo es <strong>declarar el próximo paso exacto</strong>:</p>
+<pre data-lenguaje="bash"><code>tasks note sensor &quot;PRÓXIMO PASO: ajustar el divisor de reloj en drivers/spi.c y verificar con tests/test_sensor.py&quot;</code></pre>
+<p>Cuando otra sesión o agente tome la tarea, no necesitará releer todo el árbol de código para deducir qué faltaba hacer: el próximo paso está escrito en el último párrafo de <code>TAREA.md</code>.</p>
+<h3 id="adjuntar-evidencia-con-tasks-attach">Adjuntar evidencia con <code>tasks attach</code><a class="ancla" href="#adjuntar-evidencia-con-tasks-attach" aria-label="Enlace a esta sección">#</a></h3>
+<p>Si se generó un archivo de log, una captura de pantalla o un informe de perfilado, se incorpora a la carpeta de la tarea:</p>
+<pre data-lenguaje="bash"><code>tasks attach sensor volcado_memoria.bin</code></pre>
+<p>Esto copia el archivo a la carpeta de la tarea y agrega un enlace Markdown en <code>TAREA.md</code>.</p>
+<h3 id="cerrar-la-tarea-con-tasks-close">Cerrar la tarea con <code>tasks close</code><a class="ancla" href="#cerrar-la-tarea-con-tasks-close" aria-label="Enlace a esta sección">#</a></h3>
+<p>Al finalizar el trabajo:</p>
+<pre data-lenguaje="bash"><code>tasks close sensor</code></pre>
+<p>El estado pasa atómicamente a <code>CERRADA</code>, preservando intactos todos los metadatos y el cuerpo Markdown.</p>
+<h2 id="3-ejemplo-de-agentsmd-para-tu-repositorio">3. Ejemplo de <code>AGENTS.md</code> para tu repositorio<a class="ancla" href="#3-ejemplo-de-agentsmd-para-tu-repositorio" aria-label="Enlace a esta sección">#</a></h2>
+<p>Para que cualquier agente de codificación (Claude Code, Gemini CLI, Cursor, Aider, Devin, etc.) adopte este protocolo en tu proyecto, podés incluir un archivo <code>AGENTS.md</code> en la raíz de tu repositorio con las siguientes instrucciones:</p>
+<pre data-lenguaje="markdown"><code># Protocolo de trabajo para agentes
+
+Este repositorio utiliza **trackertast** (`tasks`) para el seguimiento de tareas locales en Markdown.
+
+## Reglas de operación
+
+1. **Revisar tareas abiertas**:
+   Antes de comenzar cualquier trabajo, listá las tareas abiertas para ubicar tu objetivo:</code></pre>
+<p>tasks list</p>
+<pre><code>
+2. **Cargar contexto con `tasks show`**:
+Leé la tarea asignada antes de modificar código:</code></pre>
+<p>tasks show &lt;id_o_sufijo&gt;</p>
+<pre><code>Revisá especialmente las últimas notas para identificar el estado actual y el próximo paso.
+
+3. **Registrar avances y bloqueos**:
+No guardes hallazgos sólo en tu memoria conversacional. Usá:</code></pre>
+<p>tasks note &lt;id_o_sufijo&gt; "Descripción del hallazgo o cambio de plan"</p>
+<pre><code>
+4. **Dejar siempre el próximo paso**:
+Si no podés completar la tarea en esta sesión o necesitás intervención externa, agregá una nota explícita con el prefijo `PRÓXIMO PASO:`.
+
+5. **Convención de commits**:
+- Todo commit asociado a una tarea debe comenzar con su ID canónico: `&lt;ID&gt;: resumen del cambio`
+- Ejemplo: `20260927-120000-sensor: calibrar divisor de reloj en SPI`
+- El commit final que cierra la tarea debe ser exactamente: `&lt;ID&gt;: done`
+
+6. **Cerrar la tarea al terminar**:
+Cuando los cambios estén implementados y verificados:</code></pre>
+<p>tasks close &lt;id_o_sufijo&gt; git add tareas/ git commit -m "&lt;ID&gt;: done"</p>
+<pre><code></code></pre>
+<h2 id="4-por-qué-los-commits-nombran-la-tarea">4. Por qué los commits nombran la tarea<a class="ancla" href="#4-por-qué-los-commits-nombran-la-tarea" aria-label="Enlace a esta sección">#</a></h2>
+<p>En Git, el historial de commits suele divorciarse del sistema de incidencias: si el tracker está en una plataforma web y el repositorio se migra, los números <code>#123</code> pierden significado.</p>
+<p>En <code>trackertast</code>, el identificador de la tarea es unívoco y atemporal (<code>YYYYMMDD-HHMMSS[-sufijo]</code>). Al usar la convención:</p>
+<pre data-lenguaje="text"><code>20260927-120000-sensor: calibrar divisor de reloj en SPI</code></pre>
+<p>se establece un vínculo bidireccional permanente:</p>
+<ul><li>Desde el commit en <code>git log</code>, se llega de inmediato a la carpeta <code>tareas/20260927-120000-sensor/TAREA.md</code> y a toda su evidencia histórica.</li><li>Desde la tarea, <code>tasks follow</code> y <code>tasks refs</code> pueden rastrear qué commits tocaron ese identificador.</li></ul>
+<p>Y al finalizar, el commit canónico de cierre:</p>
+<pre data-lenguaje="text"><code>20260927-120000-sensor: done</code></pre>
+<p>registra de forma inmutable en el árbol de Git el commit exacto donde se dio por concluido el trabajo.</p>
+    <p class="fuente">Esta página se genera desde <a href="https://github.com/Segtem/trackertast/blob/main/docs/agentes.md" rel="noopener">docs/agentes.md</a>.</p>
+  </main>
+  <aside class="en-esta-pagina" aria-label="En esta página">
+    <p class='menu-grupo'>En esta página</p><ul><li class="n2"><a href="#1-la-tarea-como-fuente-de-verdad">1. La tarea como fuente de verdad</a></li><li class="n2"><a href="#2-el-ciclo-de-relevo">2. El ciclo de relevo</a></li><li class="n3"><a href="#retomar-con-tasks-show">Retomar con tasks show</a></li><li class="n3"><a href="#documentar-descubrimientos-con-tasks-note">Documentar descubrimientos con tasks note</a></li><li class="n3"><a href="#dejar-el-próximo-paso-antes-de-cerrar-la-sesión">Dejar el próximo paso antes de cerrar la sesión</a></li><li class="n3"><a href="#adjuntar-evidencia-con-tasks-attach">Adjuntar evidencia con tasks attach</a></li><li class="n3"><a href="#cerrar-la-tarea-con-tasks-close">Cerrar la tarea con tasks close</a></li><li class="n2"><a href="#3-ejemplo-de-agentsmd-para-tu-repositorio">3. Ejemplo de AGENTS.md para tu repositorio</a></li><li class="n2"><a href="#4-por-qué-los-commits-nombran-la-tarea">4. Por qué los commits nombran la tarea</a></li></ul>
+  </aside>
+</div>
+<script>
+if (matchMedia("(max-width: 760px)").matches) {
+  const m = document.querySelector(".menu");
+  if (m) m.removeAttribute("open");
+}
+document.querySelectorAll(".prosa pre:not(.salida)").forEach((pre) => {
+  const b = document.createElement("button");
+  b.type = "button"; b.className = "copiar"; b.textContent = "Copiar";
+  b.addEventListener("click", () => {
+    navigator.clipboard.writeText(pre.querySelector("code").innerText)
+      .then(() => { b.textContent = "Copiado"; setTimeout(() => { b.textContent = "Copiar"; }, 1500); })
+      .catch(() => { const r = document.createRange(); r.selectNodeContents(pre); const s = getSelection(); s.removeAllRanges(); s.addRange(r); });
+  });
+  pre.append(b);
+});
+</script>
+</body>
+</html>

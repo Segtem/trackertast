@@ -2,6 +2,8 @@
 
 Tracker local de tareas en archivos Markdown dentro del repositorio, pensado para que personas y agentes se pasen el trabajo sin bases de datos, servicios externos ni dependencias de runtime.
 
+Web y documentación: https://segtem.github.io/trackertast/
+
 Cada tarea vive en su propia carpeta bajo `tareas/`, con un archivo central `TAREA.md` y cualquier adjunto local (capturas, notas, esquemas, volcados de evidencia). Git guarda la historia.
 
 ## Instalación

@@ -1,0 +1,126 @@
+/* trackertast — portada.css. Usa los tokens de sitio.css. */
+
+.envoltura { max-width: 1180px; margin: 0 auto; padding-inline: var(--gutter); }
+.version { font-size: 11px; color: var(--gris); font-weight: 400; margin-left: 2px; }
+.ceja { color: var(--acento); margin: 0 0 12px; font-weight: 600; }
+.lectura { max-width: var(--ancho-prosa); font-family: var(--serif); font-size: 18px; line-height: 1.7; }
+.lectura p { margin: 0 0 16px; }
+
+/* ---------------------------------------------------------------- hero */
+.hero {
+  display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(24px, 4.5vw, 64px);
+  align-items: center; padding-block: clamp(36px, 7vw, 84px) clamp(36px, 5vw, 64px);
+}
+.hero h1 {
+  font-size: clamp(34px, 5.5vw, 64px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.05;
+  margin: 0 0 20px;
+}
+.bajada {
+  font-family: var(--serif); font-size: clamp(17px, 1.8vw, 20px); line-height: 1.6; color: var(--tinta-2);
+  margin: 0 0 26px; max-width: 36em;
+}
+.acciones { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 22px; }
+.boton {
+  display: inline-flex; align-items: center; padding: 12px 20px; border-radius: 6px; font-weight: 700;
+  font-size: 15px; background: var(--acento); color: var(--sobre-acento); text-decoration: none;
+}
+.boton:hover { filter: brightness(1.1); }
+.boton.secundario { background: transparent; color: var(--tinta); box-shadow: inset 0 0 0 1.5px var(--linea); }
+.boton.secundario:hover { box-shadow: inset 0 0 0 1.5px var(--tinta); }
+.instalar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 0; font-size: 14px; color: var(--gris);
+}
+.instalar code {
+  background: var(--papel-2); color: var(--tinta); padding: 6px 10px; border-radius: 4px; font-size: 14px;
+}
+
+/* ---------------------------------------------------------------- terminales y bloques */
+.terminal {
+  border-radius: 8px; overflow: hidden; border: 1px solid var(--linea); background: var(--codigo-fondo);
+  margin-block: 20px;
+}
+.terminal-barra {
+  margin: 0; padding: 8px 14px; background: var(--papel-2); color: var(--gris); font-size: 11px;
+  display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--linea);
+}
+.terminal pre {
+  margin: 0; padding: 16px 18px; background: var(--codigo-fondo); color: var(--codigo-tinta);
+  overflow-x: auto; font-size: 13.5px; line-height: 1.55; white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.t-verde { color: #86EFAC; font-weight: 600; }
+.t-cyan { color: #5EEAD4; }
+.t-rojo { color: #FF8A7E; }
+.t-gris { color: #8C9E96; }
+
+/* ---------------------------------------------------------------- capítulos */
+.capitulo { padding-block: clamp(40px, 7vw, 84px); border-top: 1px solid var(--linea); }
+.capitulo-cabeza { max-width: 44rem; margin-bottom: 26px; }
+.capitulo h2 { font-size: clamp(26px, 3.4vw, 38px); font-weight: 800; letter-spacing: -0.025em; margin: 0; }
+.dos-columnas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 44px; max-width: none; }
+.dos-escenas {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start;
+}
+.dos-escenas.invertido > :first-child { order: 2; }
+
+/* ---------------------------------------------------------------- recorrido 60s */
+.paso-60s {
+  margin-bottom: 32px; border: 1px solid var(--linea); border-radius: 8px; background: var(--papel);
+  padding: 20px 22px;
+}
+.paso-60s-cabeza { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
+.paso-60s-cabeza h3 { margin: 0; font-size: 20px; font-weight: 700; }
+.paso-60s p { margin: 0 0 12px; font-family: var(--serif); font-size: 16.5px; color: var(--tinta-2); }
+.paso-60s .terminal { margin: 0; }
+
+/* ---------------------------------------------------------------- tarjetas de características */
+.tarjetas-3 {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 24px;
+}
+.tarjeta {
+  padding: 22px 20px; border: 1px solid var(--linea); border-radius: 8px; background: var(--papel);
+  display: grid; gap: 8px; align-content: start;
+}
+.tarjeta strong { font-size: 18px; color: var(--tinta); }
+.tarjeta p { font-family: var(--serif); font-size: 15.5px; color: var(--tinta-2); margin: 0; line-height: 1.55; }
+
+/* ---------------------------------------------------------------- recorridos (por dónde seguir) */
+.recorridos { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.recorrido {
+  display: grid; gap: 6px; align-content: start; padding: 20px; border: 1px solid var(--linea); border-radius: 8px;
+  color: var(--tinta); text-decoration: none; background: var(--papel); transition: border-color 0.15s, transform 0.15s;
+}
+.recorrido:hover { border-color: var(--acento); transform: translateY(-2px); }
+.recorrido .pixel { color: var(--acento); font-size: 11px; }
+.recorrido strong { font-size: 18px; }
+.recorrido span:last-child { color: var(--tinta-2); font-size: 14.5px; line-height: 1.5; font-family: var(--serif); }
+
+/* ---------------------------------------------------------------- pie */
+.pie {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 12px 24px; padding-block: 28px 44px;
+  border-top: 1px solid var(--linea); color: var(--gris); font-size: 14px;
+}
+.pie img, .pie svg { image-rendering: pixelated; flex-shrink: 0; }
+.pie a { color: var(--tinta-2); }
+.pie a:hover { color: var(--acento); }
+
+/* ---------------------------------------------------------------- responsive */
+@media (max-width: 900px) {
+  .hero, .dos-escenas { grid-template-columns: minmax(0, 1fr); }
+  .dos-escenas.invertido > :first-child { order: 0; }
+  .tarjetas-3 { grid-template-columns: minmax(0, 1fr); }
+  .recorridos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .dos-columnas { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 560px) {
+  .recorridos { grid-template-columns: minmax(0, 1fr); }
+  .paso-60s { padding: 14px 16px; }
+}
+
+@media (max-width: 440px) {
+  :root { --gutter: 14px; }
+  .hero { padding-block: 28px 36px; }
+  .acciones { flex-direction: column; align-items: stretch; }
+  .boton { justify-content: center; }
+  .terminal pre { padding: 12px 14px; font-size: 12.5px; }
+}
