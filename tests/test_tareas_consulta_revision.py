@@ -13,7 +13,7 @@ import tempfile
 import unittest
 
 RAIZ = Path(__file__).resolve().parents[1]
-CLI = RAIZ / "tools/cli.py"
+CLI = RAIZ / "trackertast/cli.py"
 
 A = "20260915-100000-a"   # P90 [bug, ui]
 B = "20260915-100001-b"   # P50 [bug]
@@ -43,7 +43,7 @@ class TrackerTemporal(unittest.TestCase):
 
     def cli(self, *args, cwd=None, proyecto=True):
         extra = ("--proyecto", str(self.raiz)) if proyecto else ()
-        return subprocess.run([sys.executable, "-B", str(CLI), "tarea", *args, *extra],
+        return subprocess.run([sys.executable, "-B", str(CLI), *args, *extra],
                               env=self.env, capture_output=True, text=True, timeout=60,
                               cwd=cwd or self.temporal)
 
@@ -127,7 +127,7 @@ class ErroresTests(TrackerTemporal):
     def test_el_error_de_tipo_no_espera_a_leer_tareas(self):
         vacio = self.temporal / "sin-tracker"
         vacio.mkdir()
-        p = subprocess.run([sys.executable, "-B", str(CLI), "tarea", "listar", "prioridad",
+        p = subprocess.run([sys.executable, "-B", str(CLI), "listar", "prioridad",
                             "--proyecto", str(vacio)],
                            env=self.env, capture_output=True, text=True, timeout=60)
         self.assertEqual(p.returncode, 2, p.stdout + p.stderr)
@@ -138,13 +138,13 @@ class ExplicarYOrdenTests(TrackerTemporal):
     def test_explicar_no_lista_ni_exige_tracker(self):
         vacio = self.temporal / "sin-tracker"
         vacio.mkdir()
-        p = subprocess.run([sys.executable, "-B", str(CLI), "tarea", "listar", ":bug", "y", "no",
+        p = subprocess.run([sys.executable, "-B", str(CLI), "listar", ":bug", "y", "no",
                             ":ui", "--explicar", "--proyecto", str(vacio)],
                            env=self.env, capture_output=True, text=True, timeout=60)
         self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
         self.assertIn("bug", p.stdout)
         self.assertNotIn(A, p.stdout)
-        otra = subprocess.run([sys.executable, "-B", str(CLI), "tarea", "listar", ":bug", "y", "no",
+        otra = subprocess.run([sys.executable, "-B", str(CLI), "listar", ":bug", "y", "no",
                                ":ui", "--explicar", "--proyecto", str(vacio)],
                               env=self.env, capture_output=True, text=True, timeout=60)
         self.assertEqual(otra.stdout, p.stdout)
@@ -214,13 +214,13 @@ class ReferenciasEInitTests(TrackerTemporal):
     def test_init_sin_readme(self):
         nuevo = self.temporal / "nuevo"
         nuevo.mkdir()
-        p = subprocess.run([sys.executable, "-B", str(CLI), "tarea", "init", "--sin-readme",
+        p = subprocess.run([sys.executable, "-B", str(CLI), "init", "--sin-readme",
                             "--proyecto", str(nuevo)],
                            env=self.env, capture_output=True, text=True, timeout=60)
         self.assertEqual(p.returncode, 0, p.stdout + p.stderr)
         self.assertTrue((nuevo / "tareas").is_dir())
         self.assertFalse((nuevo / "tareas" / "README.md").exists())
-        r = subprocess.run([sys.executable, "-B", str(CLI), "tarea", "revisar", "--proyecto", str(nuevo)],
+        r = subprocess.run([sys.executable, "-B", str(CLI), "revisar", "--proyecto", str(nuevo)],
                            env=self.env, capture_output=True, text=True, timeout=60)
         self.assertEqual(r.returncode, 0, r.stdout + r.stderr)
 
@@ -240,12 +240,12 @@ class RevisionDeLaEntregaTests(TrackerTemporal):
                 self.assertIn("^", p.stderr)
 
     def test_el_id_de_la_consulta_es_el_del_tracker(self):
-        from tools import tareas, tareas_consulta
+        from trackertast import tasks as tareas, query as tareas_consulta
         self.assertEqual(tareas_consulta.ID_COMPLETO_RE.pattern, tareas.ID_COMPLETO_RE.pattern)
 
     def test_explicar_nombra_cada_primaria(self):
         """Sobrevivientes de mutación: el `explicar` de cinco nodos no lo fijaba ningún test."""
-        from tools.tareas_consulta import compilar
+        from trackertast.query import compilar
         forma = compilar("cualquiera y etiquetada o :Bug y no 20260915-023750-tql o prioridad desde 5")
         self.assertEqual(
             forma.explicar().splitlines()[-1],
@@ -259,7 +259,7 @@ class RevisionDeLaEntregaTests(TrackerTemporal):
         """Sobreviviente de mutación: por el CLI un `return None` también sale 0."""
         import contextlib
         import io
-        from tools import tareas
+        from trackertast import tasks as tareas
         with contextlib.redirect_stdout(io.StringIO()) as salida:
             self.assertEqual(tareas.cmd_listar([], [":a", "--explicar"]), 0)
         self.assertIn("COMPILADO:", salida.getvalue())

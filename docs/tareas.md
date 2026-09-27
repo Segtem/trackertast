@@ -1,6 +1,6 @@
-# 12 · Tareas y contexto de trabajo en Git
+# Tareas y contexto de trabajo en Git
 
-Contrato, especificación y guía de uso del tracker local de tareas de Oracle.
+Contrato, especificación y guía de uso del tracker local de tareas trackertast (tasks).
 
 ## 1. El modelo
 
@@ -37,7 +37,7 @@ El tracker determina la raíz de trabajo aplicando el siguiente orden de precede
    - **Límite Git**: la búsqueda automática se detiene inmediatamente si encuentra un límite de repositorio Git (`.git`) y no continúa hacia directorios superiores, evitando saltar accidentalmente al tracker de un repositorio padre o contenedor.
    - Si no se encuentra `tareas/` antes o al alcanzar el límite Git, la resolución falla informando que no hay tracker inicializado.
 
-El comando `oracle tarea init [ruta] [--sin-readme]` inicializa el tracker creando el directorio `tareas/` (y opcionalmente `tareas/README.md`, salvo que se especifique `--sin-readme`) en la ruta indicada o en el directorio actual. No exige la presencia de `catalogos/` ni `oracle.json`.
+El comando `tasks init [ruta] [--sin-readme]` inicializa el tracker creando el directorio `tareas/` (y opcionalmente `tareas/README.md`, salvo que se especifique `--sin-readme`) en la ruta indicada o en el directorio actual. No exige la presencia de `catalogos/` ni `oracle.json`.
 
 ## 3. Identidad de tareas y resolución de colisiones
 
@@ -98,27 +98,27 @@ Los comandos de modificación de estado (`cerrar`, `reabrir`):
 - La escritura se realiza mediante reemplazo atómico (escribiendo a un archivo temporal contiguo y reemplazando con `os.replace`), evitando archivos a medio escribir ante interrupciones.
 - La operación es idempotente: cerrar una tarea ya cerrada o reabrir una ya abierta no produce cambios y sale con código 0.
 
-## 5. Comandos del CLI (`oracle tarea`)
+## 5. Comandos del CLI (`tasks`)
 
 | Comando | Argumentos / Opciones | Descripción |
 |---|---|---|
-| `oracle tarea init` | `[ruta] [--sin-readme]` | Inicializa `tareas/` y opcionalmente `tareas/README.md`. |
-| `oracle tarea nueva` | `<titulo> [--etiqueta/-e <etiqueta>]... [--prioridad <n>] [--sufijo <sufijo>] [--json]` | Crea una nueva tarea y devuelve su ID y ruta. |
-| `oracle tarea listar` / `ls` | `[consulta] [--cerradas] [--todas] [--etiqueta/-e <e>] [--texto/-t <s>] [--por-id] [--invertir] [--explicar] [--json]` | Lista tareas abiertas (o cerradas/todas). Admite expresiones TQL, orden por ID descendente e inversión. |
-| `oracle tarea ver` | `<id> [--ruta] [--json]` | Muestra detalles de la tarea. Admite prefijos y sufijos exactos inequívocos. Con `--ruta` imprime solo la ruta al archivo. |
-| `oracle tarea cerrar` | `<id>` | Cambia el estado a `CERRADA` de forma atómica y preserva el resto. |
-| `oracle tarea reabrir` | `<id>` | Cambia el estado a `ABIERTA` de forma atómica y preserva el resto. |
-| `oracle tarea revisar` | `[--json]` | Audita la integridad del directorio tareas/: detecta carpetas sin `TAREA.md`, metadatos inválidos y omisiones. |
-| `oracle tarea anotar` | `<id> [texto] [--url <url>] [--marca <marca>] [--json]` | Agrega una nota, enlace web o marca al cuerpo de la tarea sin descargar contenido remoto. |
-| `oracle tarea adjuntar` | `<id> <archivo> [--permitir-grande] [--json]` | Copia un archivo regular al directorio de la tarea y lo vincula en `TAREA.md`. |
-| `oracle tarea buscar` | `<texto> [--json]` | Búsqueda literal en documentos y notas de texto del tracker (omite binarios y archivos > 2 MiB). |
-| `oracle tarea referencias` | `[id] [--json]` | Busca menciones textuales del ID canónico en tareas y código fuente. Sin ID, deduce la tarea desde el directorio actual. |
-| `oracle tarea resumen` | `[--json]` | Reporta cantidades agregadas por estado y etiquetas a partir de registros válidos. |
-| `oracle tarea seguimiento` | `[opciones]` | Diagnóstico de seguimiento y cobertura de tareas y adjuntos en Git. |
-| `oracle tarea hechos` | `[--git] [--json]` | Emite evidencia relacional de tareas, inventario, referencias y omisiones en JSON. |
-| `oracle tarea etiquetar` | `<id>... --etiqueta <e> [--json]` | Agrega una o más etiquetas a tareas existentes de forma atómica. |
-| `oracle tarea desetiquetar` | `[<id>...] --etiqueta <e> [--consulta <tql>] [--cerradas] [--todas] [--json]` | Quita una o más etiquetas de tareas de forma atómica (por ID o por consulta TQL masiva). |
-| `oracle tarea grafo` | `[--json]` | Emite el grafo de referencias entre tareas en formato DOT o JSON. |
+| `tasks init` | `[ruta] [--sin-readme]` | Inicializa `tareas/` y opcionalmente `tareas/README.md`. |
+| `tasks nueva` | `<titulo> [--etiqueta/-e <etiqueta>]... [--prioridad <n>] [--sufijo <sufijo>] [--json]` | Crea una nueva tarea y devuelve su ID y ruta. |
+| `tasks listar` / `ls` | `[consulta] [--cerradas] [--todas] [--etiqueta/-e <e>] [--texto/-t <s>] [--por-id] [--invertir] [--explicar] [--json]` | Lista tareas abiertas (o cerradas/todas). Admite expresiones TQL, orden por ID descendente e inversión. |
+| `tasks ver` | `<id> [--ruta] [--json]` | Muestra detalles de la tarea. Admite prefijos y sufijos exactos inequívocos. Con `--ruta` imprime solo la ruta al archivo. |
+| `tasks cerrar` | `<id>` | Cambia el estado a `CERRADA` de forma atómica y preserva el resto. |
+| `tasks reabrir` | `<id>` | Cambia el estado a `ABIERTA` de forma atómica y preserva el resto. |
+| `tasks revisar` | `[--json]` | Audita la integridad del directorio tareas/: detecta carpetas sin `TAREA.md`, metadatos inválidos y omisiones. |
+| `tasks anotar` | `<id> [texto] [--url <url>] [--marca <marca>] [--json]` | Agrega una nota, enlace web o marca al cuerpo de la tarea sin descargar contenido remoto. |
+| `tasks adjuntar` | `<id> <archivo> [--permitir-grande] [--json]` | Copia un archivo regular al directorio de la tarea y lo vincula en `TAREA.md`. |
+| `tasks buscar` | `<texto> [--json]` | Búsqueda literal en documentos y notas de texto del tracker (omite binarios y archivos > 2 MiB). |
+| `tasks referencias` | `[id] [--json]` | Busca menciones textuales del ID canónico en tareas y código fuente. Sin ID, deduce la tarea desde el directorio actual. |
+| `tasks resumen` | `[--json]` | Reporta cantidades agregadas por estado y etiquetas a partir de registros válidos. |
+| `tasks seguimiento` | `[opciones]` | Diagnóstico de seguimiento y cobertura de tareas y adjuntos en Git. |
+| `tasks hechos` | `[--git] [--json]` | Emite evidencia relacional de tareas, inventario, referencias y omisiones en JSON. |
+| `tasks etiquetar` | `<id>... --etiqueta <e> [--json]` | Agrega una o más etiquetas a tareas existentes de forma atómica. |
+| `tasks desetiquetar` | `[<id>...] --etiqueta <e> [--consulta <tql>] [--cerradas] [--todas] [--json]` | Quita una o más etiquetas de tareas de forma atómica (por ID o por consulta TQL masiva). |
+| `tasks grafo` | `[--json]` | Emite el grafo de referencias entre tareas en formato DOT o JSON. |
 
 Todos los subcomandos aceptan `--proyecto <ruta>` para operar sobre un directorio explícito.
 
@@ -177,9 +177,9 @@ El seguimiento en Git no comprueba que haya un backup remoto o que los enlaces s
 
 ### Evidencia relacional del tracker (P3)
 
-El comando `oracle tarea hechos [--git] [--json] [--proyecto RUTA]` emite un objeto JSON relacional estructurado directamente a `stdout`, concebido para ser consumido por el evaluador de políticas de Oracle (`oracle juzgar --proyecto ejemplo/seguimiento-tareas --con <hechos.json>`), basado en `evaluar` y el catálogo efectivo.
+El comando `tasks hechos [--git] [--json] [--proyecto RUTA]` emite un objeto JSON relacional estructurado directamente a `stdout`, concebido para ser consumido por el evaluador de políticas de Oracle (`oracle juzgar --proyecto ejemplo/seguimiento-tareas --con <hechos.json>`), basado en `evaluar` y el catálogo efectivo.
 
-La salida no se escribe en el tracker ni en disco; se redirige típicamente mediante tuberías o redirección shell hacia un archivo fuera del árbol de tareas (`oracle tarea hechos > /tmp/hechos.json`).
+La salida no se escribe en el tracker ni en disco; se redirige típicamente mediante tuberías o redirección shell hacia un archivo fuera del árbol de tareas (`tasks hechos > /tmp/hechos.json`).
 
 El JSON relacional contiene siempre siete relaciones clave sin envoltorios adicionales:
 
@@ -281,10 +281,10 @@ con instrucciones en el README del ejemplo.
 
 ### Juzgar los hechos del tracker con `oracle juzgar`
 
-La evidencia emitida por `oracle tarea hechos` puede juzgarse directamente mediante el comando `oracle juzgar` (o su forma canónica `oracle proyecto juzgar`), pasando como proyecto el catálogo de políticas de seguimiento provisto en `ejemplo/seguimiento-tareas`:
+La evidencia emitida por `tasks hechos` puede juzgarse directamente mediante el comando `oracle juzgar` (o su forma canónica `oracle proyecto juzgar`), pasando como proyecto el catálogo de políticas de seguimiento provisto en `ejemplo/seguimiento-tareas`:
 
 ```bash
-oracle tarea hechos --git > hechos.json
+tasks hechos --git > hechos.json
 oracle juzgar --proyecto ejemplo/seguimiento-tareas --con hechos.json
 ```
 
@@ -337,11 +337,11 @@ oracle juzgar --proyecto ejemplo/seguimiento-tareas --con hechos.json --medida s
 
 ### Lenguaje de consultas de tareas (TQL)
 
-El comando `oracle tarea listar` admite una expresión posicional de consulta en lenguaje TQL (Task Query Language) con vocabulario en español para filtrar tareas de forma expresiva:
+El comando `tasks listar` admite una expresión posicional de consulta en lenguaje TQL (Task Query Language) con vocabulario en español para filtrar tareas de forma expresiva:
 
 ```bash
-oracle tarea listar ":bug y prioridad mayor 50"
-oracle tarea listar "no :ui o [:backend y prioridad desde 70]"
+tasks listar ":bug y prioridad mayor 50"
+tasks listar "no :ui o [:backend y prioridad desde 70]"
 ```
 
 #### Vocabulario y operadores
@@ -397,15 +397,15 @@ El puntero `^` se alinea exactamente con la columna del token conflictivo (conta
 
 #### Explicación de consultas (`--explicar`)
 
-La opción `--explicar` en `oracle tarea listar` compila la consulta, imprime en `stdout` la secuencia de tokens y la representación textual del árbol sintáctico compilado, y finaliza exitosamente con código 0:
+La opción `--explicar` en `tasks listar` compila la consulta, imprime en `stdout` la secuencia de tokens y la representación textual del árbol sintáctico compilado, y finaliza exitosamente con código 0:
 ```bash
-oracle tarea listar ":bug y prioridad mayor 50" --explicar
+tasks listar ":bug y prioridad mayor 50" --explicar
 ```
 No requiere la existencia del directorio `tareas/` ni la presencia de un tracker, ni lista tareas.
 
 ### Alineación dinámica en listados
 
-El comando `oracle tarea listar` (o su alias `ls`) calcula dinámicamente el ancho de cada columna en función del contenido real de las tareas a mostrar:
+El comando `tasks listar` (o su alias `ls`) calcula dinámicamente el ancho de cada columna en función del contenido real de las tareas a mostrar:
 - Las columnas de identificador, estado, prioridad y etiquetas se ajustan para que las tareas con sufijos largos o múltiples etiquetas no desfasen las líneas ni queden desalineadas.
 - La última columna visible de cada línea no agrega espacios en blanco sobrantes al final (`trailing whitespace`).
 - Si una tarea carece de etiquetas, la columna correspondiente se muestra vacía respetando el espaciado entre columnas.
@@ -419,19 +419,19 @@ El tracker admite un catálogo opcional de etiquetas y sus descripciones ubicado
   - Ejemplo con comas: `sensor, Mediciones y telemetría de hardware`
   - La descripción es opcional (puede estar vacía). Cada línea no vacía define una etiqueta (no hay líneas de comentario; una línea que empiece con `#` define una etiqueta `#algo`).
 - **Codificación y límites**: debe ser texto codificado estrictamente en UTF-8 y no superar los 2 MiB.
-- **Enlaces simbólicos**: no se admiten. Si `tareas/etiquetas` es un symlink, `oracle tarea revisar` falla con código 1; `oracle tarea resumen` emite un aviso por `stderr`, finaliza con código 0 y omite las descripciones.
+- **Enlaces simbólicos**: no se admiten. Si `tareas/etiquetas` es un symlink, `tasks revisar` falla con código 1; `tasks resumen` emite un aviso por `stderr`, finaliza con código 0 y omite las descripciones.
 - **Tratamiento de redefiniciones**:
-  - En `oracle tarea revisar`: una etiqueta redefinida en múltiples líneas se considera un defecto de integridad y aborta con código 1 emitiendo el mensaje `etiquetas:<línea>: etiqueta «...» redefinida`.
-  - En `oracle tarea resumen`: ante redefiniciones sucesivas, la última definición prevalece para documentar la etiqueta y la ejecución finaliza con código 0, emitiendo una advertencia a `stderr` (`AVISO: etiquetas:<línea>: etiqueta «...» redefinida (usando última definición)`).
-- **Integración con resumen**: `oracle tarea resumen` incorpora las descripciones en su reporte legible y en su salida estructurada `--json` (campo `descripciones`), reportando además el recuento de tareas `sin_etiquetas`.
+  - En `tasks revisar`: una etiqueta redefinida en múltiples líneas se considera un defecto de integridad y aborta con código 1 emitiendo el mensaje `etiquetas:<línea>: etiqueta «...» redefinida`.
+  - En `tasks resumen`: ante redefiniciones sucesivas, la última definición prevalece para documentar la etiqueta y la ejecución finaliza con código 0, emitiendo una advertencia a `stderr` (`AVISO: etiquetas:<línea>: etiqueta «...» redefinida (usando última definición)`).
+- **Integración con resumen**: `tasks resumen` incorpora las descripciones en su reporte legible y en su salida estructurada `--json` (campo `descripciones`), reportando además el recuento de tareas `sin_etiquetas`.
 
 ### Operaciones de etiquetado (`etiquetar` y `desetiquetar`)
 
 Los comandos `etiquetar` y `desetiquetar` permiten gestionar etiquetas sobre tareas existentes sin edición manual:
 
 - **Sintaxis**:
-  - `oracle tarea etiquetar <id>... --etiqueta <etiq>... [--json] [--proyecto RUTA]`
-  - `oracle tarea desetiquetar [<id>...] --etiqueta <etiq>... [--consulta <tql>] [--cerradas] [--todas] [--json] [--proyecto RUTA]`
+  - `tasks etiquetar <id>... --etiqueta <etiq>... [--json] [--proyecto RUTA]`
+  - `tasks desetiquetar [<id>...] --etiqueta <etiq>... [--consulta <tql>] [--cerradas] [--todas] [--json] [--proyecto RUTA]`
 - **Validación previa estricta**: antes de aplicar cualquier modificación en disco, se audita el árbol completo del tracker (`auditar_tareas`). Si se detecta alguna tarea corrupta, malformada o fuera de confinamiento, la operación se interrumpe inmediatamente con código 1 sin alterar ningún archivo.
 - **Selección masiva y exclusión**: `desetiquetar` permite seleccionar tareas por estado (`--cerradas` para todas las tareas cerradas, o `--todas` para el universo completo de tareas abiertas y cerradas) o mediante una consulta TQL con `--consulta <tql>`. Es incompatible especificar IDs explícitos junto con banderas de estado masivo (`--cerradas`, `--todas`) o con `--consulta` (falla con código 2).
 - **Desetiquetado por consulta TQL**: con `--consulta <tql>`, el predicado se compila previamente. Si la consulta contiene errores sintácticos o de tipos, el proceso finaliza con código 2 sin modificar ningún archivo. Solo se quitan las etiquetas indicadas de aquellas tareas que satisfagan la expresión y respeten el filtro de estado (por defecto, tareas abiertas).
@@ -444,7 +444,7 @@ Los comandos `etiquetar` y `desetiquetar` permiten gestionar etiquetas sobre tar
 
 ### Grafo de referencias entre tareas (`grafo`)
 
-El comando `oracle tarea grafo [--json] [--proyecto RUTA]` construye el grafo dirigido de referencias existentes entre las tareas del tracker:
+El comando `tasks grafo [--json] [--proyecto RUTA]` construye el grafo dirigido de referencias existentes entre las tareas del tracker:
 
 - **Construcción y detección**:
   - Analiza el texto de todas las tareas (abiertas y cerradas).
@@ -457,7 +457,7 @@ El comando `oracle tarea grafo [--json] [--proyecto RUTA]` construye el grafo di
 - **Formatos de salida**:
   - Formato DOT (por defecto): especificación estándar para Graphviz apta para su consumo directo por tuberías:
     ```bash
-    oracle tarea grafo | dot -Tsvg -o grafo.svg
+    tasks grafo | dot -Tsvg -o grafo.svg
     ```
     Los títulos de tareas se escapan adecuadamente (barras invertidas y comillas dobles).
   - Formato JSON (`--json`): emite un diccionario con las listas `nodos` (con `id`, `titulo` y `estado`) y `aristas` (con `origen` y `destino`).
@@ -473,41 +473,41 @@ El subshell mantiene el directorio de tu terminal y deja el proyecto temporal di
 (
 proyecto_prueba="$(mktemp -d)"
 cd "$proyecto_prueba"
-oracle tarea init --proyecto .
+tasks init --proyecto .
 
 # 1. Crear una tarea y conservar su ID real
-id_tarea="$(oracle tarea nueva "Desincronización de eventos en sensor" \
+id_tarea="$(tasks nueva "Desincronización de eventos en sensor" \
   --etiqueta bug --etiqueta sensor --sufijo sinc --json --proyecto . \
   | python3 -c 'import json, sys; print(json.load(sys.stdin)["id"])')"
 
 # 2. Guardar una URL construida con una marca; no se descarga el video
-oracle tarea anotar "$id_tarea" "Ejemplo de nota sobre monotonic clock" \
+tasks anotar "$id_tarea" "Ejemplo de nota sobre monotonic clock" \
   --url "https://youtube.com/watch?v=ejemplo&t=150s" \
   --marca "02:30" --proyecto .
 
 # 3. Crear un registro construido y adjuntarlo
 printf 'Registro construido para practicar adjuntos.\n' > registro-ejemplo.txt
-oracle tarea adjuntar "$id_tarea" registro-ejemplo.txt --proyecto .
+tasks adjuntar "$id_tarea" registro-ejemplo.txt --proyecto .
 
 # 4. Buscar términos en todas las tareas y notas del tracker
-oracle tarea buscar "monotonic clock" --proyecto .
+tasks buscar "monotonic clock" --proyecto .
 
 # 5. Crear una mención externa y reencontrarla por el ID
 printf 'Investigación relacionada: %s\n' "$id_tarea" > referencias.md
-oracle tarea referencias "$id_tarea" --proyecto .
+tasks referencias "$id_tarea" --proyecto .
 
 # 6. Ver el resumen global de estados y etiquetas
-oracle tarea resumen --proyecto .
+tasks resumen --proyecto .
 
 # 7. Diagnosticar Git: este proyecto temporal todavía no tiene repositorio
-oracle tarea seguimiento --proyecto .
+tasks seguimiento --proyecto .
 
 # 8. Extraer hechos; el JSON declara sin_repositorio
-oracle tarea hechos --git --proyecto . > hechos-tareas.json
+tasks hechos --git --proyecto . > hechos-tareas.json
 
 # 9. Cerrar la tarea al finalizar
-oracle tarea cerrar "$id_tarea" --proyecto .
-oracle tarea listar --cerradas --proyecto .
+tasks cerrar "$id_tarea" --proyecto .
+tasks listar --cerradas --proyecto .
 printf 'Proyecto de práctica: %s\n' "$proyecto_prueba"
 oracle juzgar --proyecto /ruta/al/checkout/ejemplo/seguimiento-tareas --con "$proyecto_prueba/hechos-tareas.json"
 )
@@ -548,7 +548,7 @@ Modificadores de orden:
   - Intento de escape del directorio `tareas/`, enlaces simbólicos inseguros o rutas fuera de confinamiento.
   - Errores del sistema de archivos al acceder o modificar documentos.
 - **Código 2 (error de sintaxis en CLI / argumentos o consulta inválida)**:
-  - Banderas u opciones no reconocidas (por ejemplo `oracle tarea listar --inventada`).
+  - Banderas u opciones no reconocidas (por ejemplo `tasks listar --inventada`).
   - Argumentos requeridos ausentes o valores de opciones faltantes detectados por el analizador de argumentos (`argparse`).
   - Expresión de consulta TQL sintáctica o semánticamente inválida en `listar` o `desetiquetar --consulta`.
   - Invocación de `referencias` sin ID fuera del directorio de una tarea.
@@ -653,8 +653,8 @@ Esta nota permanece abierta para referencia continua del equipo.
 | Tarea con etiquetas | `tagged` | `etiquetada` |
 | Prioridad | `priority` | `prioridad` |
 | Etiqueta | `:tag` (sensible a mayúsculas) | `:etiqueta` (insensible a mayúsculas) |
-| Listado por ID desc. | `tatr ls -id` | `oracle tarea listar --por-id` |
-| Invertir orden final | `tatr ls -a` | `oracle tarea listar --invertir` |
-| Explicar consulta | `tatr ls -debug` (tokens y opcodes) | `oracle tarea listar --explicar` (tokens y árbol compilado) |
-- **Grafo**: `tatr graph` escribe `graph.dot` y llama a `neato` para generar `graph.svg`; `oracle tarea grafo` sólo emite DOT por `stdout`, sin escribir archivos ni invocar Graphviz (`oracle tarea grafo | dot -Tsvg -o grafo.svg`).
+| Listado por ID desc. | `tatr ls -id` | `tasks listar --por-id` |
+| Invertir orden final | `tatr ls -a` | `tasks listar --invertir` |
+| Explicar consulta | `tatr ls -debug` (tokens y opcodes) | `tasks listar --explicar` (tokens y árbol compilado) |
+- **Grafo**: `tatr graph` escribe `graph.dot` y llama a `neato` para generar `graph.svg`; `tasks grafo` sólo emite DOT por `stdout`, sin escribir archivos ni invocar Graphviz (`tasks grafo | dot -Tsvg -o grafo.svg`).
 - **Captura, adjuntos, Git y hechos relacionales**: Oracle incluye captura con marcas temporales (`anotar`), vinculación de archivos (`adjuntar`), diagnóstico Git (`seguimiento`) y evidencia relacional (`hechos`), ausentes en tatr.

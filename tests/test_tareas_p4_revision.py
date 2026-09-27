@@ -12,10 +12,10 @@ import tempfile
 import unittest
 from unittest import mock
 
-from tools import tareas, tareas_git
+from trackertast import tasks as tareas, git as tareas_git
 
 RAIZ = Path(tareas.__file__).resolve().parents[1]
-CLI = RAIZ / "tools/cli.py"
+CLI = RAIZ / "trackertast/cli.py"
 EJEMPLO = RAIZ / "ejemplo/seguimiento-tareas"
 
 
@@ -31,7 +31,7 @@ class ConsumidorDesdeCheckoutTests(unittest.TestCase):
                     "tarea_id": "ejemplo", "origen": "tareas/ejemplo/TAREA.md", "linea": 8,
                     "destino_declarado": "captura-pendiente.png", "clase": "local",
                     "estado": estado}]}))
-                p = subprocess.run([sys.executable, "-B", str(CLI), "juzgar", "--con", str(evidencia),
+                p = subprocess.run([sys.executable, "-B", "-m", "oracle_metalenguaje.tools.cli", "juzgar", "--con", str(evidencia),
                                     "--proyecto", str(EJEMPLO),
                                     "--medida", "seguimiento.referencias_locales_presentes"],
                                    cwd=td, env=env, capture_output=True, text=True, timeout=15)
@@ -63,7 +63,7 @@ class RevisionGitP4Tests(unittest.TestCase):
         return p.stdout
 
     def cli(self, verbo, *args):
-        return subprocess.run([sys.executable, "-B", str(CLI), "tarea", verbo,
+        return subprocess.run([sys.executable, "-B", str(CLI), verbo,
                                "--proyecto", str(self.raiz), *args], env=self.env,
                               capture_output=True, timeout=15)
 

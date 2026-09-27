@@ -10,7 +10,7 @@ import unittest
 from urllib.parse import quote
 
 
-CLI = Path(__file__).resolve().parents[1] / "tools" / "cli.py"
+CLI = Path(__file__).resolve().parents[1] / "trackertast" / "cli.py"
 ID = "20260912-120000-investigacion"
 
 
@@ -30,7 +30,7 @@ class RevisionContextoTests(unittest.TestCase):
                     if k != "ORACLE_PROYECTO" and not k.startswith("GIT_")}
 
     def ejecutar(self, *args, timeout=10):
-        return subprocess.run([sys.executable, "-B", str(CLI), "tarea", *args,
+        return subprocess.run([sys.executable, "-B", str(CLI), *args,
                                "--proyecto", str(self.proyecto)],
                               env=self.env, cwd=self.raiz, capture_output=True,
                               text=True, timeout=timeout)

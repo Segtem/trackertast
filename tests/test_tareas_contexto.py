@@ -15,7 +15,7 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
-from tools import cli, tareas, tareas_contexto
+from trackertast import cli, tasks as tareas, context as tareas_contexto
 
 
 class TareasContextoTestCase(unittest.TestCase):
@@ -24,7 +24,7 @@ class TareasContextoTestCase(unittest.TestCase):
         self.raiz = Path(self.td.name).resolve()
         (self.raiz / ".git").mkdir()
         # Inicializar el tracker de tareas en el proyecto temporal
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
 
     def tearDown(self) -> None:
         self.td.cleanup()
@@ -46,7 +46,7 @@ class TareasContextoTestCase(unittest.TestCase):
         prioridad: int = 50,
         sufijo: str | None = None,
     ) -> tuple[str, Path]:
-        cmd = ["--proyecto", str(self.raiz), "tarea", "nueva", titulo, "--json"]
+        cmd = ["--proyecto", str(self.raiz), "nueva", titulo, "--json"]
         if etiquetas:
             for e in etiquetas:
                 cmd.extend(["--etiqueta", e])
@@ -62,7 +62,7 @@ class TareasContextoTestCase(unittest.TestCase):
 
 
 class TestAnotar(TareasContextoTestCase):
-    """Pruebas del comando `oracle tarea anotar`."""
+    """Pruebas del comando `tasks note`."""
 
     def test_anotar_agrega_texto_y_preserva_cuerpo_y_permisos(self) -> None:
         """Evita perder notas previas, alterar el cuerpo o degradar permisos del archivo."""
@@ -74,7 +74,6 @@ class TestAnotar(TareasContextoTestCase):
             [
                 "--proyecto",
                 str(self.raiz),
-                "tarea",
                 "anotar",
                 id_tarea,
                 "Se detectó un jitter de 4 ms en la prueba de estrés.",
@@ -98,7 +97,6 @@ class TestAnotar(TareasContextoTestCase):
             [
                 "--proyecto",
                 str(self.raiz),
-                "tarea",
                 "anotar",
                 id_tarea,
                 texto_con_sangria,
@@ -119,7 +117,6 @@ class TestAnotar(TareasContextoTestCase):
             [
                 "--proyecto",
                 str(self.raiz),
-                "tarea",
                 "anotar",
                 id_tarea,
                 "Momento exacto de la explicación",
@@ -145,7 +142,7 @@ class TestAnotar(TareasContextoTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "anotar", id_tarea],
+            ["--proyecto", str(self.raiz), "anotar", id_tarea],
         )
         self.assertEqual(rc, 1)
         self.assertIn("se requiere al menos un texto o una --url", err)
@@ -160,7 +157,6 @@ class TestAnotar(TareasContextoTestCase):
             [
                 "--proyecto",
                 str(self.raiz),
-                "tarea",
                 "anotar",
                 id_tarea,
                 "Texto sin url",
@@ -187,7 +183,6 @@ class TestAnotar(TareasContextoTestCase):
                     [
                         "--proyecto",
                         str(self.raiz),
-                        "tarea",
                         "anotar",
                         id_tarea,
                         "--url",
@@ -198,7 +193,7 @@ class TestAnotar(TareasContextoTestCase):
 
 
 class TestAdjuntar(TareasContextoTestCase):
-    """Pruebas del comando `oracle tarea adjuntar`."""
+    """Pruebas del comando `tasks attach`."""
 
     def test_adjuntar_copia_exacta_y_preserva_original(self) -> None:
         """Evita mover, alterar o eliminar el archivo de origen durante el adjuntado."""
@@ -209,7 +204,7 @@ class TestAdjuntar(TareasContextoTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "adjuntar", id_tarea, str(origen), "--json"],
+            ["--proyecto", str(self.raiz), "adjuntar", id_tarea, str(origen), "--json"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -236,7 +231,7 @@ class TestAdjuntar(TareasContextoTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "adjuntar", id_tarea, str(origen)],
+            ["--proyecto", str(self.raiz), "adjuntar", id_tarea, str(origen)],
         )
         self.assertEqual(rc, 0, err)
 
@@ -258,7 +253,7 @@ class TestAdjuntar(TareasContextoTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "adjuntar", id_tarea, str(origen)],
+            ["--proyecto", str(self.raiz), "adjuntar", id_tarea, str(origen)],
         )
         self.assertEqual(rc, 0, err)
         contenido_md = ruta_md.read_text(encoding="utf-8")
@@ -274,7 +269,7 @@ class TestAdjuntar(TareasContextoTestCase):
         # Intentar pasar nombre con salto de línea vía argumento
         rc, _, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "adjuntar", id_tarea, "archivo\npartido.txt"],
+            ["--proyecto", str(self.raiz), "adjuntar", id_tarea, "archivo\npartido.txt"],
         )
         self.assertEqual(rc, 1)
 
@@ -288,7 +283,7 @@ class TestAdjuntar(TareasContextoTestCase):
 
         rc, _, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "adjuntar", id_tarea, str(enlace)],
+            ["--proyecto", str(self.raiz), "adjuntar", id_tarea, str(enlace)],
         )
         self.assertEqual(rc, 1)
         self.assertIn("no puede ser un enlace simbólico", err)
@@ -304,7 +299,7 @@ class TestAdjuntar(TareasContextoTestCase):
 
         rc, _, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "adjuntar", id_tarea, str(nuevo)],
+            ["--proyecto", str(self.raiz), "adjuntar", id_tarea, str(nuevo)],
         )
         self.assertEqual(rc, 1)
         self.assertIn("ya existe en la tarea", err)
@@ -318,7 +313,7 @@ class TestAdjuntar(TareasContextoTestCase):
 
         rc, _, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "adjuntar", id_tarea, str(falso_tarea)],
+            ["--proyecto", str(self.raiz), "adjuntar", id_tarea, str(falso_tarea)],
         )
         self.assertEqual(rc, 1)
         self.assertIn("nombre reservado TAREA.md", err)
@@ -333,7 +328,7 @@ class TestAdjuntar(TareasContextoTestCase):
 
         rc, _, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "adjuntar", id_tarea, str(grande)],
+            ["--proyecto", str(self.raiz), "adjuntar", id_tarea, str(grande)],
         )
         self.assertEqual(rc, 1)
         self.assertIn("supera el límite de 20 MiB", err)
@@ -343,7 +338,6 @@ class TestAdjuntar(TareasContextoTestCase):
             [
                 "--proyecto",
                 str(self.raiz),
-                "tarea",
                 "adjuntar",
                 id_tarea,
                 str(grande),
@@ -356,7 +350,7 @@ class TestAdjuntar(TareasContextoTestCase):
 
 
 class TestBuscar(TareasContextoTestCase):
-    """Pruebas del comando `oracle tarea buscar`."""
+    """Pruebas del comando `tasks search`."""
 
     def test_buscar_encuentra_coincidencias_en_subcarpetas_de_la_tarea(self) -> None:
         """Evita restringir la búsqueda a un solo nivel de adjuntos dentro de la tarea."""
@@ -367,7 +361,7 @@ class TestBuscar(TareasContextoTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "buscar", "timeout", "--json"],
+            ["--proyecto", str(self.raiz), "buscar", "timeout", "--json"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -388,7 +382,7 @@ class TestBuscar(TareasContextoTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "buscar", "algo", "--json"],
+            ["--proyecto", str(self.raiz), "buscar", "algo", "--json"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -402,7 +396,7 @@ class TestBuscar(TareasContextoTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "buscar", "algo", "--json"],
+            ["--proyecto", str(self.raiz), "buscar", "algo", "--json"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -416,7 +410,7 @@ class TestBuscar(TareasContextoTestCase):
 
         rc, out, _ = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "buscar", "inexistente"],
+            ["--proyecto", str(self.raiz), "buscar", "inexistente"],
         )
         self.assertEqual(rc, 0)
         self.assertIn("No se encontraron coincidencias", out)
@@ -430,14 +424,14 @@ class TestBuscar(TareasContextoTestCase):
 
         rc, _, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "buscar", "cualquiera"],
+            ["--proyecto", str(self.raiz), "buscar", "cualquiera"],
         )
         self.assertEqual(rc, 1)
         self.assertIn("registro(s) inválido(s)", err)
 
 
 class TestReferencias(TareasContextoTestCase):
-    """Pruebas del comando `oracle tarea referencias`."""
+    """Pruebas del comando `tasks refs`."""
 
     def test_referencias_encuentra_menciones_en_codigo_del_proyecto(self) -> None:
         """Evita que el rastreo de contexto pierda referencias válidas en el código fuente."""
@@ -453,7 +447,7 @@ class TestReferencias(TareasContextoTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "referencias", id_tarea, "--json"],
+            ["--proyecto", str(self.raiz), "referencias", id_tarea, "--json"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -472,7 +466,7 @@ class TestReferencias(TareasContextoTestCase):
 
         rc, _, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "referencias", id_tarea],
+            ["--proyecto", str(self.raiz), "referencias", id_tarea],
         )
         self.assertEqual(rc, 1)
         self.assertIn("registro(s) inválido(s)", err)
@@ -487,7 +481,7 @@ class TestReferencias(TareasContextoTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "referencias", id_base, "--json"],
+            ["--proyecto", str(self.raiz), "referencias", id_base, "--json"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -502,7 +496,7 @@ class TestReferencias(TareasContextoTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "referencias", id_tarea, "--json"],
+            ["--proyecto", str(self.raiz), "referencias", id_tarea, "--json"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -510,17 +504,17 @@ class TestReferencias(TareasContextoTestCase):
 
 
 class TestResumen(TareasContextoTestCase):
-    """Pruebas del comando `oracle tarea resumen`."""
+    """Pruebas del comando `tasks summary`."""
 
     def test_resumen_calcula_totales_estados_y_conserva_mayusculas_de_etiquetas(self) -> None:
         """Evita convertir etiquetas a minúsculas o perder su identidad exacta."""
         id1, _ = self._crear_tarea("Tarea 1", etiquetas=["Bug", "Urgente", "Bug"])
         id2, _ = self._crear_tarea("Tarea 2", etiquetas=["bug", "Docs"])
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "cerrar", id2])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "cerrar", id2])
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "resumen", "--json"],
+            ["--proyecto", str(self.raiz), "resumen", "--json"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -538,7 +532,7 @@ class TestResumen(TareasContextoTestCase):
         """Evita fallos cuando el tracker está recién inicializado y sin tareas."""
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "resumen", "--json"],
+            ["--proyecto", str(self.raiz), "resumen", "--json"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -555,7 +549,7 @@ class TestResumen(TareasContextoTestCase):
 
         rc, _, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "resumen"],
+            ["--proyecto", str(self.raiz), "resumen"],
         )
         self.assertEqual(rc, 1)
         self.assertIn("registro(s) inválido(s)", err)
@@ -567,12 +561,19 @@ class TestComportamientoGlobalP2(TareasContextoTestCase):
     def test_ayudas_de_cada_verbo_no_escriben(self) -> None:
         """Evita que consultar --help en cualquiera de los nuevos verbos cree carpetas o archivos."""
         raiz_vacia = Path(tempfile.mkdtemp()).resolve()
+        mapa = {
+            "anotar": "note",
+            "adjuntar": "attach",
+            "buscar": "search",
+            "referencias": "refs",
+            "resumen": "summary",
+        }
         try:
             for verbo in ("anotar", "adjuntar", "buscar", "referencias", "resumen"):
                 with self.subTest(verbo=verbo):
-                    rc, out, _ = self._callado(cli.main, ["tarea", verbo, "--help"])
+                    rc, out, _ = self._callado(cli.main, [verbo, "--help"])
                     self.assertEqual(rc, 0)
-                    self.assertIn(f"oracle tarea {verbo}", out)
+                    self.assertIn(f"tasks {mapa[verbo]}", out)
                     self.assertFalse((raiz_vacia / "tareas").exists())
         finally:
             shutil.rmtree(raiz_vacia, ignore_errors=True)
@@ -595,7 +596,7 @@ class TestComportamientoGlobalP2(TareasContextoTestCase):
             with self.subTest(verbo=verbo):
                 rc, _, err = self._callado(
                     cli.main,
-                    ["--proyecto", str(self.raiz), "tarea", verbo, *posicionales, "--opcion-inventada"],
+                    ["--proyecto", str(self.raiz), verbo, *posicionales, "--opcion-inventada"],
                 )
                 self.assertEqual(rc, 2)
                 self.assertIn("argumentos no reconocidos", err.lower())

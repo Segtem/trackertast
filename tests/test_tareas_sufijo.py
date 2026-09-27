@@ -5,7 +5,8 @@ import unittest
 from contextlib import redirect_stdout, redirect_stderr
 from pathlib import Path
 
-from tools import cli, mcp, tareas
+from trackertast import cli, tasks as tareas
+from oracle_metalenguaje.tools import mcp
 
 
 class TestSufijos(unittest.TestCase):
@@ -32,7 +33,7 @@ class TestSufijos(unittest.TestCase):
     def ejecutar(self, *args):
         out, err = io.StringIO(), io.StringIO()
         with redirect_stdout(out), redirect_stderr(err):
-            rc = cli.main(['--proyecto', str(self.raiz), 'tarea', *args])
+            rc = cli.main(['--proyecto', str(self.raiz), *args])
         return rc, out.getvalue(), err.getvalue()
 
     def test_sufijo_unico_id_y_prefijo(self):

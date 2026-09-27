@@ -14,7 +14,7 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
-from tools import cli, tareas
+from trackertast import cli, tasks as tareas
 
 
 class TareasTestCase(unittest.TestCase):
@@ -44,7 +44,7 @@ class TestDescubrimientoYContrato(TareasTestCase):
     def test_init_crea_directorio_tareas_y_readme(self) -> None:
         """Evita que un proyecto intente operar sin el andamio inicial o que una reinicialización
         destruya el README existente."""
-        rc, out, err = self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        rc, out, err = self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
         self.assertEqual(rc, 0, err)
         self.assertTrue((self.raiz / "tareas").is_dir())
         readme = self.raiz / "tareas" / "README.md"
@@ -52,7 +52,7 @@ class TestDescubrimientoYContrato(TareasTestCase):
         contenido_previo = readme.read_text(encoding="utf-8")
 
         # Idempotencia: correr init nuevamente no rompe ni borra
-        rc2, _, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        rc2, _, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
         self.assertEqual(rc2, 0)
         self.assertEqual(readme.read_text(encoding="utf-8"), contenido_previo)
 
@@ -62,13 +62,13 @@ class TestDescubrimientoYContrato(TareasTestCase):
         # self.raiz no tiene catalogos/ ni oracle.json
         self.assertFalse((self.raiz / "catalogos").exists())
         self.assertFalse((self.raiz / "oracle.json").exists())
-        rc, out, err = self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        rc, out, err = self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
         self.assertEqual(rc, 0, err)
         self.assertIn("inicializado", out)
 
     def test_descubrimiento_desde_subcarpeta_encuentra_la_raiz(self) -> None:
         """Evita obligar al usuario a situarse en la raíz del repositorio para usar el tracker."""
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
         sub = self.raiz / "src" / "modulo" / "componente"
         sub.mkdir(parents=True)
         old_cwd = os.getcwd()
@@ -83,7 +83,7 @@ class TestDescubrimientoYContrato(TareasTestCase):
         """Evita que un repositorio anidado (como un submódulo o checkout secundario) contamine
         el tracker del repositorio padre."""
         # Repositorio padre con tareas/
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
 
         # Subdirectorio que es a su vez un repositorio git independiente sin tareas/
         sub_repo = self.raiz / "dependencia_submodulo"
@@ -108,7 +108,7 @@ class TestDescubrimientoYContrato(TareasTestCase):
         otro_dir.mkdir()
         (otro_dir / "tareas").mkdir()
 
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
 
         # ORACLE_PROYECTO apunta a self.raiz, pero --proyecto pide otro_dir
         os.environ["ORACLE_PROYECTO"] = str(self.raiz)
@@ -124,7 +124,7 @@ class TestCreacionYColisiones(TareasTestCase):
 
     def setUp(self) -> None:
         super().setUp()
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
 
     def test_nueva_crea_estructura_y_archivo_con_formato(self) -> None:
         """Evita generar tareas con metadatos incompletos, permisos incorrectos o campos faltantes."""
@@ -133,7 +133,6 @@ class TestCreacionYColisiones(TareasTestCase):
             [
                 "--proyecto",
                 str(self.raiz),
-                "tarea",
                 "nueva",
                 "Defecto en sensor",
                 "--etiqueta",
@@ -179,7 +178,6 @@ class TestCreacionYColisiones(TareasTestCase):
             [
                 "--proyecto",
                 str(self.raiz),
-                "tarea",
                 "nueva",
                 "Automatizada",
                 "--json",
@@ -197,7 +195,7 @@ class TestMetadatosYPreservacion(TareasTestCase):
 
     def setUp(self) -> None:
         super().setUp()
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
 
     def test_preservacion_del_cuerpo_y_campos_desconocidos_al_cerrar_y_reabrir(self) -> None:
         """Evita que cambiar el estado destruya notas manuales, imágenes adjuntas o campos
@@ -228,7 +226,7 @@ class TestMetadatosYPreservacion(TareasTestCase):
         # Cerrar tarea
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "cerrar", "20260911-180000-investigar"],
+            ["--proyecto", str(self.raiz), "cerrar", "20260911-180000-investigar"],
         )
         self.assertEqual(rc, 0, err)
         self.assertIn("Tarea cerrada", out)
@@ -243,7 +241,7 @@ class TestMetadatosYPreservacion(TareasTestCase):
         # Reabrir tarea
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "reabrir", "20260911-180000-investigar"],
+            ["--proyecto", str(self.raiz), "reabrir", "20260911-180000-investigar"],
         )
         self.assertEqual(rc, 0, err)
         self.assertIn("Tarea reabierta", out)
@@ -263,7 +261,7 @@ class TestMetadatosYPreservacion(TareasTestCase):
         )
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "cerrar", "20260911-180000-idemp"],
+            ["--proyecto", str(self.raiz), "cerrar", "20260911-180000-idemp"],
         )
         self.assertEqual(rc, 0, err)
         self.assertIn("ya estaba cerrada", out)
@@ -278,7 +276,7 @@ class TestMetadatosYPreservacion(TareasTestCase):
         )
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "revisar"],
+            ["--proyecto", str(self.raiz), "revisar"],
         )
         self.assertEqual(rc, 1)
         self.assertIn("campo duplicado en metadatos", err)
@@ -293,7 +291,7 @@ class TestMetadatosYPreservacion(TareasTestCase):
         )
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "revisar"],
+            ["--proyecto", str(self.raiz), "revisar"],
         )
         self.assertEqual(rc, 1)
         self.assertIn("estado inválido", err)
@@ -308,7 +306,7 @@ class TestMetadatosYPreservacion(TareasTestCase):
         )
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "revisar"],
+            ["--proyecto", str(self.raiz), "revisar"],
         )
         self.assertEqual(rc, 1)
         self.assertIn("prioridad inválida", err)
@@ -319,7 +317,7 @@ class TestSeguridadYConfinamiento(TareasTestCase):
 
     def setUp(self) -> None:
         super().setUp()
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
 
     def test_id_con_caracteres_de_escape_se_rechaza(self) -> None:
         """Evita ataques de navegación por directorios con `..` o barras en el ID de tarea."""
@@ -327,7 +325,7 @@ class TestSeguridadYConfinamiento(TareasTestCase):
             with self.subTest(intento=intento):
                 rc, _, err = self._callado(
                     cli.main,
-                    ["--proyecto", str(self.raiz), "tarea", "ver", intento],
+                    ["--proyecto", str(self.raiz), "ver", intento],
                 )
                 self.assertEqual(rc, 1)
                 self.assertIn("ERROR:", err)
@@ -345,7 +343,7 @@ class TestSeguridadYConfinamiento(TareasTestCase):
 
         rc, _, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "ver", "link_externo"],
+            ["--proyecto", str(self.raiz), "ver", "link_externo"],
         )
         self.assertEqual(rc, 1)
         self.assertIn("escapa del directorio de tareas", err)
@@ -356,17 +354,17 @@ class TestListarVerYRevisar(TareasTestCase):
 
     def setUp(self) -> None:
         super().setUp()
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
 
     def test_desambiguacion_de_prefijos_en_ver(self) -> None:
         """Evita consultar o modificar una tarea errónea cuando un prefijo corto coincide con varias."""
         _, out1, _ = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "nueva", "Sensor A", "--sufijo", "sen-a", "--json"],
+            ["--proyecto", str(self.raiz), "nueva", "Sensor A", "--sufijo", "sen-a", "--json"],
         )
         _, out2, _ = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "nueva", "Sensor B", "--sufijo", "sen-b", "--json"],
+            ["--proyecto", str(self.raiz), "nueva", "Sensor B", "--sufijo", "sen-b", "--json"],
         )
         id1 = json.loads(out1)["id"]
         id2 = json.loads(out2)["id"]
@@ -375,7 +373,7 @@ class TestListarVerYRevisar(TareasTestCase):
         prefijo_ambiguo = id1[:8]
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "ver", prefijo_ambiguo],
+            ["--proyecto", str(self.raiz), "ver", prefijo_ambiguo],
         )
         self.assertNotEqual(rc, 0)
         self.assertIn("es ambiguo", err)
@@ -383,21 +381,21 @@ class TestListarVerYRevisar(TareasTestCase):
         # Prefijo unívoco
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "ver", id1],
+            ["--proyecto", str(self.raiz), "ver", id1],
         )
         self.assertEqual(rc, 0, err)
         self.assertIn("Sensor A", out)
 
     def test_ver_con_bandera_ruta_imprime_solo_ruta_absoluta(self) -> None:
-        """Evita romper la integración con editores ($EDITOR $(oracle tarea ver ID --ruta))."""
+        """Evita romper la integración con editores ($EDITOR $(tasks show ID --ruta))."""
         _, out_nueva, _ = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "nueva", "Edicion", "--sufijo", "edicion", "--json"],
+            ["--proyecto", str(self.raiz), "nueva", "Edicion", "--sufijo", "edicion", "--json"],
         )
         id_creado = json.loads(out_nueva)["id"]
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "ver", id_creado, "--ruta"],
+            ["--proyecto", str(self.raiz), "ver", id_creado, "--ruta"],
         )
         self.assertEqual(rc, 0, err)
         ruta_salida = Path(out.strip())
@@ -428,7 +426,7 @@ class TestListarVerYRevisar(TareasTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "listar", "--json"],
+            ["--proyecto", str(self.raiz), "listar", "--json"],
         )
         self.assertEqual(rc, 0, err)
         items = json.loads(out)
@@ -442,7 +440,7 @@ class TestListarVerYRevisar(TareasTestCase):
         # 1. Consulta sin coincidencias -> salida 0
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "listar", "--etiqueta", "inexistente"],
+            ["--proyecto", str(self.raiz), "listar", "--etiqueta", "inexistente"],
         )
         self.assertEqual(rc, 0, err)
         self.assertIn("No hay tareas", out)
@@ -453,7 +451,7 @@ class TestListarVerYRevisar(TareasTestCase):
         # Sin TAREA.md
         rc2, out2, err2 = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "listar"],
+            ["--proyecto", str(self.raiz), "listar"],
         )
         self.assertEqual(rc2, 1)
         self.assertIn("sin TAREA.md", err2)
@@ -463,7 +461,7 @@ class TestListarVerYRevisar(TareasTestCase):
         # Un tracker limpio pasa revisión
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "revisar"],
+            ["--proyecto", str(self.raiz), "revisar"],
         )
         self.assertEqual(rc, 0, err)
         self.assertIn("REVISIÓN OK", out)
@@ -472,7 +470,7 @@ class TestListarVerYRevisar(TareasTestCase):
         (self.raiz / "tareas" / "carpeta_sin_tarea").mkdir()
         rc2, out2, err2 = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "revisar"],
+            ["--proyecto", str(self.raiz), "revisar"],
         )
         self.assertEqual(rc2, 1)
         self.assertIn("REVISIÓN FALLIDA", err2)
@@ -481,18 +479,33 @@ class TestListarVerYRevisar(TareasTestCase):
         """Evita divergencias entre el comando canónico 'listar' y el alias habitual 'ls'."""
         self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "nueva", "Para LS", "--sufijo", "pls"],
+            ["--proyecto", str(self.raiz), "nueva", "Para LS", "--sufijo", "pls"],
         )
         rc1, out1, _ = self._callado(
-            cli.main, ["--proyecto", str(self.raiz), "tarea", "listar"]
+            cli.main, ["--proyecto", str(self.raiz), "listar"]
         )
         rc2, out2, _ = self._callado(
-            cli.main, ["--proyecto", str(self.raiz), "tarea", "ls"]
+            cli.main, ["--proyecto", str(self.raiz), "ls"]
         )
         self.assertEqual(rc1, 0)
         self.assertEqual(rc2, 0)
         self.assertEqual(out1, out2)
 
 
+class TestVerbosYAlias(unittest.TestCase):
+    """Verifica que cada verbo canónico y cada alias resuelvan al mismo verbo canónico."""
+
+    def test_cada_verbo_canonico_y_alias_resuelven_al_mismo_verbo(self) -> None:
+        """Evita divergencias entre los verbos canónicos en inglés y los alias históricos en español."""
+        for canonico in cli.VERBOS_CANONICOS:
+            self.assertEqual(cli.resolver_verbo(canonico), canonico)
+
+        for alias, canonico in cli.ALIAS.items():
+            self.assertIn(canonico, cli.VERBOS_CANONICOS)
+            self.assertEqual(cli.resolver_verbo(alias), canonico)
+            self.assertEqual(cli.resolver_verbo(canonico), canonico)
+
+
 if __name__ == "__main__":
     unittest.main()
+

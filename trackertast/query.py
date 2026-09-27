@@ -1,7 +1,7 @@
-"""Lenguaje de consultas de tareas (TQL en español) para Oracle.
+"""Lenguaje de consultas de tareas (TQL en español) para trackertast.
 
 Módulo puro de análisis léxico, sintáctico, tipado estático y evaluación
-sobre tareas (`tools.tareas.Tarea`).
+sobre tareas (`trackertast.tasks.Tarea`).
 """
 
 from __future__ import annotations

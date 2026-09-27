@@ -13,7 +13,7 @@ import unittest
 from concurrent.futures import ThreadPoolExecutor
 
 
-CLI = Path(__file__).resolve().parents[1] / "tools" / "cli.py"
+CLI = Path(__file__).resolve().parents[1] / "trackertast" / "cli.py"
 CONTENIDO = "# Tarea\n\n- ESTADO: ABIERTA\n- PRIORIDAD: 50\n\nCuerpo\n"
 
 
@@ -28,7 +28,7 @@ class RevisionTareas(unittest.TestCase):
 
     def ejecutar(self, *args, cwd=None):
         return subprocess.run(
-            [sys.executable, "-B", str(CLI), "tarea", *args],
+            [sys.executable, "-B", str(CLI), *args],
             cwd=cwd or self.raiz, env=self.entorno, capture_output=True,
             text=True, timeout=20,
         )
@@ -49,7 +49,7 @@ class RevisionTareas(unittest.TestCase):
             with self.subTest(verbo=verbo):
                 resultado = self.ejecutar(verbo, "--help")
                 self.assertEqual(resultado.returncode, 0, resultado.stderr)
-                self.assertIn("oracle tarea", resultado.stdout)
+                self.assertIn("tasks", resultado.stdout)
                 self.assertEqual(list(self.raiz.iterdir()), [])
 
     def test_opciones_desconocidas_no_se_ignoran(self):

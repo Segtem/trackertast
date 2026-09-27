@@ -21,7 +21,7 @@ import urllib.parse
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-from tools.tareas import (
+from trackertast.tasks import (
     ARCHIVOS_AUXILIARES_PERMITIDOS,
     ParserDeSubcomando,
     RutaInsegura,
@@ -575,7 +575,7 @@ def extraer_hechos(raiz: Path, *, con_git: bool = False) -> dict[str, list[dict[
     head_git = ""
     commits_leidos: list[dict] | None = None
     if con_git:
-        from tools import tareas_git
+        from trackertast import git as tareas_git
 
         commits_leidos = tareas_git.commits(raiz)
         # Una historia cortada es evidencia incompleta: se declara, y la lectura queda incompleta.
@@ -887,9 +887,9 @@ def _commit_del_tracker(commit: dict, estados: dict[str, str]) -> dict:
 
 
 def cmd_hechos(argv: list[str], args: list[str]) -> int:
-    """Punto de entrada para `oracle tarea hechos`."""
+    """Punto de entrada para `tasks facts`."""
     parser = ParserDeSubcomando(
-        prog="oracle tarea hechos",
+        prog="tasks facts",
         description="Emite hechos relacionales del tracker de tareas en formato JSON",
     )
     parser.add_argument(

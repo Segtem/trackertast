@@ -1,6 +1,6 @@
 """Tests de comportamiento para evidencia relacional del tracker propio (P3).
 
-Cubre el comando `oracle tarea hechos [--git] [--json]` a través del CLI público
+Cubre el comando `tasks facts [--git] [--json]` a través del CLI público
 sobre proyectos temporales, verificando el contrato relacional, determinismo
 byte por byte, inventario seguro de archivos, extracción y clasificación de
 referencias Markdown, registro de omisiones y códigos de salida.
@@ -17,7 +17,7 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
-from tools import cli, tareas, tareas_hechos
+from trackertast import cli, tasks as tareas, facts as tareas_hechos
 
 
 class TareasHechosTestCase(unittest.TestCase):
@@ -25,7 +25,7 @@ class TareasHechosTestCase(unittest.TestCase):
         self.td = tempfile.TemporaryDirectory()
         self.raiz = Path(self.td.name).resolve()
         # Inicializar el tracker de tareas en el proyecto temporal
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
 
     def tearDown(self) -> None:
         self.td.cleanup()
@@ -47,7 +47,7 @@ class TareasHechosTestCase(unittest.TestCase):
         prioridad: int = 50,
         sufijo: str | None = None,
     ) -> tuple[str, Path]:
-        cmd = ["--proyecto", str(self.raiz), "tarea", "nueva", titulo, "--json"]
+        cmd = ["--proyecto", str(self.raiz), "nueva", titulo, "--json"]
         if etiquetas:
             for e in etiquetas:
                 cmd.extend(["--etiqueta", e])
@@ -70,7 +70,7 @@ class TestHechosEsquemaYDeterminismo(TareasHechosTestCase):
         tiene filas obliga a cada política a preguntarse si falta o si está vacía."""
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -100,13 +100,13 @@ class TestHechosEsquemaYDeterminismo(TareasHechosTestCase):
 
         rc1, out1, err1 = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc1, 0, err1)
 
         rc2, out2, err2 = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc2, 0, err2)
 
@@ -127,7 +127,7 @@ class TestHechosTareasYArchivos(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos", "--json"],
+            ["--proyecto", str(self.raiz), "hechos", "--json"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -152,7 +152,7 @@ class TestHechosTareasYArchivos(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -199,7 +199,7 @@ class TestHechosTareasYArchivos(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -241,7 +241,7 @@ class TestHechosReferenciasMarkdown(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -269,7 +269,7 @@ class TestHechosReferenciasMarkdown(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -288,7 +288,6 @@ class TestHechosReferenciasMarkdown(TareasHechosTestCase):
             [
                 "--proyecto",
                 str(self.raiz),
-                "tarea",
                 "anotar",
                 id_tarea,
                 "Nota técnica",
@@ -307,7 +306,7 @@ class TestHechosReferenciasMarkdown(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -337,7 +336,7 @@ class TestHechosReferenciasMarkdown(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -356,7 +355,7 @@ class TestHechosReferenciasMarkdown(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -379,7 +378,7 @@ class TestHechosReferenciasMarkdown(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -409,7 +408,7 @@ class TestHechosReferenciasMarkdown(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -436,7 +435,7 @@ class TestHechosReferenciasMarkdown(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -458,7 +457,7 @@ class TestHechosReferenciasMarkdown(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -484,7 +483,6 @@ class TestHechosReferenciasMarkdown(TareasHechosTestCase):
             [
                 "--proyecto",
                 str(self.raiz),
-                "tarea",
                 "adjuntar",
                 id_tarea,
                 str(origen_adjunto),
@@ -494,7 +492,7 @@ class TestHechosReferenciasMarkdown(TareasHechosTestCase):
 
         rc_h, out_h, err_h = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc_h, 0, err_h)
         datos = json.loads(out_h)
@@ -522,7 +520,7 @@ class TestHechosReferenciasMarkdown(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -562,7 +560,7 @@ class TestHechosLimitesYErrores(TareasHechosTestCase):
         try:
             rc, out, err = self._callado(
                 cli.main,
-                ["--proyecto", str(self.raiz), "tarea", "hechos"],
+                ["--proyecto", str(self.raiz), "hechos"],
             )
             self.assertEqual(rc, 1)
             self.assertIn("ERROR:", err)
@@ -579,7 +577,7 @@ class TestHechosLimitesYErrores(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 1)
         self.assertIn("supera el límite de 2 MiB", err)
@@ -595,7 +593,7 @@ class TestHechosLimitesYErrores(TareasHechosTestCase):
 
         rc_sym, out_sym, err_sym = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc_sym, 1)
         self.assertIn("no puede ser un enlace simbólico", err_sym)
@@ -610,7 +608,7 @@ class TestHechosLimitesYErrores(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -632,7 +630,7 @@ class TestHechosLimitesYErrores(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos"],
+            ["--proyecto", str(self.raiz), "hechos"],
         )
         self.assertEqual(rc, 1)
         self.assertIn("ERROR:", err)
@@ -645,10 +643,10 @@ class TestHechosLimitesYErrores(TareasHechosTestCase):
             ruta_vacia = Path(td_vacio.name).resolve()
             rc, out, err = self._callado(
                 cli.main,
-                ["--proyecto", str(ruta_vacia), "tarea", "hechos", "--help"],
+                ["--proyecto", str(ruta_vacia), "hechos", "--help"],
             )
             self.assertEqual(rc, 0)
-            self.assertIn("oracle tarea hechos", out)
+            self.assertIn("tasks facts", out)
             self.assertFalse((ruta_vacia / "tareas").exists())
         finally:
             td_vacio.cleanup()
@@ -657,7 +655,7 @@ class TestHechosLimitesYErrores(TareasHechosTestCase):
         """Banderas u opciones no reconocidas devuelven código 2 de argparse."""
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos", "--opcion-inexistente"],
+            ["--proyecto", str(self.raiz), "hechos", "--opcion-inexistente"],
         )
         self.assertEqual(rc, 2)
 
@@ -669,7 +667,7 @@ class TestHechosIntegracionGit(TareasHechosTestCase):
         """Si se pasa --git en un directorio sin repositorio Git, reporta sin_repositorio."""
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos", "--git"],
+            ["--proyecto", str(self.raiz), "hechos", "--git"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)
@@ -713,7 +711,7 @@ class TestHechosIntegracionGit(TareasHechosTestCase):
 
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "hechos", "--git"],
+            ["--proyecto", str(self.raiz), "hechos", "--git"],
         )
         self.assertEqual(rc, 0, err)
         datos = json.loads(out)

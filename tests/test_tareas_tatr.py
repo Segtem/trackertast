@@ -17,7 +17,7 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
-from tools import cli, tareas, tareas_contexto, tareas_grafo
+from trackertast import cli, tasks as tareas, context as tareas_contexto, graph as tareas_grafo
 
 
 ID_A = "20260914-110000-a"
@@ -77,7 +77,7 @@ class BaseTatrTestCase(unittest.TestCase):
         """Ejecuta cli.main capturando stdout, stderr y SystemExit."""
         out = io.StringIO()
         err = io.StringIO()
-        cmd = ["--proyecto", str(self.raiz), "tarea", *args]
+        cmd = ["--proyecto", str(self.raiz), *args]
         with redirect_stdout(out), redirect_stderr(err):
             try:
                 rc = cli.main(cmd)
@@ -100,7 +100,7 @@ class BaseTatrTestCase(unittest.TestCase):
 
 
 class TestAlineacionDinamicaListar(BaseTatrTestCase):
-    """Pruebas de la alineación dinámica de columnas en `oracle tarea listar`."""
+    """Pruebas de la alineación dinámica de columnas en `tasks list`."""
 
     def test_alineacion_dinamica_con_ids_largos_cortos_y_sin_trailing_whitespace(self) -> None:
         self.crear_tarea(ID_A, "Tarea Corta", prioridad=90, etiquetas="alfa")
@@ -516,7 +516,7 @@ class TestEtiquetarYDesetiquetar(BaseTatrTestCase):
 
 
 class TestGrafo(BaseTatrTestCase):
-    """Pruebas del comando `oracle tarea grafo`."""
+    """Pruebas del comando `tasks graph`."""
 
     def test_grafo_referencias_validas_y_frontera_de_tokens(self) -> None:
         self.crear_tarea(
@@ -604,7 +604,8 @@ class TestCliIntegracionYAyudas(BaseTatrTestCase):
         for verbo in ("etiquetar", "desetiquetar", "grafo"):
             rc, out, err = self.ejecutar_cli(verbo, "--help")
             self.assertEqual(rc, 0, f"Error en ayuda de {verbo}: {err}")
-            self.assertIn(f"oracle tarea {verbo}", out)
+            mapa_canonico = {"etiquetar": "tag", "desetiquetar": "untag", "grafo": "graph"}
+            self.assertIn(f"tasks {mapa_canonico[verbo]}", out)
 
         # Ayuda general de tarea menciona los tres nuevos verbos
         rc_gen, out_gen, _ = self.ejecutar_cli("--help")

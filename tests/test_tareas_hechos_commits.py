@@ -16,8 +16,8 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
-from tools import cli, tareas_git
-from tools.tareas_hechos import _commit_del_tracker, extraer_hechos
+from trackertast import cli, git as tareas_git
+from trackertast.facts import _commit_del_tracker, extraer_hechos
 
 
 def _git(raiz: Path, *orden: str) -> None:
@@ -117,7 +117,7 @@ class CommitsDelRepositorioTests(unittest.TestCase):
 
 
 class HechosConCommitsTests(unittest.TestCase):
-    """De punta a punta: `oracle tarea hechos --git` sobre un tracker de verdad."""
+    """De punta a punta: `tasks facts --git` sobre un tracker de verdad."""
 
     def _callado(self, *argumentos: str) -> tuple[int, str]:
         out, err = io.StringIO(), io.StringIO()
@@ -129,8 +129,8 @@ class HechosConCommitsTests(unittest.TestCase):
         return rc, out.getvalue()
 
     def _proyecto(self, raiz: Path) -> str:
-        self._callado("--proyecto", str(raiz), "tarea", "init")
-        rc, salida = self._callado("--proyecto", str(raiz), "tarea", "nueva", "una tarea",
+        self._callado("--proyecto", str(raiz), "init")
+        rc, salida = self._callado("--proyecto", str(raiz), "nueva", "una tarea",
                                    "--sufijo", "una", "--json")
         self.assertEqual(rc, 0)
         return json.loads(salida)["id"]
@@ -149,7 +149,7 @@ class HechosConCommitsTests(unittest.TestCase):
             _git(raiz, "add", "-A")
             _git(raiz, "commit", "-qm", "20260101-000000-inventada: done")
 
-            rc, salida = self._callado("--proyecto", str(raiz), "tarea", "hechos", "--git")
+            rc, salida = self._callado("--proyecto", str(raiz), "hechos", "--git")
             self.assertEqual(rc, 0)
             datos = json.loads(salida)
 
@@ -171,7 +171,7 @@ class HechosConCommitsTests(unittest.TestCase):
         with tempfile.TemporaryDirectory() as d:
             raiz = Path(d).resolve()
             tarea = self._proyecto(raiz)
-            rc, salida = self._callado("--proyecto", str(raiz), "tarea", "hechos")
+            rc, salida = self._callado("--proyecto", str(raiz), "hechos")
             self.assertEqual(rc, 0)
             datos = json.loads(salida)
         self.assertEqual(datos["commit_seguimiento"], [])
@@ -185,8 +185,8 @@ class HechosConCommitsTests(unittest.TestCase):
             tarea = self._proyecto(raiz)
             _git(raiz, "add", "-A")
             _git(raiz, "commit", "-qm", f"{tarea}: done")
-            _, una = self._callado("--proyecto", str(raiz), "tarea", "hechos", "--git")
-            _, otra = self._callado("--proyecto", str(raiz), "tarea", "hechos", "--git")
+            _, una = self._callado("--proyecto", str(raiz), "hechos", "--git")
+            _, otra = self._callado("--proyecto", str(raiz), "hechos", "--git")
         self.assertEqual(una, otra)
 
 
@@ -197,7 +197,7 @@ class HistoriaSuperficialTests(unittest.TestCase):
             origen.mkdir()
             _git(origen, "init", "-q")
             with redirect_stdout(io.StringIO()):
-                cli.main(["--proyecto", str(origen), "tarea", "init"])
+                cli.main(["--proyecto", str(origen), "init"])
             for texto in ("uno", "dos"):
                 (origen / "a.txt").write_text(texto, encoding="utf-8")
                 _git(origen, "add", "-A")

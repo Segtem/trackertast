@@ -24,8 +24,8 @@ import sys
 import tempfile
 import unittest
 
-from tools.tareas import Tarea
-from tools.tareas_consulta import (
+from trackertast.tasks import Tarea
+from trackertast.query import (
     Consulta,
     ConsultaInvalida,
     Nodo,
@@ -45,7 +45,7 @@ from tools.tareas_consulta import (
 )
 
 RAIZ = Path(__file__).resolve().parents[1]
-CLI = RAIZ / "tools/cli.py"
+CLI = RAIZ / "trackertast/cli.py"
 
 
 def crear_tarea_en_memoria(
@@ -297,7 +297,7 @@ class BaseCliTrackerTestCase(unittest.TestCase):
 
     def run_cli(self, *args: str, cwd: Path | None = None, proyecto: bool = True) -> subprocess.CompletedProcess[str]:
         extra = ("--proyecto", str(self.raiz)) if proyecto else ()
-        cmd = [sys.executable, "-B", str(CLI), "tarea", *args, *extra]
+        cmd = [sys.executable, "-B", str(CLI), *args, *extra]
         return subprocess.run(
             cmd,
             env=self.env,
@@ -315,7 +315,7 @@ class BaseCliTrackerTestCase(unittest.TestCase):
 
 
 class TestCliListarConsulta(BaseCliTrackerTestCase):
-    """Pruebas del comando 'oracle tarea listar' con TQL y ordenamiento."""
+    """Pruebas del comando 'tasks list' con TQL y ordenamiento."""
 
     def test_listar_con_tql_filtra_abiertas(self) -> None:
         # Por defecto solo abiertas: t1 (P90) y t2 (P50) tienen 'bug'
@@ -368,7 +368,7 @@ class TestCliListarConsulta(BaseCliTrackerTestCase):
 
 
 class TestCliDesetiquetarConsulta(BaseCliTrackerTestCase):
-    """Pruebas de 'oracle tarea desetiquetar --consulta'."""
+    """Pruebas de 'tasks untag --consulta'."""
 
     def obtener_etiquetas(self, ident: str) -> str:
         md = self.raiz / "tareas" / ident / "TAREA.md"
@@ -428,7 +428,7 @@ class TestCliReferenciasCwdEInit(BaseCliTrackerTestCase):
         nuevo = self.temporal / "nuevo_repo"
         nuevo.mkdir()
         p_init = subprocess.run(
-            [sys.executable, "-B", str(CLI), "tarea", "init", "--sin-readme", "--proyecto", str(nuevo)],
+            [sys.executable, "-B", str(CLI), "init", "--sin-readme", "--proyecto", str(nuevo)],
             capture_output=True,
             text=True,
         )
@@ -436,9 +436,9 @@ class TestCliReferenciasCwdEInit(BaseCliTrackerTestCase):
         self.assertTrue((nuevo / "tareas").is_dir())
         self.assertFalse((nuevo / "tareas" / "README.md").exists())
 
-        # 'oracle tarea revisar' debe auditar con éxito (código 0)
+        # 'tasks review' debe auditar con éxito (código 0)
         p_rev = subprocess.run(
-            [sys.executable, "-B", str(CLI), "tarea", "revisar", "--proyecto", str(nuevo)],
+            [sys.executable, "-B", str(CLI), "revisar", "--proyecto", str(nuevo)],
             capture_output=True,
             text=True,
         )

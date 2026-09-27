@@ -11,8 +11,8 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from tools import cli, tareas_contexto
-from tools.tareas import TareaError
+from trackertast import cli, context as tareas_contexto
+from trackertast.tasks import TareaError
 
 
 class ContextoMutacionTests(unittest.TestCase):
@@ -34,7 +34,7 @@ class ContextoMutacionTests(unittest.TestCase):
     def ejecutar(self, *args, raiz=None):
         out, err = io.StringIO(), io.StringIO()
         with redirect_stdout(out), redirect_stderr(err):
-            rc = cli.main(['--proyecto', str(raiz or self.raiz), 'tarea', *args])
+            rc = cli.main(['--proyecto', str(raiz or self.raiz), *args])
         return rc, out.getvalue(), err.getvalue()
 
     def exito(self, *args):

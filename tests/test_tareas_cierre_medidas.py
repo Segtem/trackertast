@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from unittest import mock
 
-from tools import cli, tareas
+from trackertast import cli, tasks as tareas
 
 
 class CierreMedidasTests(unittest.TestCase):
@@ -67,7 +67,7 @@ class CierreMedidasTests(unittest.TestCase):
                 esperado = original.replace(b"ABIERTA", b"CERRADA")
                 self.assertEqual(ruta.read_bytes(), esperado)
                 with contextlib.redirect_stdout(io.StringIO()), contextlib.redirect_stderr(io.StringIO()):
-                    codigo = cli.main(["tarea", "etiquetar", carpeta.name, "--etiqueta", "dos", "--proyecto", str(raiz)])
+                    codigo = cli.main(["etiquetar", carpeta.name, "--etiqueta", "dos", "--proyecto", str(raiz)])
                 self.assertEqual(codigo, 0)
                 esperado = esperado.replace(b"ETIQUETAS: uno", b"ETIQUETAS: uno, dos")
                 self.assertEqual(ruta.read_bytes(), esperado)

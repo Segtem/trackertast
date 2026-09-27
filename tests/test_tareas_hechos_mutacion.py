@@ -9,7 +9,7 @@ import tempfile
 import unittest
 from unittest.mock import patch
 
-from tools import tareas_hechos as h
+from trackertast import facts as h
 
 ID = "20260912-140000-contrato"
 
@@ -45,7 +45,7 @@ class GramaticaHechosTests(unittest.TestCase):
                  "``x```": [], "``x```y``": [(0, 9)], "`x": [],
                  "`a``b` [x](y)": [(0, 6)], "``x`` `y`": [(0, 5), (6, 9)]}
         # Aislar el parser hace fallar una regresión que no avanza, sin colgar la suite.
-        codigo = "from tools.tareas_hechos import _encontrar_spans_codigo as f\n"
+        codigo = "from trackertast.facts import _encontrar_spans_codigo as f\n"
         codigo += "casos = " + repr(casos) + "\n"
         codigo += "for texto, esperado in casos.items():\n assert f(texto) == esperado, (texto, f(texto), esperado)\n"
         try:
@@ -225,7 +225,7 @@ class DatosHechosTests(unittest.TestCase):
              (f"tareas/{ID}/sub/TAREA.md", False), (f"tareas/{ID}/no_inventariado", True)]:
             filas.append({"ruta": nombre, "existe": existe, "en_indice": False,
                           "en_head": True, "ignorado": True, "indice": "D", "trabajo": "M"})
-        with patch("tools.tareas_git.seguimiento", return_value={"repositorio": str(self.raiz), "head": "abc", "archivos": filas}):
+        with patch("trackertast.git.seguimiento", return_value={"repositorio": str(self.raiz), "head": "abc", "archivos": filas}):
             datos = h.extraer_hechos(self.raiz, con_git=True)
         self.assertEqual(datos["lectura_seguimiento"], [{"esquema": "oracle.tareas.hechos/v1", "git": "comprobado", "head": "abc", "completa": True}])
         archivos = {a["ruta"]: a for a in datos["archivo_seguimiento"]}
@@ -242,7 +242,7 @@ class DatosHechosTests(unittest.TestCase):
 
     def test_git_sin_fila_para_archivo_recien_creado(self):
         """Una creación entre inventarios queda observada en disco, sin fingir inclusión en índice o HEAD."""
-        with patch("tools.tareas_git.seguimiento", return_value={"repositorio": str(self.raiz), "head": None, "archivos": []}):
+        with patch("trackertast.git.seguimiento", return_value={"repositorio": str(self.raiz), "head": None, "archivos": []}):
             archivo = h.extraer_hechos(self.raiz, con_git=True)["archivo_seguimiento"][0]
         self.assertEqual({k: archivo[k] for k in ["git_comprobado", "en_indice", "en_head", "ignorado", "indice", "trabajo"]},
                          {"git_comprobado": True, "en_indice": False, "en_head": False, "ignorado": False, "indice": "", "trabajo": ""})
@@ -422,7 +422,7 @@ class DatosHechosTests(unittest.TestCase):
 
     def test_enlace_de_adjunto_no_reinterpreta_barras_percent_encoded(self):
         """Un nombre con barra antes de paréntesis conserva esa barra al consumir el enlace que produce P2."""
-        from tools.tareas_contexto import _escapar_enlace_markdown
+        from trackertast.context import _escapar_enlace_markdown
         nombres = [r"barra\(1).txt", r"barra\)1.txt", "literal(1).txt"]
         lineas = []
         destinos = []
@@ -499,7 +499,7 @@ class DatosHechosTests(unittest.TestCase):
 
     def test_extraccion_sin_git_no_invoca_el_sensor(self):
         """El argumento omitido no habilita el proceso Git ni siquiera en un proyecto sin repositorio."""
-        with patch("tools.tareas_git.seguimiento", side_effect=AssertionError("Git no solicitado")):
+        with patch("trackertast.git.seguimiento", side_effect=AssertionError("Git no solicitado")):
             datos = h.extraer_hechos(self.raiz)
         self.assertEqual(datos["lectura_seguimiento"], [{"esquema": "oracle.tareas.hechos/v1",
             "completa": True, "git": "no_solicitado", "head": ""}])

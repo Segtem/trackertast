@@ -22,7 +22,7 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
-from tools import cli, tareas
+from trackertast import cli, tasks as tareas
 
 
 class MutacionBaseTestCase(unittest.TestCase):
@@ -300,18 +300,18 @@ class TestMutacionCliComandosYCodigos(MutacionBaseTestCase):
         """Evita que errores de sintaxis o banderas desconocidas devuelvan un código distinto a 2."""
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "listar", "--bandera-inexistente"]
+            ["--proyecto", str(self.raiz), "listar", "--bandera-inexistente"]
         )
         self.assertEqual(rc, 2)
         self.assertIn("ERROR:", err)
 
     def test_cmd_nueva_prioridad_por_defecto_50_y_sufijo_custom(self) -> None:
         """Evita que la prioridad por defecto difiera de 50 o que --sufijo sea ignorado si el título existe."""
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
         rc, out, err = self._callado(
             cli.main,
             [
-                "--proyecto", str(self.raiz), "tarea", "nueva",
+                "--proyecto", str(self.raiz), "nueva",
                 "Mi Titulo Largo", "--sufijo", "mi-slug-personal"
             ]
         )
@@ -326,11 +326,11 @@ class TestMutacionCliComandosYCodigos(MutacionBaseTestCase):
     def test_cmd_nueva_recorte_de_slug_largo(self) -> None:
         """El ID entero es el prefijo de cada commit de esa tarea: eran 40 caracteres, y por un
         sufijo de 41 hubo que rehacer dos commits de 0.18.0. Ahora son 16 como mucho."""
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
         titulo_largo = "a" * 80
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "nueva", titulo_largo]
+            ["--proyecto", str(self.raiz), "nueva", titulo_largo]
         )
         self.assertEqual(rc, 0, err)
         carpetas = [d for d in (self.raiz / "tareas").iterdir() if d.is_dir()]
@@ -340,7 +340,7 @@ class TestMutacionCliComandosYCodigos(MutacionBaseTestCase):
     def test_cmd_nueva_corta_el_sufijo_en_una_palabra_entera(self) -> None:
         """Media palabra se lee peor que una palabra menos, y el listado está para leerse de un
         vistazo. Si el corte cae justo en el guion, la última palabra ya está entera."""
-        from tools.tareas import _sufijo_del_titulo
+        from trackertast.tasks import _sufijo_del_titulo
 
         self.assertEqual(_sufijo_del_titulo("juzgar evidencia real desde el CLI 0.18"),
                          "juzgar-evidencia")
@@ -354,10 +354,10 @@ class TestMutacionCliComandosYCodigos(MutacionBaseTestCase):
 
     def test_cmd_nueva_con_sufijo_vacio_no_pone_ninguno(self) -> None:
         """`--sufijo ""` es una elección, no una ausencia: el ID queda sólo con fecha y hora."""
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "nueva", "un título cualquiera",
+            ["--proyecto", str(self.raiz), "nueva", "un título cualquiera",
              "--sufijo", ""]
         )
         self.assertEqual(rc, 0, err)
@@ -366,17 +366,17 @@ class TestMutacionCliComandosYCodigos(MutacionBaseTestCase):
 
     def test_cmd_listar_incompatibilidad_cerradas_y_todas_devuelve_codigo_1(self) -> None:
         """Evita que combinar --cerradas y --todas se procese exitosamente o devuelva código distinto a 1."""
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
         rc, out, err = self._callado(
             cli.main,
-            ["--proyecto", str(self.raiz), "tarea", "listar", "--cerradas", "--todas"]
+            ["--proyecto", str(self.raiz), "listar", "--cerradas", "--todas"]
         )
         self.assertEqual(rc, 1)
         self.assertIn("incompatibles", err)
 
     def test_cmd_listar_por_defecto_solo_abiertas_y_filtros_etiqueta_texto(self) -> None:
         """Evita que el listado por defecto muestre cerradas o que los filtros de etiqueta y texto fallen."""
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
         raiz_tareas = self.raiz / "tareas"
 
         # Tarea 1: Abierta, etiqueta "bug", texto en cuerpo "fuga de memoria"
@@ -395,31 +395,31 @@ class TestMutacionCliComandosYCodigos(MutacionBaseTestCase):
         (c3 / "TAREA.md").write_text("# Tarea 3\n\n- ESTADO: ABIERTA\n- PRIORIDAD: 20\n- ETIQUETAS: sensor\n\nFuga detectada en sensor.\n", encoding="utf-8")
 
         # 1. Por defecto: sólo abiertas (T1 y T3 presentes, T2 ausente)
-        rc_def, out_def, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "listar", "--json"])
+        rc_def, out_def, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "listar", "--json"])
         self.assertEqual(rc_def, 0)
         ids_def = [t["id"] for t in json.loads(out_def)]
         self.assertEqual(ids_def, ["20260913-100001-t1", "20260913-100003-t3"])
 
         # 2. Filtro etiqueta exacto (case-insensitive)
-        rc_etiq, out_etiq, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "listar", "--etiqueta", "BUG", "--todas", "--json"])
+        rc_etiq, out_etiq, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "listar", "--etiqueta", "BUG", "--todas", "--json"])
         self.assertEqual(rc_etiq, 0)
         ids_etiq = [t["id"] for t in json.loads(out_etiq)]
         self.assertEqual(ids_etiq, ["20260913-100001-t1", "20260913-100002-t2"])
 
         # 3. Filtro texto buscando en cuerpo cuando no figura en el título
-        rc_txt, out_txt, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "listar", "--texto", "fuga", "--json"])
+        rc_txt, out_txt, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "listar", "--texto", "fuga", "--json"])
         self.assertEqual(rc_txt, 0)
         ids_txt = [t["id"] for t in json.loads(out_txt)]
         self.assertEqual(ids_txt, ["20260913-100001-t1", "20260913-100003-t3"])
 
         # 4. Sin coincidencias devuelve mensaje de aviso y código 0
-        rc_cero, out_cero, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "listar", "--texto", "termino_inexistente"])
+        rc_cero, out_cero, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "listar", "--texto", "termino_inexistente"])
         self.assertEqual(rc_cero, 0)
         self.assertIn("No hay tareas que coincidan con la búsqueda.", out_cero)
 
     def test_cmd_ver_ruta_y_formato_humano(self) -> None:
         """Evita que cmd_ver confunda --ruta y --json o emita etiquetas erróneas en formato humano."""
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
         carpeta = self.raiz / "tareas" / "20260913-100000-demo"
         carpeta.mkdir(parents=True)
         tarea_md = carpeta / "TAREA.md"
@@ -427,21 +427,21 @@ class TestMutacionCliComandosYCodigos(MutacionBaseTestCase):
 
         # Incompatibilidad --ruta y --json
         rc_inc, _, err_inc = self._callado(
-            cli.main, ["--proyecto", str(self.raiz), "tarea", "ver", "20260913-100000", "--ruta", "--json"]
+            cli.main, ["--proyecto", str(self.raiz), "ver", "20260913-100000", "--ruta", "--json"]
         )
         self.assertEqual(rc_inc, 1)
         self.assertIn("incompatibles", err_inc)
 
         # --ruta sola imprime solo el path a TAREA.md
         rc_ruta, out_ruta, _ = self._callado(
-            cli.main, ["--proyecto", str(self.raiz), "tarea", "ver", "20260913-100000", "--ruta"]
+            cli.main, ["--proyecto", str(self.raiz), "ver", "20260913-100000", "--ruta"]
         )
         self.assertEqual(rc_ruta, 0)
         self.assertEqual(out_ruta.strip(), str(tarea_md.resolve()))
 
         # Formato humano sin etiquetas y sin cuerpo
         rc_hum, out_hum, _ = self._callado(
-            cli.main, ["--proyecto", str(self.raiz), "tarea", "ver", "20260913-100000"]
+            cli.main, ["--proyecto", str(self.raiz), "ver", "20260913-100000"]
         )
         self.assertEqual(rc_hum, 0)
         self.assertIn("Etiquetas: (ninguna)", out_hum)
@@ -449,34 +449,34 @@ class TestMutacionCliComandosYCodigos(MutacionBaseTestCase):
 
     def test_cmd_cerrar_y_reabrir_mensajes_cambio_e_idempotencia(self) -> None:
         """Evita que cerrar o reabrir reporten mensajes invertidos o fallen ante estados ya fijados."""
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
         carpeta = self.raiz / "tareas" / "20260913-100000-demo"
         carpeta.mkdir(parents=True)
         (carpeta / "TAREA.md").write_text("# Demo\n\n- ESTADO: ABIERTA\n- PRIORIDAD: 50\n", encoding="utf-8")
 
         # Cerrar abierta
-        rc1, out1, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "cerrar", "20260913-100000"])
+        rc1, out1, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "cerrar", "20260913-100000"])
         self.assertEqual(rc1, 0)
         self.assertIn("Tarea cerrada: 20260913-100000-demo", out1)
 
         # Cerrar ya cerrada (idempotente)
-        rc2, out2, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "cerrar", "20260913-100000"])
+        rc2, out2, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "cerrar", "20260913-100000"])
         self.assertEqual(rc2, 0)
         self.assertIn("Tarea ya estaba cerrada: 20260913-100000-demo", out2)
 
         # Reabrir cerrada
-        rc3, out3, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "reabrir", "20260913-100000"])
+        rc3, out3, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "reabrir", "20260913-100000"])
         self.assertEqual(rc3, 0)
         self.assertIn("Tarea reabierta: 20260913-100000-demo", out3)
 
         # Reabrir ya abierta (idempotente)
-        rc4, out4, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "reabrir", "20260913-100000"])
+        rc4, out4, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "reabrir", "20260913-100000"])
         self.assertEqual(rc4, 0)
         self.assertIn("Tarea ya estaba abierta: 20260913-100000-demo", out4)
 
     def test_cmd_revisar_json_y_humano_exito_y_fallo(self) -> None:
         """Evita que cmd_revisar omita el código 1 ante problemas o emita estructura JSON incorrecta."""
-        self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "init"])
+        self._callado(cli.main, ["--proyecto", str(self.raiz), "init"])
         raiz_tareas = self.raiz / "tareas"
 
         # Tarea válida
@@ -489,7 +489,7 @@ class TestMutacionCliComandosYCodigos(MutacionBaseTestCase):
         (raiz_tareas / ".gitignore").write_text("*.tmp\n", encoding="utf-8")
 
         # Revisión OK en JSON
-        rc_jok, out_jok, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "revisar", "--json"])
+        rc_jok, out_jok, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "revisar", "--json"])
         self.assertEqual(rc_jok, 0)
         data_jok = json.loads(out_jok)
         self.assertTrue(data_jok["ok"])
@@ -500,13 +500,13 @@ class TestMutacionCliComandosYCodigos(MutacionBaseTestCase):
         (raiz_tareas / "invalido.txt").write_text("suelto", encoding="utf-8")
 
         # Revisión con fallo en JSON
-        rc_jerr, out_jerr, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "revisar", "--json"])
+        rc_jerr, out_jerr, _ = self._callado(cli.main, ["--proyecto", str(self.raiz), "revisar", "--json"])
         self.assertEqual(rc_jerr, 1)
         data_jerr = json.loads(out_jerr)
         self.assertFalse(data_jerr["ok"])
         self.assertEqual(len(data_jerr["problemas"]), 1)
 
         # Revisión con fallo en modo humano
-        rc_herr, _, err_herr = self._callado(cli.main, ["--proyecto", str(self.raiz), "tarea", "revisar"])
+        rc_herr, _, err_herr = self._callado(cli.main, ["--proyecto", str(self.raiz), "revisar"])
         self.assertEqual(rc_herr, 1)
         self.assertIn("REVISIÓN FALLIDA", err_herr)

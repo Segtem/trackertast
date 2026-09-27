@@ -19,7 +19,7 @@ import unicodedata
 from pathlib import Path
 from typing import Any
 
-from tools.tareas import (
+from trackertast.tasks import (
     ID_COMPLETO_RE,
     ParserDeSubcomando,
     RutaInsegura,
@@ -235,7 +235,7 @@ def leer_archivo_texto_si_aplica(
 
 def cmd_anotar(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea anotar",
+        prog="tasks note",
         description="Agrega una nota, URL o marca temporal a una tarea existente",
     )
     parser.add_argument("id", help="Identificador o prefijo inequívoco de la tarea")
@@ -368,7 +368,7 @@ def cmd_anotar(argv: list[str], args: list[str]) -> int:
 
 def cmd_adjuntar(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea adjuntar",
+        prog="tasks attach",
         description="Copia un adjunto al directorio de la tarea y lo vincula en TAREA.md",
     )
     parser.add_argument("id", help="Identificador o prefijo inequívoco de la tarea")
@@ -665,7 +665,7 @@ def buscar_en_tracker(raiz: Path, texto_buscado: str) -> dict[str, Any]:
 
 def cmd_buscar(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea buscar",
+        prog="tasks search",
         description="Busca texto de forma literal e insensible a mayúsculas en tareas y notas",
     )
     parser.add_argument("texto", help="Texto literal a buscar")
@@ -724,7 +724,7 @@ def cmd_buscar(argv: list[str], args: list[str]) -> int:
 
 def cmd_referencias(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea referencias",
+        prog="tasks refs",
         description="Busca menciones textuales del ID canónico en tareas, notas y código del proyecto",
     )
     parser.add_argument("id", nargs="?", default=None, help="Identificador o prefijo inequívoco de la tarea")
@@ -873,7 +873,7 @@ def cmd_referencias(argv: list[str], args: list[str]) -> int:
 
 def cmd_resumen(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea resumen",
+        prog="tasks summary",
         description="Muestra cantidades agregadas por estado y etiquetas a partir de registros válidos",
     )
     parser.add_argument("--json", action="store_true", help="Salida en formato JSON")

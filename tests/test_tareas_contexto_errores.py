@@ -9,7 +9,7 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
-from tools import cli, tareas_contexto
+from trackertast import cli, context as tareas_contexto
 
 
 class ErroresContextoTests(unittest.TestCase):
@@ -32,7 +32,7 @@ class ErroresContextoTests(unittest.TestCase):
     def ejecutar(self, *args):
         salida, error = io.StringIO(), io.StringIO()
         with redirect_stdout(salida), redirect_stderr(error):
-            codigo = cli.main(['tarea', *args, '--proyecto', str(self.raiz)])
+            codigo = cli.main([*args, '--proyecto', str(self.raiz)])
         return codigo, salida.getvalue(), error.getvalue()
 
     def adjuntar_falla(self, origen=None):
@@ -110,7 +110,7 @@ class ErroresContextoTests(unittest.TestCase):
             def read(self, cantidad=-1):
                 solicitudes.append(cantidad)
                 return self.archivo.read(cantidad)
-        with patch('tools.tareas_contexto.open', LecturaObservada, create=True):
+        with patch('trackertast.context.open', LecturaObservada, create=True):
             resultado = tareas_contexto.leer_archivo_texto_si_aplica(self.origen)
         self.assertEqual(resultado, (['Captura construida'], None, False))
         self.assertTrue(solicitudes)

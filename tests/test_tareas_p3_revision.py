@@ -10,14 +10,14 @@ import sys
 import tempfile
 import unittest
 
-from nucleo.caso import cargar_casos
-from nucleo.medida import cargar_catalogo
-from nucleo.mutacion import correr
-from nucleo.relacion import cargar_relaciones
+from oracle_metalenguaje.nucleo.caso import cargar_casos
+from oracle_metalenguaje.nucleo.medida import cargar_catalogo
+from oracle_metalenguaje.nucleo.mutacion import correr
+from oracle_metalenguaje.nucleo.relacion import cargar_relaciones
 
 
 RAIZ = Path(__file__).resolve().parents[1]
-CLI = RAIZ / "tools" / "cli.py"
+CLI = RAIZ / "trackertast" / "cli.py"
 EJEMPLO = RAIZ / "ejemplo" / "seguimiento-tareas"
 ID = "20260912-140000-investigacion"
 
@@ -60,7 +60,7 @@ class EvidenciaTareasRevisionTests(unittest.TestCase):
                         if k != "ORACLE_PROYECTO" and not k.startswith("GIT_")}
 
     def ejecutar(self, *args, timeout=10):
-        return subprocess.run([sys.executable, "-B", str(CLI), "tarea", "hechos", *args,
+        return subprocess.run([sys.executable, "-B", str(CLI), "hechos", *args,
                                "--proyecto", str(self.proyecto)],
                               cwd=self.raiz, env=self.entorno, capture_output=True, timeout=timeout)
 

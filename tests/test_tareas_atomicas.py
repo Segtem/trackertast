@@ -9,7 +9,7 @@ import tempfile
 import unittest
 from unittest import mock
 
-from tools import cli, tareas
+from trackertast import cli, tasks as tareas
 
 
 class EscriturasAtomicasTests(unittest.TestCase):
@@ -56,7 +56,7 @@ class EscriturasAtomicasTests(unittest.TestCase):
             with self.subTest(verbo=verbo), contextlib.redirect_stdout(io.StringIO()) as salida:
                 with contextlib.redirect_stderr(io.StringIO()) as error:
                     with mock.patch.object(tareas.os, "chmod", side_effect=OSError("chmod construido")):
-                        codigo = cli.main(["tarea", verbo, self.identidad, *argumentos,
+                        codigo = cli.main([verbo, self.identidad, *argumentos,
                                            "--proyecto", str(self.raiz)])
                 self.assertEqual(codigo, 1, salida.getvalue())
                 self.assertIn("chmod construido", error.getvalue())

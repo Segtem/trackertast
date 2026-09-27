@@ -15,7 +15,7 @@ import tempfile
 import unittest
 
 RAIZ = Path(__file__).resolve().parents[1]
-CLI = RAIZ / "tools/cli.py"
+CLI = RAIZ / "trackertast/cli.py"
 
 CORTA = "20260914-100000-a"
 LARGA = "20260914-100001-investigar-un-defecto-del-sensor-de-procesos"
@@ -48,7 +48,7 @@ class TrackerTemporal(unittest.TestCase):
         return ruta
 
     def cli(self, verbo, *args):
-        return subprocess.run([sys.executable, "-B", str(CLI), "tarea", verbo, *args,
+        return subprocess.run([sys.executable, "-B", str(CLI), verbo, *args,
                                "--proyecto", str(self.raiz)],
                               env=self.env, capture_output=True, text=True, timeout=30)
 
@@ -267,7 +267,7 @@ class AyudaTests(TrackerTemporal):
         antes = self.instantanea()
         for verbo in ("etiquetar", "desetiquetar", "grafo"):
             self.ok(verbo, "--help")
-        general = subprocess.run([sys.executable, "-B", str(CLI), "tarea", "--help"],
+        general = subprocess.run([sys.executable, "-B", str(CLI), "--help"],
                                  env=self.env, capture_output=True, text=True, timeout=30)
         for verbo in ("etiquetar", "desetiquetar", "grafo"):
             self.assertRegex(general.stdout, rf"\b{verbo}\b")
@@ -284,7 +284,7 @@ class GrafoErroresOperacionalesTests(TrackerTemporal):
     def test_sin_tracker_sale_exactamente_uno(self):
         sin_tracker = self.raiz.parent / "vacio"
         sin_tracker.mkdir()
-        p = subprocess.run([sys.executable, "-B", str(CLI), "tarea", "grafo",
+        p = subprocess.run([sys.executable, "-B", str(CLI), "grafo",
                             "--proyecto", str(sin_tracker)],
                            env=self.env, capture_output=True, text=True, timeout=30)
         self.assertEqual(p.returncode, 1, p.stdout + p.stderr)
@@ -294,7 +294,7 @@ class GrafoErroresOperacionalesTests(TrackerTemporal):
         import contextlib
         import io
         from unittest import mock
-        from tools import tareas_grafo
+        from trackertast import graph as tareas_grafo
 
         self.tarea(CORTA, "Legible")
         salida, errores = io.StringIO(), io.StringIO()
@@ -338,7 +338,7 @@ class SobrevivientesTareasTests(TrackerTemporal):
         import contextlib
         import io
         from unittest import mock
-        from tools import tareas
+        from trackertast import tasks as tareas
 
         self.tarea(CORTA, "A")
         (self.raiz / "tareas/etiquetas").write_text("bug algo\n", encoding="utf-8")
@@ -365,7 +365,7 @@ class SobrevivientesTareasTests(TrackerTemporal):
         self.assertNotIn(b"\r", lf.read_bytes())
 
     def test_documento_en_blanco_es_tarea_invalida(self):
-        from tools import tareas
+        from trackertast import tasks as tareas
 
         for texto in ("", "\n  \n\t\n"):
             with self.assertRaises(tareas.TareaInvalida):
@@ -396,7 +396,7 @@ class SobrevivientesTareasTests(TrackerTemporal):
         self.assertIn("TAREA.md:5:", self.ok("etiquetar", CORTA, "--etiqueta", "bug").stdout)
 
     def test_titulo_sin_metadatos_ni_fin_de_linea(self):
-        from tools import tareas
+        from trackertast import tasks as tareas
 
         modificado, texto, _ = tareas._aplicar_etiquetas_texto(
             "# T", ["bug"], modo="agregar", id_tarea=CORTA, ruta_tarea=self.raiz / "TAREA.md")
@@ -417,7 +417,7 @@ class SobrevivientesTareasTests(TrackerTemporal):
         import contextlib
         import io
         from unittest import mock
-        from tools import tareas
+        from trackertast import tasks as tareas
 
         ruta = self.tarea(CORTA, "T", etiquetas="a")
         antes = ruta.read_bytes()
@@ -433,7 +433,7 @@ class SobrevivientesTareasTests(TrackerTemporal):
     def test_json_sale_exactamente_cero(self):
         import contextlib
         import io
-        from tools import tareas
+        from trackertast import tasks as tareas
 
         self.tarea(CORTA, "T", etiquetas="a")
         salida = io.StringIO()
@@ -447,7 +447,7 @@ class SobrevivientesTareasTests(TrackerTemporal):
         import contextlib
         import io
         from unittest import mock
-        from tools import tareas
+        from trackertast import tasks as tareas
 
         self.tarea(CORTA, "Primera", etiquetas="a")
         segunda = self.tarea(LARGA, "Segunda", etiquetas="a")
@@ -487,7 +487,7 @@ class SobrevivientesTareasTests(TrackerTemporal):
                 self.assertEqual(self.instantanea(), antes)
         for verbo in ("etiquetar", "desetiquetar"):
             with self.subTest(f"{verbo} sin tracker"):
-                p = subprocess.run([sys.executable, "-B", str(CLI), "tarea", verbo, CORTA,
+                p = subprocess.run([sys.executable, "-B", str(CLI), verbo, CORTA,
                                     "--etiqueta", "a", "--proyecto", str(sin_tracker)],
                                    env=self.env, capture_output=True, text=True, timeout=30)
                 self.assertEqual(p.returncode, 1, p.stdout + p.stderr)

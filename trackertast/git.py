@@ -8,7 +8,7 @@ from pathlib import Path, PurePosixPath
 import subprocess
 import sys
 
-from tools import tareas
+from trackertast import tasks as tareas
 
 
 def _git(raiz: Path, *argumentos: str) -> subprocess.CompletedProcess:
@@ -191,7 +191,7 @@ def seguimiento(raiz: Path) -> dict:
 
 def cmd_seguimiento(argv: list[str], args: list[str]) -> int:
     parser = tareas.ParserDeSubcomando(
-        prog="oracle tarea seguimiento",
+        prog="tasks follow",
         description="Compara archivos del tracker con el índice y HEAD de Git, sin escribir")
     parser.add_argument("--proyecto", help="Raíz explícita del proyecto")
     parser.add_argument("--json", action="store_true", help="Diagnóstico como JSON")

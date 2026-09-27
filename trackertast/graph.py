@@ -7,8 +7,8 @@ import re
 import sys
 from pathlib import Path
 
-from tools import tareas
-from tools.tareas import ParserDeSubcomando, auditar_tareas, resolver_raiz_tracker
+from trackertast import tasks as tareas
+from trackertast.tasks import ParserDeSubcomando, auditar_tareas, resolver_raiz_tracker
 
 
 PATRON_CANDIDATO_ID = re.compile(
@@ -18,7 +18,7 @@ PATRON_CANDIDATO_ID = re.compile(
 
 def cmd_grafo(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea grafo",
+        prog="tasks graph",
         description="Emite el grafo de referencias entre tareas en formato DOT o JSON",
     )
     parser.add_argument("--json", action="store_true", help="Salida en formato JSON")

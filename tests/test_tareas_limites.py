@@ -9,7 +9,7 @@ import tempfile
 import unittest
 from unittest import mock
 
-from tools import tareas
+from trackertast import tasks as tareas
 
 
 class LimitesDeTareasTests(unittest.TestCase):

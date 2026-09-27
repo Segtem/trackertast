@@ -19,12 +19,12 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from tools.tareas_consulta import ConsultaInvalida, compilar
+from trackertast.query import ConsultaInvalida, compilar
 
 ID_RE = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_-]*$")
 ID_COMPLETO_RE = re.compile(r"^[0-9]{8}-[0-9]{6}(?:-[a-z0-9_-]+)*$")
 LINEA_META_RE = re.compile(r"^[ \t]*[-*][ \t]+((?ai:CIERRA CON)|[A-Za-z0-9_-]+)[ \t]*:[ \t]*(.*)$")
-# Gramática de nucleo.proyecto.ID_MEDIDA_RE, sin importar el motor desde el tracker.
+# Gramática de oracle_metalenguaje.nucleo.proyecto.ID_MEDIDA_RE, sin importar el motor desde el tracker.
 CIERRE_MEDIDA_RE = re.compile(r"[a-z][a-z0-9_]*(?:\.[a-z][a-z0-9_]*)+")
 ARCHIVOS_AUXILIARES_PERMITIDOS = frozenset({"README.md", "README", ".gitignore", "etiquetas"})
 
@@ -201,7 +201,7 @@ def resolver_raiz_tracker(
         return actual
 
     raise TrackerNoEncontrado(
-        "no se encontró ningún tracker de tareas (`tareas/`). Usá `oracle tarea init` para crearlo."
+        "no se encontró ningún tracker de tareas (`tareas/`). Usá `tasks init` para crearlo."
     )
 
 
@@ -609,7 +609,7 @@ def auditar_tareas(raiz_tareas: Path) -> tuple[list[Tarea], list[str]]:
 
 def cmd_init(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea init",
+        prog="tasks init",
         description="Inicializa el tracker de tareas en tareas/",
     )
     parser.add_argument(
@@ -683,7 +683,7 @@ def cmd_init(argv: list[str], args: list[str]) -> int:
 
 def cmd_nueva(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea nueva",
+        prog="tasks new",
         description="Crea una nueva tarea con plantilla lista",
     )
     parser.add_argument("titulo", help="Título de la tarea")
@@ -770,8 +770,8 @@ def cmd_nueva(argv: list[str], args: list[str]) -> int:
 
 def cmd_listar(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea listar",
-        description="Lista tareas del proyecto (alias: ls)",
+        prog="tasks list",
+        description="Lista tareas del proyecto (alias: listar, ls)",
     )
     parser.add_argument("consulta", nargs="*", default=[], help="Consulta TQL opcional")
     parser.add_argument("--cerradas", action="store_true", help="Muestra sólo tareas cerradas")
@@ -939,7 +939,7 @@ def leer_tarea(raiz_tareas: Path, id_o_prefijo: str) -> Tarea:
 
 def cmd_ver(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea ver",
+        prog="tasks show",
         description="Muestra detalles de una tarea o su ruta",
     )
     parser.add_argument("id", help="Identificador, prefijo o sufijo inequívoco de la tarea")
@@ -992,7 +992,7 @@ def cmd_ver(argv: list[str], args: list[str]) -> int:
 
 def cmd_cerrar(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea cerrar",
+        prog="tasks close",
         description="Marca una tarea como CERRADA de forma atómica",
     )
     parser.add_argument("id", help="Identificador, prefijo o sufijo inequívoco de la tarea")
@@ -1038,7 +1038,7 @@ def cmd_cerrar(argv: list[str], args: list[str]) -> int:
 
 def cmd_reabrir(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea reabrir",
+        prog="tasks reopen",
         description="Marca una tarea como ABIERTA de forma atómica",
     )
     parser.add_argument("id", help="Identificador, prefijo o sufijo inequívoco de la tarea")
@@ -1084,7 +1084,7 @@ def cmd_reabrir(argv: list[str], args: list[str]) -> int:
 
 def cmd_revisar(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea revisar",
+        prog="tasks review",
         description="Audita la integridad del directorio tareas/",
     )
     parser.add_argument("--json", action="store_true", help="Salida en formato JSON")
@@ -1302,7 +1302,7 @@ def _aplicar_y_guardar_etiquetas(
 
 def cmd_etiquetar(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea etiquetar",
+        prog="tasks tag",
         description="Agrega una o más etiquetas a tareas existentes",
     )
     parser.add_argument(
@@ -1366,7 +1366,7 @@ def cmd_etiquetar(argv: list[str], args: list[str]) -> int:
 
 def cmd_desetiquetar(argv: list[str], args: list[str]) -> int:
     parser = ParserDeSubcomando(
-        prog="oracle tarea desetiquetar",
+        prog="tasks untag",
         description="Quita una o más etiquetas de tareas",
     )
     parser.add_argument(
@@ -1467,37 +1467,37 @@ def cmd_desetiquetar(argv: list[str], args: list[str]) -> int:
 
 
 def ayuda() -> None:
-    print("""Oracle — metalenguaje de medidas: tracker de tareas.
+    print("""tasks — tracker local de tareas en Markdown.
 
 Uso:
-  oracle tarea init [ruta] [opciones]     Inicializa el tracker de tareas en tareas/
-  oracle tarea nueva <titulo> [opciones]  Crea una nueva tarea con plantilla lista
-  oracle tarea listar [consulta] [opc]    Lista tareas (alias: ls)
-  oracle tarea ver <id> [--ruta] [--json] Muestra detalles de una tarea o su ruta
-  oracle tarea cerrar <id>                Marca la tarea como CERRADA de forma atómica
-  oracle tarea reabrir <id>               Marca la tarea como ABIERTA de forma atómica
-  oracle tarea revisar [--json]           Audita la integridad del directorio tareas/
-  oracle tarea anotar <id> [texto] [opc]  Agrega una nota, URL o marca temporal a una tarea
-  oracle tarea adjuntar <id> <archivo>    Copia un adjunto al directorio de la tarea
-  oracle tarea buscar <texto> [--json]    Busca texto en tareas y notas del tracker
-  oracle tarea referencias [id] [--json]  Busca menciones del ID en tareas y código
-  oracle tarea resumen [--json]           Muestra cantidades por estado y etiquetas
-  oracle tarea seguimiento [opciones]     Diagnóstico de seguimiento y cobertura en Git
-  oracle tarea hechos [opciones]          Emite hechos relacionales del tracker en JSON
-  oracle tarea etiquetar <id>... [opc]    Agrega una o más etiquetas a tareas
-  oracle tarea desetiquetar [id]... [opc] Quita una o más etiquetas de tareas
-  oracle tarea grafo [--json]             Emite el grafo de referencias en DOT o JSON
+  tasks init [ruta] [opciones]          Inicializa el tracker de tareas en tareas/
+  tasks new <titulo> [opciones]         Crea una nueva tarea con plantilla lista (alias: nueva)
+  tasks list [consulta] [opc]           Lista tareas (alias: listar, ls)
+  tasks show <id> [--ruta] [--json]     Muestra detalles de una tarea o su ruta (alias: ver)
+  tasks close <id>                      Marca la tarea como CERRADA de forma atómica (alias: cerrar)
+  tasks reopen <id>                     Marca la tarea como ABIERTA de forma atómica (alias: reabrir)
+  tasks review [--json]                 Audita la integridad del directorio tareas/ (alias: revisar)
+  tasks note <id> [texto] [opc]         Agrega una nota, URL o marca temporal a una tarea (alias: anotar)
+  tasks attach <id> <archivo>           Copia un adjunto al directorio de la tarea (alias: adjuntar)
+  tasks search <texto> [--json]         Busca texto en tareas y notas del tracker (alias: buscar)
+  tasks refs [id] [--json]              Busca menciones del ID en tareas y código (alias: referencias)
+  tasks summary [--json]                Muestra cantidades por estado y etiquetas (alias: resumen)
+  tasks follow [opciones]               Diagnóstico de seguimiento y cobertura en Git (alias: seguimiento)
+  tasks facts [opciones]                Emite hechos relacionales del tracker en JSON (alias: hechos)
+  tasks tag <id>... [opc]               Agrega una o más etiquetas a tareas (alias: etiquetar)
+  tasks untag [id]... [opc]             Quita una o más etiquetas de tareas (alias: desetiquetar)
+  tasks graph [--json]                  Emite el grafo de referencias en DOT o JSON (alias: grafo)
 
 Opciones de «init»:
   --sin-readme                           Inicializa el tracker sin crear README.md
 
-Opciones de «nueva»:
+Opciones de «new» / «nueva»:
   --etiqueta, -e <etiqueta>              Agrega una o más etiquetas (separadas por coma o repetidas)
   --prioridad <n>                        Prioridad numérica entera (por defecto: 50)
   --sufijo <slug>                        Sufijo del ID (sin él se deriva del título, ≤16)
   --json                                 Emite el ID y ruta en JSON
 
-Opciones de «listar» / «ls»:
+Opciones de «list» / «listar» / «ls»:
   --cerradas                             Muestra sólo tareas cerradas
   --todas                                Muestra abiertas y cerradas
   --etiqueta, -e <etiqueta>              Filtra por etiqueta exacta
@@ -1507,31 +1507,31 @@ Opciones de «listar» / «ls»:
   --explicar                             Muestra la consulta TQL compilada y sale
   --json                                 Emite la lista de tareas en JSON
 
-Opciones de «anotar»:
+Opciones de «note» / «anotar»:
   --url <url>                            URL absoluta (http/https) de referencia
   --marca <posicion>                     Marca temporal o posición en el recurso (exige --url)
   --json                                 Emite la nota registrada en JSON
 
-Opciones de «adjuntar»:
+Opciones de «attach» / «adjuntar»:
   --permitir-grande                      Permite copiar archivos mayores a 20 MiB
   --json                                 Emite la ruta del adjunto y documento en JSON
 
-Opciones de «hechos»:
+Opciones de «facts» / «hechos»:
   --git                                  Comprueba estado frente al índice y HEAD de Git
   --json                                 Emite el resultado en JSON (siempre activo)
 
-Opciones de «etiquetar»:
+Opciones de «tag» / «etiquetar»:
   --etiqueta, -e <etiqueta>              Etiqueta a agregar (repetible o separada por comas)
   --json                                 Emite la lista de cambios en JSON
 
-Opciones de «desetiquetar»:
+Opciones de «untag» / «desetiquetar»:
   --etiqueta, -e <etiqueta>              Etiqueta a quitar (repetible o separada por comas)
   --consulta <tql>                       Filtra tareas por consulta TQL en modo masivo
   --cerradas                             Aplica a tareas cerradas (modo masivo)
   --todas                                Aplica a abiertas y cerradas (modo masivo)
   --json                                 Emite la lista de cambios en JSON
 
-Opciones de «grafo»:
+Opciones de «graph» / «grafo»:
   --json                                 Emite nodos y aristas en formato JSON
 
 Opciones comunes:
@@ -1541,40 +1541,51 @@ Opciones comunes:
 
 
 def despachar(verbo: str, args: list[str], argv: list[str]) -> int:
-    """Punto de entrada para el sustantivo `tarea` desde `tools/cli.py`."""
+    """Punto de entrada para despachar comandos de tasks."""
     if not verbo or verbo in ("-h", "--help", "help"):
         ayuda()
         return 0
 
     if verbo == "init":
         return cmd_init(argv, args)
-    if verbo == "nueva":
+    if verbo in ("new", "nueva"):
         return cmd_nueva(argv, args)
-    if verbo in ("listar", "ls"):
+    if verbo in ("list", "listar", "ls"):
         return cmd_listar(argv, args)
-    if verbo == "ver":
+    if verbo in ("show", "ver"):
         return cmd_ver(argv, args)
-    if verbo == "cerrar":
+    if verbo in ("close", "cerrar"):
         return cmd_cerrar(argv, args)
-    if verbo == "reabrir":
+    if verbo in ("reopen", "reabrir"):
         return cmd_reabrir(argv, args)
-    if verbo == "revisar":
+    if verbo in ("review", "revisar"):
         return cmd_revisar(argv, args)
-    if verbo == "etiquetar":
+    if verbo in ("tag", "etiquetar"):
         return cmd_etiquetar(argv, args)
-    if verbo == "desetiquetar":
+    if verbo in ("untag", "desetiquetar"):
         return cmd_desetiquetar(argv, args)
-    if verbo == "grafo":
-        from tools import tareas_grafo
-        return tareas_grafo.cmd_grafo(argv, args)
-    if verbo in ("anotar", "adjuntar", "buscar", "referencias", "resumen"):
-        from tools import tareas_contexto
+    if verbo in ("graph", "grafo"):
+        from trackertast import graph
+        return graph.cmd_grafo(argv, args)
+    if verbo in (
+        "note", "anotar",
+        "attach", "adjuntar",
+        "search", "buscar",
+        "refs", "referencias",
+        "summary", "resumen",
+    ):
+        from trackertast import context
         comandos = {
-            "anotar": tareas_contexto.cmd_anotar,
-            "adjuntar": tareas_contexto.cmd_adjuntar,
-            "buscar": tareas_contexto.cmd_buscar,
-            "referencias": tareas_contexto.cmd_referencias,
-            "resumen": tareas_contexto.cmd_resumen,
+            "note": context.cmd_anotar,
+            "anotar": context.cmd_anotar,
+            "attach": context.cmd_adjuntar,
+            "adjuntar": context.cmd_adjuntar,
+            "search": context.cmd_buscar,
+            "buscar": context.cmd_buscar,
+            "refs": context.cmd_referencias,
+            "referencias": context.cmd_referencias,
+            "summary": context.cmd_resumen,
+            "resumen": context.cmd_resumen,
         }
         try:
             return comandos[verbo](argv, args)
@@ -1582,28 +1593,23 @@ def despachar(verbo: str, args: list[str], argv: list[str]) -> int:
             # Incluye fallos al enumerar carpetas, anteriores a la lectura de cada archivo.
             print(f"ERROR: {e}", file=sys.stderr)
             return 1
-    if verbo == "seguimiento":
-        from tools import tareas_git
-        return tareas_git.cmd_seguimiento(argv, args)
-    if verbo == "hechos":
-        from tools import tareas_hechos
-        return tareas_hechos.cmd_hechos(argv, args)
+    if verbo in ("follow", "seguimiento"):
+        from trackertast import git
+        return git.cmd_seguimiento(argv, args)
+    if verbo in ("facts", "hechos"):
+        from trackertast import facts
+        return facts.cmd_hechos(argv, args)
 
-    print(f"verbo desconocido para «tarea»: {verbo}", file=sys.stderr)
+    print(f"verbo desconocido para «tasks»: {verbo}", file=sys.stderr)
     return 1
 
 
 def main(argv: list[str] | None = None) -> int:
-    argv_lista = list(sys.argv[1:] if argv is None else argv)
-    if not argv_lista or argv_lista[0] in ("-h", "--help", "help"):
-        ayuda()
-        return 0
-
-    verbo = argv_lista[0]
-    args = argv_lista[1:]
-    return despachar(verbo, args, argv_lista)
+    from trackertast.cli import main as cli_main
+    return cli_main(argv)
 
 
 _entrada_directa = {"__main__": main}.get(__name__)
 if _entrada_directa:
     sys.exit(_entrada_directa())
+
