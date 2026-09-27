@@ -51,18 +51,23 @@ def main(argv=None) -> int:
     parser.add_argument("--tracker", required=True, help="proyecto con tareas/")
     parser.add_argument("--git", action="store_true", help="incluir diagnóstico Git del tracker")
     parser.add_argument("--politicas", default=str(Path(__file__).resolve().parent))
+    # Oracle y el tracker son paquetes aparte: cada uno se llama por el suyo, instalado.
     parser.add_argument("--oracle", nargs="+", default=[
-        sys.executable, "-B", str(Path(__file__).resolve().parents[2] / "tools/cli.py")])
+        sys.executable, "-B", "-m", "oracle_metalenguaje.tools.cli"])
+    parser.add_argument("--tasks", nargs="+", default=[sys.executable, "-B", "-m", "trackertast.cli"])
     args = parser.parse_args(argv)
 
     def ejecutar(argumentos):
         return subprocess.run(args.oracle + argumentos, capture_output=True, text=True, check=False)
 
+    def ejecutar_tasks(argumentos):
+        return subprocess.run(args.tasks + argumentos, capture_output=True, text=True, check=False)
+
     try:
         aceptacion = convertir_aceptacion(ejecutar([
             "juzgar", "--proyecto", args.proyecto, "--con", args.con, "--json"]))
-        tracker = leer_salida(ejecutar([
-            "tarea", "hechos", "--proyecto", args.tracker,
+        tracker = leer_salida(ejecutar_tasks([
+            "facts", "--proyecto", args.tracker,
             *(["--git"] if args.git else [])]), (0,))
         if (not {"tarea_seguimiento", "tarea_cierre_medida"} <= tracker.keys()
                 or "aceptacion_medida" in tracker
