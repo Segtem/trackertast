@@ -42,8 +42,9 @@ class HechosRealesJuzgadosPorOracle(unittest.TestCase):
         self.assertEqual(hechos.returncode, 0, hechos.stderr)
         con = self.temporal / "hechos.json"
         con.write_text(hechos.stdout, encoding="utf-8")
-        return self.correr("oracle_metalenguaje.tools.cli", "juzgar", "--con", str(con),
-                           "--proyecto", str(POLITICAS), *MEDIDAS)
+        return subprocess.run([str(Path(sys.executable).with_name("oracle")), "juzgar",
+                              "--con", str(con), "--proyecto", str(POLITICAS), *MEDIDAS],
+                             cwd=self.repo, env=self.env, capture_output=True, text=True, timeout=120)
 
     def test_un_enlace_local_da_verde_y_roto_da_rojo_con_su_testigo(self):
         self.assertEqual(self.tasks("init").returncode, 0)

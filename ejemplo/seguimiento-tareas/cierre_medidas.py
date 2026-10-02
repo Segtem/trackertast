@@ -53,7 +53,7 @@ def main(argv=None) -> int:
     parser.add_argument("--politicas", default=str(Path(__file__).resolve().parent))
     # Oracle y el tracker son paquetes aparte: cada uno se llama por el suyo, instalado.
     parser.add_argument("--oracle", nargs="+", default=[
-        sys.executable, "-B", "-m", "oracle_metalenguaje.tools.cli"])
+        str(Path(sys.executable).with_name("oracle"))])
     parser.add_argument("--tasks", nargs="+", default=[sys.executable, "-B", "-m", "trackertast.cli"])
     args = parser.parse_args(argv)
 

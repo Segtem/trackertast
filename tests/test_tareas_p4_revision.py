@@ -31,7 +31,7 @@ class ConsumidorDesdeCheckoutTests(unittest.TestCase):
                     "tarea_id": "ejemplo", "origen": "tareas/ejemplo/TAREA.md", "linea": 8,
                     "destino_declarado": "captura-pendiente.png", "clase": "local",
                     "estado": estado}]}))
-                p = subprocess.run([sys.executable, "-B", "-m", "oracle_metalenguaje.tools.cli", "juzgar", "--con", str(evidencia),
+                p = subprocess.run([str(Path(sys.executable).with_name("oracle")), "juzgar", "--con", str(evidencia),
                                     "--proyecto", str(EJEMPLO),
                                     "--medida", "seguimiento.referencias_locales_presentes"],
                                    cwd=td, env=env, capture_output=True, text=True, timeout=15)

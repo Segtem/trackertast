@@ -23,7 +23,7 @@ tasks = "trackertast.cli:main"
 
 [project.optional-dependencies]
 prueba = [
-    "oracle-metalenguaje==0.33.0"
+    "oracle-metalenguaje==0.38.1"
 ]
 
 [tool.setuptools.dynamic]

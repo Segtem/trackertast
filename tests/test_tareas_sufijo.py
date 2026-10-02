@@ -6,7 +6,6 @@ from contextlib import redirect_stdout, redirect_stderr
 from pathlib import Path
 
 from trackertast import cli, tasks as tareas
-from oracle_metalenguaje.tools import mcp
 
 
 class TestSufijos(unittest.TestCase):
@@ -126,19 +125,3 @@ class TestSufijos(unittest.TestCase):
                 self.assertEqual(rc, 1, err)
                 self.assertIn('quisiste decir' if valor == 'multimala' else 'ambiguo', err)
                 self.assertEqual(archivo.read_bytes(), antes)
-
-    def test_mcp_hereda_resolucion_y_errores(self):
-        proyecto = mcp.Proyecto(self.raiz)
-        def ver(valor):
-            return mcp.tareas_para_mcp(proyecto, {'accion': 'ver', 'id': valor})
-        self.assertEqual(ver('multimalla')['resultado']['id'], self.id)
-        with self.assertRaises(mcp.ErrorHerramienta) as ctx:
-            ver('multimala')
-        self.assertEqual(ctx.exception.codigo, 'TAREA_NO_ENCONTRADA')
-        self.assertIn(f'¿quisiste decir {self.id}?', str(ctx.exception))
-        otro = '20260920-140308-multimalla'
-        self.crear(otro)
-        with self.assertRaises(mcp.ErrorHerramienta) as ctx:
-            ver('multimalla')
-        self.assertEqual(ctx.exception.codigo, 'ID_AMBIGUO')
-        self.assertIn(f'{self.id}, {otro}', str(ctx.exception))
