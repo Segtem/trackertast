@@ -14,7 +14,7 @@ alcance y defensa propios:
 - `lectura_sin_omisiones`: requiere una lectura que no declare omisiones del formato soportado.
   Conviene combinarla con la de referencias para no confundir un análisis parcial con uno completo.
 
-Con trackertast y Oracle instalados, desde la raíz del checkout:
+Con Oracle Task y Oracle instalados, desde la raíz del checkout:
 
 ```bash
 tasks facts --proyecto /ruta/al/proyecto --git > /tmp/hechos-tareas.json
@@ -33,7 +33,7 @@ oracle juzgar --proyecto ejemplo/seguimiento-tareas --con /tmp/hechos-tareas.jso
   --medida seguimiento.referencias_locales_presentes --medida seguimiento.lectura_sin_omisiones
 ```
 
-Sin instalar los comandos, los mismos verbos corren con `python3 -m trackertast.cli` y
+Sin instalar los comandos, los mismos verbos corren con `python3 -m oracle_task.cli` y
 `python3 -m oracle_metalenguaje.tools.cli`.
 
 Para adoptar estas políticas, copiar sólo las medidas y declaraciones de relaciones deseadas a

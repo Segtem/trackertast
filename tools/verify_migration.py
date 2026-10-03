@@ -1,4 +1,4 @@
-"""Prueba uv aislada: Trackertast publicado -> Oracle Task wheel, sin tocar herramientas del usuario."""
+"""Prueba uv aislada: Trackertast archivado en GitHub -> Oracle Task wheel, sin tocar herramientas del usuario."""
 import argparse
 import hashlib
 import json
@@ -19,7 +19,7 @@ def main():
             p=subprocess.run(cmd,cwd=repo,env=env,text=True,capture_output=True)
             if p.returncode:raise AssertionError(p.stdout+p.stderr)
             return p.stdout.strip()
-        run('uv','tool','install','--python','3.13','trackertast==0.1.0')
+        run('uv','tool','install','--python','3.13','https://github.com/Segtem/trackertast/releases/download/v0.1.0/trackertast-0.1.0-py3-none-any.whl#sha256=0ce222bbd53a42a8d3917572a5e289261582c10f147cc410652e8387d175331d')
         old=root/'bin/tasks';run(str(old),'init')
         ident=json.loads(run(str(old),'new','Tarea previa a la migración','--sufijo','migracion','--json'))['id']
         before={str(p.relative_to(repo)):hashlib.sha256(p.read_bytes()).hexdigest() for p in repo.rglob('*') if p.is_file()}

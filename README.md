@@ -10,7 +10,7 @@ Cada tarea vive en su propia carpeta bajo `tareas/`, con un archivo central `TAR
 
 Oracle Task continúa Trackertast. El paquete nuevo es `oracle-task`, su módulo Python es `oracle_task` y conserva `tasks` como alias. Los archivos `tareas/`, `TAREA.md`, ids, consultas y hechos no cambian. El repositorio y la URL de la web siguen siendo `Segtem/trackertast` para conservar los enlaces existentes.
 
-`trackertast==0.1.0` permanece disponible para los consumidores publicados, incluido Oracle Factory 0.1.0a1. No se reemplaza ni se borra esa versión. Las importaciones Python nuevas usan `oracle_task`; el paquete nuevo no instala módulos `trackertast`, evitando sobrescribir el código del anterior.
+`oracle-task==0.2.0` ya está publicado en PyPI. El retiro de `trackertast==0.1.0` está pendiente de publicar los consumidores migrados. Las versiones antiguas de Factory y MCP fijan la dependencia anterior y su instalación desde PyPI dejará de funcionar si se elimina. El [release histórico v0.1.0](https://github.com/Segtem/trackertast/releases/tag/v0.1.0) conserva sus artefactos para reproducir migraciones. Las importaciones Python nuevas usan `oracle_task`; el paquete nuevo no instala módulos `trackertast`, evitando sobrescribir el código del anterior.
 
 ## Instalación
 
@@ -30,7 +30,7 @@ pip install .
 
 ## Migración de una instalación con uv
 
-Después de publicar en PyPI, si tenés Trackertast instalado como herramienta, reemplazá su instalación para evitar que ambos reclamen el ejecutable `tasks`:
+Si tenés Trackertast instalado como herramienta, reemplazá su instalación para evitar que ambos reclamen el ejecutable `tasks`:
 
 ```bash
 uv tool uninstall trackertast
@@ -41,7 +41,7 @@ tasks --version
 
 Esto cambia la herramienta instalada, no borra los directorios de tareas de tus proyectos. Evitá instalar ambos paquetes en el mismo entorno pip: aunque los módulos son distintos, comparten el ejecutable `tasks`. Los consumidores que fijan Trackertast deben actualizar su dependencia en su propia próxima versión.
 
-Para probar antes de PyPI, podés instalar el wheel del [release v0.2.0](https://github.com/Segtem/trackertast/releases/tag/v0.2.0).
+También podés instalar el wheel del [release v0.2.0](https://github.com/Segtem/trackertast/releases/tag/v0.2.0).
 
 ## Comandos y ejemplos
 
