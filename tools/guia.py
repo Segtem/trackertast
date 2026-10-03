@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Reconstruye el recorrido de la guía de trackertast y comprueba sus salidas.
+"""Reconstruye el recorrido de la guía de oracle_task y comprueba sus salidas.
 
     python tools/guia.py --escribir    # actualiza las salidas de la guía con las reales
     python tools/guia.py               # falla si alguna salida no coincide con la real
@@ -141,7 +141,7 @@ def correr(
         return texto + "\n", cwd
 
     if argumentos[0] == "tasks":
-        argumentos = [sys.executable, "-m", "trackertast.cli", *argumentos[1:]]
+        argumentos = [sys.executable, "-m", "oracle_task.cli", *argumentos[1:]]
     elif argumentos[0] == "git":
         argumentos = ["git", *argumentos[1:]]
     elif argumentos[0] == "python3":
@@ -196,7 +196,7 @@ def verificar(escribir: bool = False, guia: Path = GUIAS[0]) -> None:
     encontrados = list(bloques(lineas))
     cambios: list[tuple[int, int, str]] = []
 
-    with tempfile.TemporaryDirectory(prefix="trackertast-guia-") as tmp:
+    with tempfile.TemporaryDirectory(prefix="oracle_task-guia-") as tmp:
         temporal = Path(tmp)
         cwd = temporal
         id_map: dict[str, str] = {}

@@ -35,7 +35,7 @@ class HechosRealesJuzgadosPorOracle(unittest.TestCase):
                               capture_output=True, text=True, timeout=120)
 
     def tasks(self, *args):
-        return self.correr("trackertast.cli", "--proyecto", str(self.repo), *args)
+        return self.correr("oracle_task.cli", "--proyecto", str(self.repo), *args)
 
     def juzgar(self):
         hechos = self.tasks("facts")

@@ -22,11 +22,11 @@ RAIZ = Path(__file__).resolve().parents[1]
 DOCS = RAIZ / "docs"
 REPO = "https://github.com/Segtem/trackertast"
 
-# Permitir importar trackertast desde la raíz del repositorio
+# Permitir importar oracle_task desde la raíz del repositorio
 if str(RAIZ) not in sys.path:
     sys.path.insert(0, str(RAIZ))
 
-from trackertast import __version__, cli, tasks
+from oracle_task import __version__, cli, tasks
 
 
 @dataclass(frozen=True)
@@ -294,7 +294,7 @@ def generar_referencia_md() -> str:
     lineas = [
         "# Referencia del CLI (tasks)",
         "",
-        "El comando principal de **trackertast** es `tasks`. Los verbos canónicos son en inglés, con alias en español para mantener compatibilidad.",
+        "El comando principal de **Oracle Task** es `oracle-task`, con `tasks` como alias. Los verbos canónicos son en inglés, con alias en español para mantener compatibilidad.",
         "",
         "## Resumen de comandos",
         "",
@@ -407,7 +407,7 @@ def generar_referencia_md() -> str:
 
 def _titulo(texto: str) -> str:
     m = re.search(r"^# +(.+)$", texto, re.MULTILINE)
-    return re.sub(r"[`*]", "", m.group(1)).strip() if m else "trackertast"
+    return re.sub(r"[`*]", "", m.group(1)).strip() if m else "Oracle Task"
 
 
 def _menu(actual: Pagina, salida: Path) -> str:
@@ -441,7 +441,7 @@ def pagina(p: Pagina) -> str:
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{html.escape(titulo)} — trackertast</title>
+<title>{html.escape(titulo)} — Oracle Task</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&family=Silkscreen&display=swap">
@@ -451,7 +451,7 @@ def pagina(p: Pagina) -> str:
 <body class="doc">
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 <header class="barra">
-  <a class="marca" href="{raiz}"><img src="{raiz}assets/emblema.svg" alt="" width="28" height="28"> trackertast</a>
+  <a class="marca" href="{raiz}"><img src="{raiz}assets/emblema.svg" alt="" width="28" height="28"> Oracle Task</a>
   <nav aria-label="Principal">
     <a href="{raiz}">Inicio</a>
     <a href="{raiz}guia.html">Guía</a>

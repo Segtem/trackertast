@@ -5,7 +5,7 @@ import unittest
 from contextlib import redirect_stdout, redirect_stderr
 from pathlib import Path
 
-from trackertast import cli, tasks as tareas
+from oracle_task import cli, tasks as tareas
 
 
 class TestSufijos(unittest.TestCase):

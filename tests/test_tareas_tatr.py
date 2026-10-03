@@ -17,7 +17,7 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
-from trackertast import cli, tasks as tareas, context as tareas_contexto, graph as tareas_grafo
+from oracle_task import cli, tasks as tareas, context as tareas_contexto, graph as tareas_grafo
 
 
 ID_A = "20260914-110000-a"

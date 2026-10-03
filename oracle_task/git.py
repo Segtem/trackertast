@@ -8,7 +8,7 @@ from pathlib import Path, PurePosixPath
 import subprocess
 import sys
 
-from trackertast import tasks as tareas
+from oracle_task import tasks as tareas
 
 
 def _git(raiz: Path, *argumentos: str) -> subprocess.CompletedProcess:

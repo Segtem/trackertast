@@ -4,7 +4,7 @@ En proyectos donde colaboran personas y modelos de lenguaje (o agentes autónomo
 
 Las ventanas de contexto se llenan, las sesiones de terminal o chat se reinician y los subagentes se destruyen al finalizar su turno. Si las notas, decisiones intermedias y próximos pasos quedan atrapados en el chat o en servicios externos, la siguiente sesión arranca a ciegas.
 
-En **trackertast**, la tarea es la **fuente de verdad** compartida: vive dentro del repositorio en archivos Markdown versionados con Git.
+En **oracle-task**, la tarea es la **fuente de verdad** compartida: vive dentro del repositorio en archivos Markdown versionados con Git.
 
 ## 1. La tarea como fuente de verdad
 
@@ -80,7 +80,7 @@ Para que cualquier agente de codificación (Claude Code, Gemini CLI, Cursor, Aid
 ```markdown
 # Protocolo de trabajo para agentes
 
-Este repositorio utiliza **trackertast** (`tasks`) para el seguimiento de tareas locales en Markdown.
+Este repositorio utiliza **oracle-task** (`tasks`) para el seguimiento de tareas locales en Markdown.
 
 ## Reglas de operación
 
@@ -124,7 +124,7 @@ Este repositorio utiliza **trackertast** (`tasks`) para el seguimiento de tareas
 
 En Git, el historial de commits suele divorciarse del sistema de incidencias: si el tracker está en una plataforma web y el repositorio se migra, los números `#123` pierden significado.
 
-En `trackertast`, el identificador de la tarea es unívoco y atemporal (`YYYYMMDD-HHMMSS[-sufijo]`). Al usar la convención:
+En `oracle-task`, el identificador de la tarea es unívoco y atemporal (`YYYYMMDD-HHMMSS[-sufijo]`). Al usar la convención:
 
 ```text
 20260927-120000-sensor: calibrar divisor de reloj en SPI

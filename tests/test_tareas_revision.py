@@ -13,7 +13,7 @@ import unittest
 from concurrent.futures import ThreadPoolExecutor
 
 
-CLI = Path(__file__).resolve().parents[1] / "trackertast" / "cli.py"
+CLI = Path(__file__).resolve().parents[1] / "oracle_task" / "cli.py"
 CONTENIDO = "# Tarea\n\n- ESTADO: ABIERTA\n- PRIORIDAD: 50\n\nCuerpo\n"
 
 

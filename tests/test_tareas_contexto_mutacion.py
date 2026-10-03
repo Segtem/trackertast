@@ -11,8 +11,8 @@ from pathlib import Path
 from types import SimpleNamespace
 from unittest.mock import patch
 
-from trackertast import cli, context as tareas_contexto
-from trackertast.tasks import TareaError
+from oracle_task import cli, context as tareas_contexto
+from oracle_task.tasks import TareaError
 
 
 class ContextoMutacionTests(unittest.TestCase):

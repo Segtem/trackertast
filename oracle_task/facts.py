@@ -21,7 +21,7 @@ import urllib.parse
 from pathlib import Path, PurePosixPath
 from typing import Any
 
-from trackertast.tasks import (
+from oracle_task.tasks import (
     ARCHIVOS_AUXILIARES_PERMITIDOS,
     ParserDeSubcomando,
     RutaInsegura,
@@ -575,7 +575,7 @@ def extraer_hechos(raiz: Path, *, con_git: bool = False) -> dict[str, list[dict[
     head_git = ""
     commits_leidos: list[dict] | None = None
     if con_git:
-        from trackertast import git as tareas_git
+        from oracle_task import git as tareas_git
 
         commits_leidos = tareas_git.commits(raiz)
         # Una historia cortada es evidencia incompleta: se declara, y la lectura queda incompleta.

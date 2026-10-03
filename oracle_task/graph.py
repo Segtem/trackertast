@@ -7,8 +7,8 @@ import re
 import sys
 from pathlib import Path
 
-from trackertast import tasks as tareas
-from trackertast.tasks import ParserDeSubcomando, auditar_tareas, resolver_raiz_tracker
+from oracle_task import tasks as tareas
+from oracle_task.tasks import ParserDeSubcomando, auditar_tareas, resolver_raiz_tracker
 
 
 PATRON_CANDIDATO_ID = re.compile(

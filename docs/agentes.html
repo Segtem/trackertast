@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>El relevo entre sesiones: personas y agentes — trackertast</title>
+<title>El relevo entre sesiones: personas y agentes — Oracle Task</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&family=Silkscreen&display=swap">
@@ -13,7 +13,7 @@
 <body class="doc">
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 <header class="barra">
-  <a class="marca" href="./"><img src="./assets/emblema.svg" alt="" width="28" height="28"> trackertast</a>
+  <a class="marca" href="./"><img src="./assets/emblema.svg" alt="" width="28" height="28"> Oracle Task</a>
   <nav aria-label="Principal">
     <a href="./">Inicio</a>
     <a href="./guia.html">Guía</a>
@@ -32,7 +32,7 @@
 <h1 id="el-relevo-entre-sesiones-personas-y-agentes">El relevo entre sesiones: personas y agentes<a class="ancla" href="#el-relevo-entre-sesiones-personas-y-agentes" aria-label="Enlace a esta sección">#</a></h1>
 <p>En proyectos donde colaboran personas y modelos de lenguaje (o agentes autónomos), el mayor riesgo no es escribir código incorrecto, sino <strong>perder el contexto de trabajo entre sesiones</strong>.</p>
 <p>Las ventanas de contexto se llenan, las sesiones de terminal o chat se reinician y los subagentes se destruyen al finalizar su turno. Si las notas, decisiones intermedias y próximos pasos quedan atrapados en el chat o en servicios externos, la siguiente sesión arranca a ciegas.</p>
-<p>En <strong>trackertast</strong>, la tarea es la <strong>fuente de verdad</strong> compartida: vive dentro del repositorio en archivos Markdown versionados con Git.</p>
+<p>En <strong>oracle-task</strong>, la tarea es la <strong>fuente de verdad</strong> compartida: vive dentro del repositorio en archivos Markdown versionados con Git.</p>
 <h2 id="1-la-tarea-como-fuente-de-verdad">1. La tarea como fuente de verdad<a class="ancla" href="#1-la-tarea-como-fuente-de-verdad" aria-label="Enlace a esta sección">#</a></h2>
 <p>Cada tarea reside en su propio directorio dentro de <code>tareas/</code> (por ejemplo, <code>tareas/20260927-120000-sensor/</code>), compuesta por:</p>
 <ul><li><strong><code>TAREA.md</code></strong>: contiene el título, los metadatos estructurados (<code>ESTADO</code>, <code>PRIORIDAD</code>, <code>ETIQUETAS</code>) y el cuerpo libre en Markdown con notas fechadas en UTC.</li><li><strong>Adjuntos locales</strong>: capturas, registros, volcados de pruebas, especificaciones o scripts auxiliares.</li></ul>
@@ -64,7 +64,7 @@
 <p>Para que cualquier agente de codificación (Claude Code, Gemini CLI, Cursor, Aider, Devin, etc.) adopte este protocolo en tu proyecto, podés incluir un archivo <code>AGENTS.md</code> en la raíz de tu repositorio con las siguientes instrucciones:</p>
 <pre data-lenguaje="markdown"><code># Protocolo de trabajo para agentes
 
-Este repositorio utiliza **trackertast** (`tasks`) para el seguimiento de tareas locales en Markdown.
+Este repositorio utiliza **oracle-task** (`tasks`) para el seguimiento de tareas locales en Markdown.
 
 ## Reglas de operación
 
@@ -95,7 +95,7 @@ Cuando los cambios estén implementados y verificados:</code></pre>
 <pre><code></code></pre>
 <h2 id="4-por-qué-los-commits-nombran-la-tarea">4. Por qué los commits nombran la tarea<a class="ancla" href="#4-por-qué-los-commits-nombran-la-tarea" aria-label="Enlace a esta sección">#</a></h2>
 <p>En Git, el historial de commits suele divorciarse del sistema de incidencias: si el tracker está en una plataforma web y el repositorio se migra, los números <code>#123</code> pierden significado.</p>
-<p>En <code>trackertast</code>, el identificador de la tarea es unívoco y atemporal (<code>YYYYMMDD-HHMMSS[-sufijo]</code>). Al usar la convención:</p>
+<p>En <code>oracle-task</code>, el identificador de la tarea es unívoco y atemporal (<code>YYYYMMDD-HHMMSS[-sufijo]</code>). Al usar la convención:</p>
 <pre data-lenguaje="text"><code>20260927-120000-sensor: calibrar divisor de reloj en SPI</code></pre>
 <p>se establece un vínculo bidireccional permanente:</p>
 <ul><li>Desde el commit en <code>git log</code>, se llega de inmediato a la carpeta <code>tareas/20260927-120000-sensor/TAREA.md</code> y a toda su evidencia histórica.</li><li>Desde la tarea, <code>tasks follow</code> y <code>tasks refs</code> pueden rastrear qué commits tocaron ese identificador.</li></ul>

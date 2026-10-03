@@ -19,7 +19,7 @@ import unicodedata
 from pathlib import Path
 from typing import Any
 
-from trackertast.tasks import (
+from oracle_task.tasks import (
     ID_COMPLETO_RE,
     ParserDeSubcomando,
     RutaInsegura,

@@ -17,7 +17,7 @@ from oracle_metalenguaje.nucleo.relacion import cargar_relaciones
 
 
 RAIZ = Path(__file__).resolve().parents[1]
-CLI = RAIZ / "trackertast" / "cli.py"
+CLI = RAIZ / "oracle_task" / "cli.py"
 EJEMPLO = RAIZ / "ejemplo" / "seguimiento-tareas"
 ID = "20260912-140000-investigacion"
 

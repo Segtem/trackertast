@@ -9,7 +9,7 @@ import tempfile
 import unittest
 from unittest import mock
 
-from trackertast import tasks as tareas
+from oracle_task import tasks as tareas
 
 
 class LimitesDeTareasTests(unittest.TestCase):

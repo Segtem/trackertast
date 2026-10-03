@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from unittest import mock
 
-from trackertast import cli, tasks as tareas
+from oracle_task import cli, tasks as tareas
 
 
 class CierreMedidasTests(unittest.TestCase):

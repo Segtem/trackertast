@@ -12,10 +12,10 @@ import tempfile
 import unittest
 from unittest import mock
 
-from trackertast import tasks as tareas, git as tareas_git
+from oracle_task import tasks as tareas, git as tareas_git
 
 RAIZ = Path(tareas.__file__).resolve().parents[1]
-CLI = RAIZ / "trackertast/cli.py"
+CLI = RAIZ / "oracle_task/cli.py"
 EJEMPLO = RAIZ / "ejemplo/seguimiento-tareas"
 
 

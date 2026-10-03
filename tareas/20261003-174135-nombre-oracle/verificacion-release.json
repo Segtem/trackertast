@@ -1,0 +1,16 @@
+{
+  "version": "0.2.0",
+  "python_tests": 500,
+  "guia_pasos": 24,
+  "sitio": "vigente",
+  "oracle_ejemplo": "VERDE; medidas contra corpus, no certificación universal del producto",
+  "migracion_uv": "Trackertast 0.1.0 -> wheel nuevo: archivos e ids intactos, ambos comandos operativos",
+  "entorno": "Linux, Python 3.13",
+  "sha256": {
+    "oracle_task-0.2.0-py3-none-any.whl": "a1e74360b5d32b6b2d03340bba74ab7ad5026faaaba291590329c52613c4be14",
+    "oracle_task-0.2.0.tar.gz": "f1e61e186cd50e9e06d6d75eb1586128c9762394b16e094ced3c0419167ed988"
+  },
+  "twine": "PASSED",
+  "namespace": "oracle_task; el wheel no incluye módulos trackertast",
+  "publicacion_pypi": "pendiente del usuario"
+}

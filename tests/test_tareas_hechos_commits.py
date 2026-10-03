@@ -16,8 +16,8 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
-from trackertast import cli, git as tareas_git
-from trackertast.facts import _commit_del_tracker, extraer_hechos
+from oracle_task import cli, git as tareas_git
+from oracle_task.facts import _commit_del_tracker, extraer_hechos
 
 
 def _git(raiz: Path, *orden: str) -> None:

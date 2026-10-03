@@ -1,6 +1,6 @@
 # Auditoría formal con Oracle
 
-**trackertast** es un proyecto independiente de Oracle: no requiere motores de evaluación, catálogos de medidas ni dependencias complejas para operar en el día a día.
+**oracle-task** es un proyecto independiente de Oracle: no requiere motores de evaluación, catálogos de medidas ni dependencias complejas para operar en el día a día.
 
 Sin embargo, cuenta con un puente nativo de exportación de evidencia relacional: el comando `tasks facts` (alias `tasks hechos`). Esto permite que Oracle audite formalmente la integridad del tracker y de la historia de Git utilizando políticas declarativas.
 
@@ -58,4 +58,4 @@ En `.github/workflows/tracker.yml`, el proyecto de ejemplo se ejecuta para verif
   run: oracle test --proyecto ejemplo/seguimiento-tareas
 ```
 
-De esta manera, si en tu equipo o empresa adoptás Oracle, el tracker de tareas se integra automáticamente con el sistema de verificación continua de especificaciones. Si no usás Oracle, `trackertast` sigue funcionando sin ninguna merma de funcionalidad.
+De esta manera, si en tu equipo o empresa adoptás Oracle, el tracker de tareas se integra automáticamente con el sistema de verificación continua de especificaciones. Si no usás Oracle, `oracle-task` sigue funcionando sin ninguna merma de funcionalidad.

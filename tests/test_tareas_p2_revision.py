@@ -10,7 +10,7 @@ import unittest
 from urllib.parse import quote
 
 
-CLI = Path(__file__).resolve().parents[1] / "trackertast" / "cli.py"
+CLI = Path(__file__).resolve().parents[1] / "oracle_task" / "cli.py"
 ID = "20260912-120000-investigacion"
 
 

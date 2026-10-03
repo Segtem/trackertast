@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Auditoría formal con Oracle — trackertast</title>
+<title>Auditoría formal con Oracle — Oracle Task</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&family=Silkscreen&display=swap">
@@ -13,7 +13,7 @@
 <body class="doc">
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 <header class="barra">
-  <a class="marca" href="./"><img src="./assets/emblema.svg" alt="" width="28" height="28"> trackertast</a>
+  <a class="marca" href="./"><img src="./assets/emblema.svg" alt="" width="28" height="28"> Oracle Task</a>
   <nav aria-label="Principal">
     <a href="./">Inicio</a>
     <a href="./guia.html">Guía</a>
@@ -30,7 +30,7 @@
   </details>
   <main id="contenido" class="prosa">
 <h1 id="auditoría-formal-con-oracle">Auditoría formal con Oracle<a class="ancla" href="#auditoría-formal-con-oracle" aria-label="Enlace a esta sección">#</a></h1>
-<p><strong>trackertast</strong> es un proyecto independiente de Oracle: no requiere motores de evaluación, catálogos de medidas ni dependencias complejas para operar en el día a día.</p>
+<p><strong>oracle-task</strong> es un proyecto independiente de Oracle: no requiere motores de evaluación, catálogos de medidas ni dependencias complejas para operar en el día a día.</p>
 <p>Sin embargo, cuenta con un puente nativo de exportación de evidencia relacional: el comando <code>tasks facts</code> (alias <code>tasks hechos</code>). Esto permite que Oracle audite formalmente la integridad del tracker y de la historia de Git utilizando políticas declarativas.</p>
 <h2 id="1-evidencia-relacional-tasks-facts">1. Evidencia relacional: <code>tasks facts</code><a class="ancla" href="#1-evidencia-relacional-tasks-facts" aria-label="Enlace a esta sección">#</a></h2>
 <p>El comando:</p>
@@ -50,7 +50,7 @@ oracle juzgar --proyecto ejemplo/seguimiento-tareas --con hechos.json</code></pr
 <p>En <code>.github/workflows/tracker.yml</code>, el proyecto de ejemplo se ejecuta para verificar la coherencia de las políticas del catálogo:</p>
 <pre data-lenguaje="yaml"><code>- name: Juzgar ejemplo de seguimiento
   run: oracle test --proyecto ejemplo/seguimiento-tareas</code></pre>
-<p>De esta manera, si en tu equipo o empresa adoptás Oracle, el tracker de tareas se integra automáticamente con el sistema de verificación continua de especificaciones. Si no usás Oracle, <code>trackertast</code> sigue funcionando sin ninguna merma de funcionalidad.</p>
+<p>De esta manera, si en tu equipo o empresa adoptás Oracle, el tracker de tareas se integra automáticamente con el sistema de verificación continua de especificaciones. Si no usás Oracle, <code>oracle-task</code> sigue funcionando sin ninguna merma de funcionalidad.</p>
     <p class="fuente">Esta página se genera desde <a href="https://github.com/Segtem/trackertast/blob/main/docs/oracle.md" rel="noopener">docs/oracle.md</a>.</p>
   </main>
   <aside class="en-esta-pagina" aria-label="En esta página">

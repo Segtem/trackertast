@@ -1,6 +1,6 @@
 # Tareas y contexto de trabajo en Git
 
-Contrato, especificación y guía de uso del tracker local de tareas trackertast (tasks).
+Contrato, especificación y guía de uso del tracker local de tareas oracle-task (tasks).
 
 ## 1. El modelo
 

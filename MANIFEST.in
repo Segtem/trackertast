@@ -1,0 +1,6 @@
+include LICENSE
+include NOTAS-DE-RELEASE.md
+recursive-include tests *.py
+recursive-include tools *.py
+recursive-include docs *.md *.html *.css *.svg
+recursive-include ejemplo *.py *.md *.json *.oracle *.relacion *.caso

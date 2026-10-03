@@ -1,6 +1,6 @@
 # Referencia del CLI (tasks)
 
-El comando principal de **trackertast** es `tasks`. Los verbos canónicos son en inglés, con alias en español para mantener compatibilidad.
+El comando principal de **Oracle Task** es `oracle-task`, con `tasks` como alias. Los verbos canónicos son en inglés, con alias en español para mantener compatibilidad.
 
 ## Resumen de comandos
 

@@ -14,7 +14,7 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
-from trackertast import cli, tasks as tareas
+from oracle_task import cli, tasks as tareas
 
 
 class TareasTestCase(unittest.TestCase):

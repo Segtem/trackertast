@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Referencia del CLI (tasks) — trackertast</title>
+<title>Referencia del CLI (tasks) — Oracle Task</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&family=Silkscreen&display=swap">
@@ -13,7 +13,7 @@
 <body class="doc">
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 <header class="barra">
-  <a class="marca" href="./"><img src="./assets/emblema.svg" alt="" width="28" height="28"> trackertast</a>
+  <a class="marca" href="./"><img src="./assets/emblema.svg" alt="" width="28" height="28"> Oracle Task</a>
   <nav aria-label="Principal">
     <a href="./">Inicio</a>
     <a href="./guia.html">Guía</a>
@@ -30,7 +30,7 @@
   </details>
   <main id="contenido" class="prosa">
 <h1 id="referencia-del-cli-tasks">Referencia del CLI (tasks)<a class="ancla" href="#referencia-del-cli-tasks" aria-label="Enlace a esta sección">#</a></h1>
-<p>El comando principal de <strong>trackertast</strong> es <code>tasks</code>. Los verbos canónicos son en inglés, con alias en español para mantener compatibilidad.</p>
+<p>El comando principal de <strong>Oracle Task</strong> es <code>oracle-task</code>, con <code>tasks</code> como alias. Los verbos canónicos son en inglés, con alias en español para mantener compatibilidad.</p>
 <h2 id="resumen-de-comandos">Resumen de comandos<a class="ancla" href="#resumen-de-comandos" aria-label="Enlace a esta sección">#</a></h2>
 <div class="tabla"><table><thead><tr><th>Canónico</th><th>Alias</th><th>Descripción</th></tr></thead><tbody><tr><td><a href="#tasks-init"><code>init</code></a></td><td>—</td><td>Inicializa el tracker de tareas en tareas/</td></tr><tr><td><a href="#tasks-new"><code>new</code></a></td><td><code>nueva</code></td><td>Crea una nueva tarea con plantilla lista</td></tr><tr><td><a href="#tasks-list"><code>list</code></a></td><td><code>listar</code>, <code>ls</code></td><td>Lista tareas del proyecto (alias: listar, ls)</td></tr><tr><td><a href="#tasks-show"><code>show</code></a></td><td><code>ver</code></td><td>Muestra detalles de una tarea o su ruta</td></tr><tr><td><a href="#tasks-close"><code>close</code></a></td><td><code>cerrar</code></td><td>Marca una tarea como CERRADA de forma atómica</td></tr><tr><td><a href="#tasks-reopen"><code>reopen</code></a></td><td><code>reabrir</code></td><td>Marca una tarea como ABIERTA de forma atómica</td></tr><tr><td><a href="#tasks-review"><code>review</code></a></td><td><code>revisar</code></td><td>Audita la integridad del directorio tareas/</td></tr><tr><td><a href="#tasks-note"><code>note</code></a></td><td><code>anotar</code></td><td>Agrega una nota, URL o marca temporal a una tarea existente</td></tr><tr><td><a href="#tasks-attach"><code>attach</code></a></td><td><code>adjuntar</code></td><td>Copia un adjunto al directorio de la tarea y lo vincula en TAREA.md</td></tr><tr><td><a href="#tasks-search"><code>search</code></a></td><td><code>buscar</code></td><td>Busca texto de forma literal e insensible a mayúsculas en tareas y notas</td></tr><tr><td><a href="#tasks-refs"><code>refs</code></a></td><td><code>referencias</code></td><td>Busca menciones textuales del ID canónico en tareas, notas y código del proyecto</td></tr><tr><td><a href="#tasks-summary"><code>summary</code></a></td><td><code>resumen</code></td><td>Muestra cantidades agregadas por estado y etiquetas a partir de registros válidos</td></tr><tr><td><a href="#tasks-follow"><code>follow</code></a></td><td><code>seguimiento</code></td><td>Compara archivos del tracker con el índice y HEAD de Git, sin escribir</td></tr><tr><td><a href="#tasks-facts"><code>facts</code></a></td><td><code>hechos</code></td><td>Emite hechos relacionales del tracker de tareas en formato JSON</td></tr><tr><td><a href="#tasks-tag"><code>tag</code></a></td><td><code>etiquetar</code></td><td>Agrega una o más etiquetas a tareas existentes</td></tr><tr><td><a href="#tasks-untag"><code>untag</code></a></td><td><code>desetiquetar</code></td><td>Quita una o más etiquetas de tareas</td></tr><tr><td><a href="#tasks-graph"><code>graph</code></a></td><td><code>grafo</code></td><td>Emite el grafo de referencias entre tareas en formato DOT o JSON</td></tr></tbody></table></div>
 <h2 id="opciones-comunes">Opciones comunes<a class="ancla" href="#opciones-comunes" aria-label="Enlace a esta sección">#</a></h2>

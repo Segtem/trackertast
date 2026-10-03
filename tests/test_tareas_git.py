@@ -11,7 +11,7 @@ import tempfile
 import unittest
 from unittest import mock
 
-from trackertast import git as tareas_git
+from oracle_task import git as tareas_git
 
 
 @unittest.skipUnless(shutil.which("git"), "requiere Git")

@@ -24,8 +24,8 @@ import sys
 import tempfile
 import unittest
 
-from trackertast.tasks import Tarea
-from trackertast.query import (
+from oracle_task.tasks import Tarea
+from oracle_task.query import (
     Consulta,
     ConsultaInvalida,
     Nodo,
@@ -45,7 +45,7 @@ from trackertast.query import (
 )
 
 RAIZ = Path(__file__).resolve().parents[1]
-CLI = RAIZ / "trackertast/cli.py"
+CLI = RAIZ / "oracle_task/cli.py"
 
 
 def crear_tarea_en_memoria(

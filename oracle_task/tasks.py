@@ -19,7 +19,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-from trackertast.query import ConsultaInvalida, compilar
+from oracle_task.query import ConsultaInvalida, compilar
 
 ID_RE = re.compile(r"^[a-zA-Z0-9][a-zA-Z0-9_-]*$")
 ID_COMPLETO_RE = re.compile(r"^[0-9]{8}-[0-9]{6}(?:-[a-z0-9_-]+)*$")
@@ -1467,7 +1467,7 @@ def cmd_desetiquetar(argv: list[str], args: list[str]) -> int:
 
 
 def ayuda() -> None:
-    print("""tasks — tracker local de tareas en Markdown.
+    print("""oracle-task — tracker local de tareas en Markdown (alias: tasks).
 
 Uso:
   tasks init [ruta] [opciones]          Inicializa el tracker de tareas en tareas/
@@ -1565,7 +1565,7 @@ def despachar(verbo: str, args: list[str], argv: list[str]) -> int:
     if verbo in ("untag", "desetiquetar"):
         return cmd_desetiquetar(argv, args)
     if verbo in ("graph", "grafo"):
-        from trackertast import graph
+        from oracle_task import graph
         return graph.cmd_grafo(argv, args)
     if verbo in (
         "note", "anotar",
@@ -1574,7 +1574,7 @@ def despachar(verbo: str, args: list[str], argv: list[str]) -> int:
         "refs", "referencias",
         "summary", "resumen",
     ):
-        from trackertast import context
+        from oracle_task import context
         comandos = {
             "note": context.cmd_anotar,
             "anotar": context.cmd_anotar,
@@ -1594,10 +1594,10 @@ def despachar(verbo: str, args: list[str], argv: list[str]) -> int:
             print(f"ERROR: {e}", file=sys.stderr)
             return 1
     if verbo in ("follow", "seguimiento"):
-        from trackertast import git
+        from oracle_task import git
         return git.cmd_seguimiento(argv, args)
     if verbo in ("facts", "hechos"):
-        from trackertast import facts
+        from oracle_task import facts
         return facts.cmd_hechos(argv, args)
 
     print(f"verbo desconocido para «tasks»: {verbo}", file=sys.stderr)
@@ -1605,7 +1605,7 @@ def despachar(verbo: str, args: list[str], argv: list[str]) -> int:
 
 
 def main(argv: list[str] | None = None) -> int:
-    from trackertast.cli import main as cli_main
+    from oracle_task.cli import main as cli_main
     return cli_main(argv)
 
 

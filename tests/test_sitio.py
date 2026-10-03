@@ -87,8 +87,8 @@ class ElConvertidorTests(unittest.TestCase):
         self.assertIn('href="guia.html#2-crear-tareas"', salida)
 
     def test_un_enlace_a_un_archivo_del_repo_va_a_github(self) -> None:
-        salida = self.convertir("[cli](../trackertast/cli.py)")
-        self.assertIn(f'href="{sitio.REPO}/blob/main/trackertast/cli.py"', salida)
+        salida = self.convertir("[cli](../oracle_task/cli.py)")
+        self.assertIn(f'href="{sitio.REPO}/blob/main/oracle_task/cli.py"', salida)
 
     def test_una_lista_anidada_queda_anidada(self) -> None:
         self.assertIn("<li>dos\n<ul><li>dos.a</li></ul></li>", self.convertir("- uno\n- dos\n  - dos.a"))

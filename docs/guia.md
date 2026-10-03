@@ -1,6 +1,8 @@
-# Guía paso a paso de trackertast
+# Guía paso a paso de oracle-task
 
-Esta guía recorre el ciclo completo de uso de **trackertast** (`tasks`), desde la inicialización hasta el cierre de una tarea, pasando por consultas avanzadas con TQL, notas de avance, adjuntos, referencias cruzadas, el grafo de dependencias y el seguimiento en Git.
+Esta guía recorre el ciclo completo de uso de **oracle-task** (`tasks`), desde la inicialización hasta el cierre de una tarea, pasando por consultas avanzadas con TQL, notas de avance, adjuntos, referencias cruzadas, el grafo de dependencias y el seguimiento en Git.
+
+`oracle-task` es el comando principal y `tasks` su alias compatible. La guía usa el alias, y funciona sobre las mismas carpetas de tareas existentes.
 
 Cada paso muestra el comando ejecutado y la salida real obtenida.
 

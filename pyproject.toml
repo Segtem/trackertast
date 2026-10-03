@@ -3,7 +3,7 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "trackertast"
+name = "oracle-task"
 dynamic = ["version"]
 description = "Tracker local de tareas en archivos Markdown dentro del repositorio"
 readme = "README.md"
@@ -19,7 +19,8 @@ Homepage = "https://github.com/Segtem/trackertast"
 Repository = "https://github.com/Segtem/trackertast"
 
 [project.scripts]
-tasks = "trackertast.cli:main"
+oracle-task = "oracle_task.cli:main"
+tasks = "oracle_task.cli:main"
 
 [project.optional-dependencies]
 prueba = [
@@ -27,7 +28,7 @@ prueba = [
 ]
 
 [tool.setuptools.dynamic]
-version = { attr = "trackertast.__version__" }
+version = { attr = "oracle_task.__version__" }
 
 [tool.setuptools.packages.find]
-include = ["trackertast*"]
+include = ["oracle_task*"]

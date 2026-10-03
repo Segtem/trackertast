@@ -13,7 +13,7 @@ import tempfile
 import unittest
 
 RAIZ = Path(__file__).resolve().parents[1]
-CLI = RAIZ / "trackertast/cli.py"
+CLI = RAIZ / "oracle_task/cli.py"
 
 A = "20260915-100000-a"   # P90 [bug, ui]
 B = "20260915-100001-b"   # P50 [bug]
@@ -240,12 +240,12 @@ class RevisionDeLaEntregaTests(TrackerTemporal):
                 self.assertIn("^", p.stderr)
 
     def test_el_id_de_la_consulta_es_el_del_tracker(self):
-        from trackertast import tasks as tareas, query as tareas_consulta
+        from oracle_task import tasks as tareas, query as tareas_consulta
         self.assertEqual(tareas_consulta.ID_COMPLETO_RE.pattern, tareas.ID_COMPLETO_RE.pattern)
 
     def test_explicar_nombra_cada_primaria(self):
         """Sobrevivientes de mutación: el `explicar` de cinco nodos no lo fijaba ningún test."""
-        from trackertast.query import compilar
+        from oracle_task.query import compilar
         forma = compilar("cualquiera y etiquetada o :Bug y no 20260915-023750-tql o prioridad desde 5")
         self.assertEqual(
             forma.explicar().splitlines()[-1],
@@ -259,7 +259,7 @@ class RevisionDeLaEntregaTests(TrackerTemporal):
         """Sobreviviente de mutación: por el CLI un `return None` también sale 0."""
         import contextlib
         import io
-        from trackertast import tasks as tareas
+        from oracle_task import tasks as tareas
         with contextlib.redirect_stdout(io.StringIO()) as salida:
             self.assertEqual(tareas.cmd_listar([], [":a", "--explicar"]), 0)
         self.assertIn("COMPILADO:", salida.getvalue())

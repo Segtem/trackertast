@@ -9,7 +9,7 @@ from types import SimpleNamespace
 import unittest
 from unittest.mock import patch
 
-from trackertast import cli, context as tareas_contexto
+from oracle_task import cli, context as tareas_contexto
 
 
 class ErroresContextoTests(unittest.TestCase):
@@ -110,7 +110,7 @@ class ErroresContextoTests(unittest.TestCase):
             def read(self, cantidad=-1):
                 solicitudes.append(cantidad)
                 return self.archivo.read(cantidad)
-        with patch('trackertast.context.open', LecturaObservada, create=True):
+        with patch('oracle_task.context.open', LecturaObservada, create=True):
             resultado = tareas_contexto.leer_archivo_texto_si_aplica(self.origen)
         self.assertEqual(resultado, (['Captura construida'], None, False))
         self.assertTrue(solicitudes)

@@ -1,4 +1,4 @@
-"""Entry point propio para trackertast.
+"""Entry point propio para oracle_task.
 
     tasks <verbo> [opciones]
     tasks --help
@@ -12,7 +12,7 @@ from __future__ import annotations
 import sys
 from typing import Sequence
 
-from trackertast import __version__, tasks
+from oracle_task import __version__, tasks
 
 VERBOS_CANONICOS: tuple[str, ...] = (
     "init",
@@ -75,7 +75,7 @@ def ayuda() -> None:
 
 
 def version() -> None:
-    print(f"tasks {__version__}")
+    print(f"oracle-task {__version__}")
 
 
 def _verbo_desconocido(palabra: str) -> int:

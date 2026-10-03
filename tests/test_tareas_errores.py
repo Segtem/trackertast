@@ -27,8 +27,8 @@ from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 from unittest import mock
 
-from trackertast import tasks as tareas
-from trackertast.tasks import (
+from oracle_task import tasks as tareas
+from oracle_task.tasks import (
     RutaInsegura,
     TareaError,
     TareaInvalida,
@@ -300,7 +300,7 @@ class TestErroresIOYArchivo(ErroresBaseTestCase):
     def test_cmd_nueva_error_crear_carpeta_atomica_retorna_1_exacto(self) -> None:
         """Evita que fallos de E/S al crear la carpeta de la tarea devuelvan código distinto de 1."""
         self._callado(tareas.cmd_init, ["init", "--proyecto", str(self.raiz)], ["--proyecto", str(self.raiz)])
-        with mock.patch("trackertast.tasks.crear_carpeta_tarea_atomica", side_effect=OSError("Fallo en creacion de carpeta")):
+        with mock.patch("oracle_task.tasks.crear_carpeta_tarea_atomica", side_effect=OSError("Fallo en creacion de carpeta")):
             rc, out, err = self._callado(
                 tareas.cmd_nueva,
                 ["nueva", "--proyecto", str(self.raiz), "Mi Tarea"],
@@ -458,7 +458,7 @@ class TestErroresActualizarEstado(ErroresBaseTestCase):
         """Evita que errores de validación o E/S en actualizar_estado_tarea al cerrar devuelvan código distinto de 1."""
         self._callado(tareas.cmd_init, ["init", "--proyecto", str(self.raiz)], ["--proyecto", str(self.raiz)])
         id_t, _ = self._crear_tarea(sufijo="cerrarerr")
-        with mock.patch("trackertast.tasks.actualizar_estado_tarea", side_effect=TareaInvalida("documento corrupto")):
+        with mock.patch("oracle_task.tasks.actualizar_estado_tarea", side_effect=TareaInvalida("documento corrupto")):
             rc, out, err = self._callado(
                 tareas.cmd_cerrar,
                 ["cerrar", id_t, "--proyecto", str(self.raiz)],
@@ -467,7 +467,7 @@ class TestErroresActualizarEstado(ErroresBaseTestCase):
         self.assertEqual(rc, 1)
         self.assertIn("documento corrupto", err)
 
-        with mock.patch("trackertast.tasks.actualizar_estado_tarea", side_effect=OSError("fallo de escritura atomica")):
+        with mock.patch("oracle_task.tasks.actualizar_estado_tarea", side_effect=OSError("fallo de escritura atomica")):
             rc, out, err = self._callado(
                 tareas.cmd_cerrar,
                 ["cerrar", id_t, "--proyecto", str(self.raiz)],
@@ -519,7 +519,7 @@ class TestErroresActualizarEstado(ErroresBaseTestCase):
         """Evita que errores de validación o E/S en actualizar_estado_tarea al reabrir devuelvan código distinto de 1."""
         self._callado(tareas.cmd_init, ["init", "--proyecto", str(self.raiz)], ["--proyecto", str(self.raiz)])
         id_t, _ = self._crear_tarea(sufijo="reabrirerr", estado="CERRADA")
-        with mock.patch("trackertast.tasks.actualizar_estado_tarea", side_effect=TareaInvalida("formato corrupto")):
+        with mock.patch("oracle_task.tasks.actualizar_estado_tarea", side_effect=TareaInvalida("formato corrupto")):
             rc, out, err = self._callado(
                 tareas.cmd_reabrir,
                 ["reabrir", id_t, "--proyecto", str(self.raiz)],
@@ -528,7 +528,7 @@ class TestErroresActualizarEstado(ErroresBaseTestCase):
         self.assertEqual(rc, 1)
         self.assertIn("formato corrupto", err)
 
-        with mock.patch("trackertast.tasks.actualizar_estado_tarea", side_effect=OSError("fallo de E/S")):
+        with mock.patch("oracle_task.tasks.actualizar_estado_tarea", side_effect=OSError("fallo de E/S")):
             rc, out, err = self._callado(
                 tareas.cmd_reabrir,
                 ["reabrir", id_t, "--proyecto", str(self.raiz)],
@@ -665,7 +665,7 @@ class TestDespachoYMain(ErroresBaseTestCase):
         for flag in ("", "-h", "--help", "help"):
             rc, out, err = self._callado(tareas.despachar, flag, [], [flag] if flag else [])
             self.assertEqual(rc, 0)
-            self.assertIn("tasks — tracker local de tareas en Markdown", out)
+            self.assertIn("oracle-task — tracker local de tareas en Markdown", out)
 
     def test_despachar_verbo_desconocido_devuelve_1_exacto(self) -> None:
         """Evita que un verbo desconocido devuelva un código distinto de 1."""
@@ -677,7 +677,7 @@ class TestDespachoYMain(ErroresBaseTestCase):
         """Evita que excepciones TareaError en comandos P2 escapen sin traducción o devuelvan código distinto de 1."""
         verbos_p2 = ("anotar", "adjuntar", "buscar", "referencias", "resumen")
         for verbo in verbos_p2:
-            with mock.patch(f"trackertast.context.cmd_{verbo}", side_effect=TareaError(f"error tarea en {verbo}")):
+            with mock.patch(f"oracle_task.context.cmd_{verbo}", side_effect=TareaError(f"error tarea en {verbo}")):
                 rc, out, err = self._callado(
                     tareas.despachar,
                     verbo,
@@ -691,7 +691,7 @@ class TestDespachoYMain(ErroresBaseTestCase):
         """Evita que excepciones OSError en comandos P2 escapen sin traducción o devuelvan código distinto de 1."""
         verbos_p2 = ("anotar", "adjuntar", "buscar", "referencias", "resumen")
         for verbo in verbos_p2:
-            with mock.patch(f"trackertast.context.cmd_{verbo}", side_effect=OSError(f"error io en {verbo}")):
+            with mock.patch(f"oracle_task.context.cmd_{verbo}", side_effect=OSError(f"error io en {verbo}")):
                 rc, out, err = self._callado(
                     tareas.despachar,
                     verbo,
@@ -703,14 +703,14 @@ class TestDespachoYMain(ErroresBaseTestCase):
 
     def test_despachar_seguimiento_y_hechos_delega_correctamente(self) -> None:
         """Evita que despachar altere los argumentos o código de salida al delegar a seguimiento y hechos."""
-        with mock.patch("trackertast.git.cmd_seguimiento", return_value=42) as m_seg:
+        with mock.patch("oracle_task.git.cmd_seguimiento", return_value=42) as m_seg:
             rc, out, err = self._callado(
                 tareas.despachar, "seguimiento", ["--proyecto", str(self.raiz)], ["seguimiento", "--proyecto", str(self.raiz)]
             )
             self.assertEqual(rc, 42)
             m_seg.assert_called_once_with(["seguimiento", "--proyecto", str(self.raiz)], ["--proyecto", str(self.raiz)])
 
-        with mock.patch("trackertast.facts.cmd_hechos", return_value=43) as m_hech:
+        with mock.patch("oracle_task.facts.cmd_hechos", return_value=43) as m_hech:
             rc, out, err = self._callado(
                 tareas.despachar, "hechos", ["--proyecto", str(self.raiz)], ["hechos", "--proyecto", str(self.raiz)]
             )
@@ -722,19 +722,19 @@ class TestDespachoYMain(ErroresBaseTestCase):
         for inv in ([], ["-h"], ["--help"], ["help"]):
             rc, out, err = self._callado(tareas.main, inv)
             self.assertEqual(rc, 0)
-            self.assertIn("tasks — tracker local de tareas en Markdown", out)
+            self.assertIn("oracle-task — tracker local de tareas en Markdown", out)
 
     def test_main_con_sys_argv_por_defecto(self) -> None:
         """Evita que main con argv=None falle al consumir sys.argv[1:] o propague errores indebidos."""
         with mock.patch.object(sys, "argv", ["tasks"]):
             rc, out, err = self._callado(tareas.main)
             self.assertEqual(rc, 0)
-            self.assertIn("tasks — tracker local de tareas en Markdown", out)
+            self.assertIn("oracle-task — tracker local de tareas en Markdown", out)
 
         with mock.patch.object(sys, "argv", ["tasks", "-h"]):
             rc, out, err = self._callado(tareas.main)
             self.assertEqual(rc, 0)
-            self.assertIn("tasks — tracker local de tareas en Markdown", out)
+            self.assertIn("oracle-task — tracker local de tareas en Markdown", out)
 
         with mock.patch.object(sys, "argv", ["tasks", "init", "--proyecto", str(self.raiz)]):
             rc, out, err = self._callado(tareas.main)

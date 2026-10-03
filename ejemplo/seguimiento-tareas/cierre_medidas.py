@@ -54,7 +54,7 @@ def main(argv=None) -> int:
     # Oracle y el tracker son paquetes aparte: cada uno se llama por el suyo, instalado.
     parser.add_argument("--oracle", nargs="+", default=[
         str(Path(sys.executable).with_name("oracle"))])
-    parser.add_argument("--tasks", nargs="+", default=[sys.executable, "-B", "-m", "trackertast.cli"])
+    parser.add_argument("--tasks", nargs="+", default=[sys.executable, "-B", "-m", "oracle_task.cli"])
     args = parser.parse_args(argv)
 
     def ejecutar(argumentos):

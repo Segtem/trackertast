@@ -1,4 +1,4 @@
-# Suite de pruebas de trackertast
+# Suite de pruebas de oracle_task
 
 import sys
 from pathlib import Path

@@ -22,7 +22,7 @@ import unittest
 from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 
-from trackertast import cli, tasks as tareas
+from oracle_task import cli, tasks as tareas
 
 
 class MutacionBaseTestCase(unittest.TestCase):
@@ -340,7 +340,7 @@ class TestMutacionCliComandosYCodigos(MutacionBaseTestCase):
     def test_cmd_nueva_corta_el_sufijo_en_una_palabra_entera(self) -> None:
         """Media palabra se lee peor que una palabra menos, y el listado está para leerse de un
         vistazo. Si el corte cae justo en el guion, la última palabra ya está entera."""
-        from trackertast.tasks import _sufijo_del_titulo
+        from oracle_task.tasks import _sufijo_del_titulo
 
         self.assertEqual(_sufijo_del_titulo("juzgar evidencia real desde el CLI 0.18"),
                          "juzgar-evidencia")

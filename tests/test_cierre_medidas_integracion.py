@@ -16,8 +16,8 @@ import unittest
 from unittest import mock
 
 from oracle_metalenguaje.tools import cli as oracle_cli
-from trackertast import cli as tasks_cli
-from trackertast import facts as tareas_hechos
+from oracle_task import cli as tasks_cli
+from oracle_task import facts as tareas_hechos
 
 RAIZ = Path(__file__).resolve().parents[1]
 EJEMPLO = RAIZ / "ejemplo/seguimiento-tareas"

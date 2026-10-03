@@ -29,6 +29,8 @@ jobs:
       - name: Verificar guía
         run: python tools/guia.py
       - name: Verificar CLI
-        run: tasks --help
+        run: oracle-task --help
+      - name: Verificar alias compatible
+        run: tasks --version
       - name: Juzgar ejemplo de seguimiento
         run: oracle test --proyecto ejemplo/seguimiento-tareas

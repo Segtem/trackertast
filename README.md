@@ -1,4 +1,4 @@
-# trackertast
+# Oracle Task
 
 Tracker local de tareas en archivos Markdown dentro del repositorio, pensado para que personas y agentes se pasen el trabajo sin bases de datos, servicios externos ni dependencias de runtime.
 
@@ -6,12 +6,18 @@ Web y documentación: https://segtem.github.io/trackertast/
 
 Cada tarea vive en su propia carpeta bajo `tareas/`, con un archivo central `TAREA.md` y cualquier adjunto local (capturas, notas, esquemas, volcados de evidencia). Git guarda la historia.
 
+## Cambio de nombre
+
+Oracle Task continúa Trackertast. El paquete nuevo es `oracle-task`, su módulo Python es `oracle_task` y conserva `tasks` como alias. Los archivos `tareas/`, `TAREA.md`, ids, consultas y hechos no cambian. El repositorio y la URL de la web siguen siendo `Segtem/trackertast` para conservar los enlaces existentes.
+
+`trackertast==0.1.0` permanece disponible para los consumidores publicados, incluido Oracle Factory 0.1.0a1. No se reemplaza ni se borra esa versión. Las importaciones Python nuevas usan `oracle_task`; el paquete nuevo no instala módulos `trackertast`, evitando sobrescribir el código del anterior.
+
 ## Instalación
 
-Requiere Python 3.11 o posterior y no tiene dependencias de runtime:
+Requiere Python 3.11 o posterior y no tiene dependencias de runtime. Este corte está preparado en el release de GitHub; el mantenedor hará la publicación PyPI. Después de publicarlo:
 
 ```bash
-uv tool install trackertast
+uv tool install oracle-task==0.2.0
 ```
 
 O desde el repositorio:
@@ -22,9 +28,24 @@ uv tool install .
 pip install .
 ```
 
+## Migración de una instalación con uv
+
+Después de publicar en PyPI, si tenés Trackertast instalado como herramienta, reemplazá su instalación para evitar que ambos reclamen el ejecutable `tasks`:
+
+```bash
+uv tool uninstall trackertast
+uv tool install oracle-task==0.2.0
+oracle-task --version
+tasks --version
+```
+
+Esto cambia la herramienta instalada, no borra los directorios de tareas de tus proyectos. Evitá instalar ambos paquetes en el mismo entorno pip: aunque los módulos son distintos, comparten el ejecutable `tasks`. Los consumidores que fijan Trackertast deben actualizar su dependencia en su propia próxima versión.
+
+Para probar antes de PyPI, podés instalar el wheel del [release v0.2.0](https://github.com/Segtem/trackertast/releases/tag/v0.2.0).
+
 ## Comandos y ejemplos
 
-El CLI se invoca como `tasks`. Los verbos canónicos son en inglés, con alias en español para mantener compatibilidad:
+El comando principal es `oracle-task`; `tasks` se conserva como alias con los mismos verbos y formatos. Los verbos canónicos son en inglés, con alias en español para mantener compatibilidad:
 
 | Canónico | Alias | Descripción y ejemplo |
 |---|---|---|
@@ -50,7 +71,7 @@ Para más detalles sobre el formato de `TAREA.md`, consultas TQL y contratos, co
 
 ## Relación con Oracle
 
-`trackertast` es un programa independiente de Oracle: no requiere catálogos de medidas ni motor de evaluación para funcionar.
+`oracle-task` es un programa independiente de Oracle: no requiere catálogos de medidas ni motor de evaluación para funcionar.
 
 Sin embargo, sabe emitir evidencia relacional observable mediante el comando `tasks facts` (alias `tasks hechos`). Oracle puede consumir esta evidencia relacional y juzgarla contra políticas formales del catálogo:
 

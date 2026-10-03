@@ -15,7 +15,7 @@ import tempfile
 import unittest
 
 RAIZ = Path(__file__).resolve().parents[1]
-CLI = RAIZ / "trackertast/cli.py"
+CLI = RAIZ / "oracle_task/cli.py"
 
 CORTA = "20260914-100000-a"
 LARGA = "20260914-100001-investigar-un-defecto-del-sensor-de-procesos"
@@ -294,7 +294,7 @@ class GrafoErroresOperacionalesTests(TrackerTemporal):
         import contextlib
         import io
         from unittest import mock
-        from trackertast import graph as tareas_grafo
+        from oracle_task import graph as tareas_grafo
 
         self.tarea(CORTA, "Legible")
         salida, errores = io.StringIO(), io.StringIO()
@@ -338,7 +338,7 @@ class SobrevivientesTareasTests(TrackerTemporal):
         import contextlib
         import io
         from unittest import mock
-        from trackertast import tasks as tareas
+        from oracle_task import tasks as tareas
 
         self.tarea(CORTA, "A")
         (self.raiz / "tareas/etiquetas").write_text("bug algo\n", encoding="utf-8")
@@ -365,7 +365,7 @@ class SobrevivientesTareasTests(TrackerTemporal):
         self.assertNotIn(b"\r", lf.read_bytes())
 
     def test_documento_en_blanco_es_tarea_invalida(self):
-        from trackertast import tasks as tareas
+        from oracle_task import tasks as tareas
 
         for texto in ("", "\n  \n\t\n"):
             with self.assertRaises(tareas.TareaInvalida):
@@ -396,7 +396,7 @@ class SobrevivientesTareasTests(TrackerTemporal):
         self.assertIn("TAREA.md:5:", self.ok("etiquetar", CORTA, "--etiqueta", "bug").stdout)
 
     def test_titulo_sin_metadatos_ni_fin_de_linea(self):
-        from trackertast import tasks as tareas
+        from oracle_task import tasks as tareas
 
         modificado, texto, _ = tareas._aplicar_etiquetas_texto(
             "# T", ["bug"], modo="agregar", id_tarea=CORTA, ruta_tarea=self.raiz / "TAREA.md")
@@ -417,7 +417,7 @@ class SobrevivientesTareasTests(TrackerTemporal):
         import contextlib
         import io
         from unittest import mock
-        from trackertast import tasks as tareas
+        from oracle_task import tasks as tareas
 
         ruta = self.tarea(CORTA, "T", etiquetas="a")
         antes = ruta.read_bytes()
@@ -433,7 +433,7 @@ class SobrevivientesTareasTests(TrackerTemporal):
     def test_json_sale_exactamente_cero(self):
         import contextlib
         import io
-        from trackertast import tasks as tareas
+        from oracle_task import tasks as tareas
 
         self.tarea(CORTA, "T", etiquetas="a")
         salida = io.StringIO()
@@ -447,7 +447,7 @@ class SobrevivientesTareasTests(TrackerTemporal):
         import contextlib
         import io
         from unittest import mock
-        from trackertast import tasks as tareas
+        from oracle_task import tasks as tareas
 
         self.tarea(CORTA, "Primera", etiquetas="a")
         segunda = self.tarea(LARGA, "Segunda", etiquetas="a")

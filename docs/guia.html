@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Guía paso a paso de trackertast — trackertast</title>
+<title>Guía paso a paso de oracle-task — Oracle Task</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&family=Silkscreen&display=swap">
@@ -13,7 +13,7 @@
 <body class="doc">
 <a class="saltar" href="#contenido">Saltar al contenido</a>
 <header class="barra">
-  <a class="marca" href="./"><img src="./assets/emblema.svg" alt="" width="28" height="28"> trackertast</a>
+  <a class="marca" href="./"><img src="./assets/emblema.svg" alt="" width="28" height="28"> Oracle Task</a>
   <nav aria-label="Principal">
     <a href="./">Inicio</a>
     <a href="./guia.html">Guía</a>
@@ -29,8 +29,9 @@
     <nav aria-label="Documentación"><p class="menu-grupo">Empezar</p><ul><li><a href="guia.html" aria-current=page>Guía paso a paso</a></li></ul><p class="menu-grupo">Uso e integración</p><ul><li><a href="agentes.html">Para agentes</a></li><li><a href="oracle.html">Con Oracle</a></li></ul><p class="menu-grupo">Referencia</p><ul><li><a href="referencia.html">Referencia del CLI</a></li><li><a href="tareas.html">Especificación y contrato</a></li></ul></nav>
   </details>
   <main id="contenido" class="prosa">
-<h1 id="guía-paso-a-paso-de-trackertast">Guía paso a paso de trackertast<a class="ancla" href="#guía-paso-a-paso-de-trackertast" aria-label="Enlace a esta sección">#</a></h1>
-<p>Esta guía recorre el ciclo completo de uso de <strong>trackertast</strong> (<code>tasks</code>), desde la inicialización hasta el cierre de una tarea, pasando por consultas avanzadas con TQL, notas de avance, adjuntos, referencias cruzadas, el grafo de dependencias y el seguimiento en Git.</p>
+<h1 id="guía-paso-a-paso-de-oracle-task">Guía paso a paso de oracle-task<a class="ancla" href="#guía-paso-a-paso-de-oracle-task" aria-label="Enlace a esta sección">#</a></h1>
+<p>Esta guía recorre el ciclo completo de uso de <strong>oracle-task</strong> (<code>tasks</code>), desde la inicialización hasta el cierre de una tarea, pasando por consultas avanzadas con TQL, notas de avance, adjuntos, referencias cruzadas, el grafo de dependencias y el seguimiento en Git.</p>
+<p><code>oracle-task</code> es el comando principal y <code>tasks</code> su alias compatible. La guía usa el alias, y funciona sobre las mismas carpetas de tareas existentes.</p>
 <p>Cada paso muestra el comando ejecutado y la salida real obtenida.</p>
 <h2 id="1-inicializar-el-tracker">1. Inicializar el tracker<a class="ancla" href="#1-inicializar-el-tracker" aria-label="Enlace a esta sección">#</a></h2>
 <p>El comando <code>tasks init</code> crea la carpeta <code>tareas/</code> y su archivo <code>README.md</code> en la raíz del proyecto actual:</p>
