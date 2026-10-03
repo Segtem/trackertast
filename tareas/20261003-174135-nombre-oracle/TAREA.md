@@ -21,6 +21,11 @@ El usuario aceptó migrar el paquete y solicitó los comandos para publicar orac
 
 El usuario autorizó la migración y pidió artefactos/comandos para publicar oracle-task. Implementado corte 0.2.0: namespace oracle_task, comandos oracle-task/tasks, datos compatibles y documentación actualizada. 500 tests OK, guía de 24 pasos reproducida, sitio generado vigente y oracle test del ejemplo VERDE (alcance: medidas contra corpus). Prueba de migración uv desde trackertast 0.1.0: mismos archivos e ids, ambos comandos operativos. Trackertast 0.1.0 y Factory 0.1.0a1 se conservan.
 
+
+### Nota (2026-10-03 18:27:02 UTC)
+
+Tag v0.2.0 y release publicados: https://github.com/Segtem/trackertast/releases/tag/v0.2.0; commit 2dad00f. Tres assets remotos verificados por SHA-256. Checks GitHub tracker 37144068449 y 37144068134 exitosos. Solo resta publicación PyPI del usuario y luego actualización de consumidores.
+
 ## Próximo paso
 
-Publicar tag y release v0.2.0 con artefactos probados. El usuario los sube a PyPI; tras su aviso verificar instalación del índice y preparar la actualización de la dependencia en Factory, con su propio release.
+El usuario publica oracle-task 0.2.0 con los dos artefactos explícitos de dist/. Tras su aviso, verificar hashes/instalación desde PyPI y preparar la siguiente versión de Factory con la dependencia oracle-task y su despacho de comandos actualizado, más web/guía. Mantener trackertast 0.1.0 disponible.
