@@ -1,6 +1,6 @@
 # Migrar trackertast a oracle-task
 
-- ESTADO: ABIERTA
+- ESTADO: CERRADA
 - PRIORIDAD: 50
 - ETIQUETAS:
 
@@ -26,6 +26,12 @@ El usuario autorizó la migración y pidió artefactos/comandos para publicar or
 
 Tag v0.2.0 y release publicados: https://github.com/Segtem/trackertast/releases/tag/v0.2.0; commit 2dad00f. Tres assets remotos verificados por SHA-256. Checks GitHub tracker 37144068449 y 37144068134 exitosos. Solo resta publicación PyPI del usuario y luego actualización de consumidores.
 
+
+### Nota (2026-10-03 23:44:40 UTC)
+
+Oracle Task 0.2.0 confirmado en PyPI; hashes coinciden con release, instalación global y migración de tareas verificadas. Factory 0.1.0a2 y MCP 0.1.2 migrados, tags/releases GitHub preparados y empujados. El usuario ahora pide eliminar trackertast después de migrar consumidores: supersede la conservación anterior. El retiro y las publicaciones de consumidores continúan en Oracle 20261003-183936-migrar-task.
+
+
 ## Próximo paso
 
-El usuario publica oracle-task 0.2.0 con los dos artefactos explícitos de dist/. Tras su aviso, verificar hashes/instalación desde PyPI y preparar la siguiente versión de Factory con la dependencia oracle-task y su despacho de comandos actualizado, más web/guía. Mantener trackertast 0.1.0 disponible.
+Renombrado y verificación terminados. Publicar los consumidores preparados y retirar el paquete anterior conforme al pedido nuevo, seguido en Oracle 20261003-183936-migrar-task.
