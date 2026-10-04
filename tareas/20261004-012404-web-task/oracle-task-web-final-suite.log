@@ -1,0 +1,849 @@
+test_error_tras_verde_no_reutiliza_resultado (test_cierre_medidas_integracion.CierreIntegracionTests.test_error_tras_verde_no_reutiliza_resultado) ... ok
+test_flujo_real_verde_rojo_sombra_no_evaluada_inexistente (test_cierre_medidas_integracion.CierreIntegracionTests.test_flujo_real_verde_rojo_sombra_no_evaluada_inexistente) ... ok
+test_hechos_siempre_presentes_deterministas_y_saneados (test_cierre_medidas_integracion.CierreIntegracionTests.test_hechos_siempre_presentes_deterministas_y_saneados) ... ok
+test_relacion_ausente_no_aplica_vacia_rechaza (test_cierre_medidas_integracion.CierreIntegracionTests.test_relacion_ausente_no_aplica_vacia_rechaza) ... ok
+test_conserva_ok_individual_omite_no_aplicadas (test_cierre_medidas_integracion.ConversionAceptacionTests.test_conserva_ok_individual_omite_no_aplicadas) ... ok
+test_error_aborta_sin_publicar_ni_llamar_politica (test_cierre_medidas_integracion.ConversionAceptacionTests.test_error_aborta_sin_publicar_ni_llamar_politica) ... ok
+test_rechaza_errores_y_veredictos_malformados (test_cierre_medidas_integracion.ConversionAceptacionTests.test_rechaza_errores_y_veredictos_malformados) ... ok
+test_la_guia_corre_y_sus_salidas_coinciden (test_guia.LaGuiaPasoAPasoTests.test_la_guia_corre_y_sus_salidas_coinciden)
+Comprueba que docs/guia.md ejecute limpio y sus salidas coincidan exactamente. ... ok
+test_un_enlace_local_da_verde_y_roto_da_rojo_con_su_testigo (test_juzgar_hechos_reales.HechosRealesJuzgadosPorOracle.test_un_enlace_local_da_verde_y_roto_da_rojo_con_su_testigo) ... ok
+test_el_codigo_se_escapa_y_no_se_interpreta (test_sitio.ElConvertidorTests.test_el_codigo_se_escapa_y_no_se_interpreta) ... ok
+test_un_enlace_a_otro_md_del_sitio_va_a_su_pagina (test_sitio.ElConvertidorTests.test_un_enlace_a_otro_md_del_sitio_va_a_su_pagina) ... ok
+test_un_enlace_a_un_archivo_del_repo_va_a_github (test_sitio.ElConvertidorTests.test_un_enlace_a_un_archivo_del_repo_va_a_github) ... ok
+test_una_lista_anidada_queda_anidada (test_sitio.ElConvertidorTests.test_una_lista_anidada_queda_anidada) ... ok
+test_una_tabla_se_convierte_en_tabla (test_sitio.ElConvertidorTests.test_una_tabla_se_convierte_en_tabla) ... ok
+test_cada_pagina_publicada_es_exactamente_la_generada (test_sitio.LasPaginasDelSitioEstanAlDiaTests.test_cada_pagina_publicada_es_exactamente_la_generada) ... ok
+test_referencia_md_esta_al_dia (test_sitio.LasPaginasDelSitioEstanAlDiaTests.test_referencia_md_esta_al_dia) ... ok
+test_todos_los_enlaces_internos_existen (test_sitio.LosEnlacesInternosExistenTests.test_todos_los_enlaces_internos_existen) ... ok
+test_colision_de_ids_en_el_mismo_segundo_resuelve_con_sufijo_secuencial (test_tareas.TestCreacionYColisiones.test_colision_de_ids_en_el_mismo_segundo_resuelve_con_sufijo_secuencial)
+Evita la sobrescritura silenciosa de tareas o bloqueos cuando se crean múltiples tareas ... ok
+test_nueva_crea_estructura_y_archivo_con_formato (test_tareas.TestCreacionYColisiones.test_nueva_crea_estructura_y_archivo_con_formato)
+Evita generar tareas con metadatos incompletos, permisos incorrectos o campos faltantes. ... ok
+test_nueva_salida_json_contiene_id_y_ruta (test_tareas.TestCreacionYColisiones.test_nueva_salida_json_contiene_id_y_ruta)
+Evita que scripts y herramientas no puedan integrar la creación de tareas programáticamente. ... ok
+test_descubrimiento_desde_subcarpeta_encuentra_la_raiz (test_tareas.TestDescubrimientoYContrato.test_descubrimiento_desde_subcarpeta_encuentra_la_raiz)
+Evita obligar al usuario a situarse en la raíz del repositorio para usar el tracker. ... ok
+test_descubrimiento_se_detiene_en_limite_git_y_no_salta_a_otro_repo (test_tareas.TestDescubrimientoYContrato.test_descubrimiento_se_detiene_en_limite_git_y_no_salta_a_otro_repo)
+Evita que un repositorio anidado (como un submódulo o checkout secundario) contamine ... ok
+test_init_crea_directorio_tareas_y_readme (test_tareas.TestDescubrimientoYContrato.test_init_crea_directorio_tareas_y_readme)
+Evita que un proyecto intente operar sin el andamio inicial o que una reinicialización ... ok
+test_init_no_requiere_catalogos_ni_oracle_json (test_tareas.TestDescubrimientoYContrato.test_init_no_requiere_catalogos_ni_oracle_json)
+Evita acoplar el tracker al catálogo de medidas, permitiendo usar tareas en proyectos ... ok
+test_precedencia_proyecto_sobre_entorno_y_busqueda (test_tareas.TestDescubrimientoYContrato.test_precedencia_proyecto_sobre_entorno_y_busqueda)
+Evita que variables de entorno desactualizadas o la carpeta de trabajo alteren ... ok
+test_alias_ls_es_equivalente_a_listar (test_tareas.TestListarVerYRevisar.test_alias_ls_es_equivalente_a_listar)
+Evita divergencias entre el comando canónico 'listar' y el alias habitual 'ls'. ... ok
+test_desambiguacion_de_prefijos_en_ver (test_tareas.TestListarVerYRevisar.test_desambiguacion_de_prefijos_en_ver)
+Evita consultar o modificar una tarea errónea cuando un prefijo corto coincide con varias. ... ok
+test_listar_ordena_por_prioridad_descendente_y_desempata_por_id (test_tareas.TestListarVerYRevisar.test_listar_ordena_por_prioridad_descendente_y_desempata_por_id)
+Evita listados desordenados donde las tareas urgentes queden ocultas al final. ... ok
+test_listar_vacio_es_exito_pero_datos_invalidos_salen_con_error (test_tareas.TestListarVerYRevisar.test_listar_vacio_es_exito_pero_datos_invalidos_salen_con_error)
+Evita disfrazar errores de lectura o corrupción de datos bajo la apariencia de una lista vacía. ... ok
+test_revisar_audita_integridad_completa_y_tolera_readme (test_tareas.TestListarVerYRevisar.test_revisar_audita_integridad_completa_y_tolera_readme)
+Evita falsas alarmas con README.md o .gitignore en tareas/ pero atrapa carpetas mal formadas. ... ok
+test_ver_con_bandera_ruta_imprime_solo_ruta_absoluta (test_tareas.TestListarVerYRevisar.test_ver_con_bandera_ruta_imprime_solo_ruta_absoluta)
+Evita romper la integración con editores ($EDITOR $(tasks show ID --ruta)). ... ok
+test_estado_invalido_se_rechaza (test_tareas.TestMetadatosYPreservacion.test_estado_invalido_se_rechaza)
+Evita que estados arbitrarios (e.g. 'EN_PROGRESO') invaliden los listados y la historia. ... ok
+test_idempotencia_al_cerrar_o_reabrir (test_tareas.TestMetadatosYPreservacion.test_idempotencia_al_cerrar_o_reabrir)
+Evita que reintentar cerrar una tarea ya cerrada o reabrir una ya abierta falle con error. ... ok
+test_metadatos_duplicados_se_rechazan (test_tareas.TestMetadatosYPreservacion.test_metadatos_duplicados_se_rechazan)
+Evita la ambigüedad generada por campos repetidos en el bloque de metadatos. ... ok
+test_preservacion_del_cuerpo_y_campos_desconocidos_al_cerrar_y_reabrir (test_tareas.TestMetadatosYPreservacion.test_preservacion_del_cuerpo_y_campos_desconocidos_al_cerrar_y_reabrir)
+Evita que cambiar el estado destruya notas manuales, imágenes adjuntas o campos ... ok
+test_prioridad_no_entera_se_rechaza (test_tareas.TestMetadatosYPreservacion.test_prioridad_no_entera_se_rechaza)
+Evita caídas por excepción al ordenar tareas cuando la prioridad contiene texto en vez de número. ... ok
+test_id_con_caracteres_de_escape_se_rechaza (test_tareas.TestSeguridadYConfinamiento.test_id_con_caracteres_de_escape_se_rechaza)
+Evita ataques de navegación por directorios con `..` o barras en el ID de tarea. ... ok
+test_symlink_hacia_afuera_de_tareas_se_rechaza (test_tareas.TestSeguridadYConfinamiento.test_symlink_hacia_afuera_de_tareas_se_rechaza)
+Evita acceder a directorios ajenos al tracker siguiendo enlaces simbólicos. ... ok
+test_cada_verbo_canonico_y_alias_resuelven_al_mismo_verbo (test_tareas.TestVerbosYAlias.test_cada_verbo_canonico_y_alias_resuelven_al_mismo_verbo)
+Evita divergencias entre los verbos canónicos en inglés y los alias históricos en español. ... ok
+test_actualizacion_preserva_modo_posix_y_bytes_ajenos_al_estado (test_tareas_atomicas.EscriturasAtomicasTests.test_actualizacion_preserva_modo_posix_y_bytes_ajenos_al_estado)
+El modo incluye bits especiales; en UTF-8/CRLF sólo cambia el valor del estado. ... ok
+test_fallos_antes_del_reemplazo_conservan_original_y_limpian_temporal (test_tareas_atomicas.EscriturasAtomicasTests.test_fallos_antes_del_reemplazo_conservan_original_y_limpian_temporal)
+Antes se ignoraba el fallo de chmod y se confirmaba una copia con modo 0600. ... ok
+test_los_tres_comandos_rechazan_fallo_de_permisos_sin_dejar_cambios (test_tareas_atomicas.EscriturasAtomicasTests.test_los_tres_comandos_rechazan_fallo_de_permisos_sin_dejar_cambios)
+Cerrar, anotar y adjuntar comparten el rechazo; adjuntar revierte además su copia. ... ok
+test_stat_fallido_no_recurre_a_permisos_predeterminados (test_tareas_atomicas.EscriturasAtomicasTests.test_stat_fallido_no_recurre_a_permisos_predeterminados)
+Un fallo al conocer los permisos no autoriza reemplazar el documento con 0644. ... ok
+test_cierre_antes_de_estado_no_interrumpe_metadatos (test_tareas_cierre_medidas.CierreMedidasTests.test_cierre_antes_de_estado_no_interrumpe_metadatos) ... ok
+test_cuerpo_no_declara_medidas (test_tareas_cierre_medidas.CierreMedidasTests.test_cuerpo_no_declara_medidas) ... ok
+test_identificadores_invalidos_no_se_descartan_silenciosamente (test_tareas_cierre_medidas.CierreMedidasTests.test_identificadores_invalidos_no_se_descartan_silenciosamente) ... ok
+test_modificaciones_atomicas_preservan_criterio_y_bytes (test_tareas_cierre_medidas.CierreMedidasTests.test_modificaciones_atomicas_preservan_criterio_y_bytes) ... ok
+test_opcional_vacio_y_json (test_tareas_cierre_medidas.CierreMedidasTests.test_opcional_vacio_y_json) ... ok
+test_rechaza_campo_duplicado (test_tareas_cierre_medidas.CierreMedidasTests.test_rechaza_campo_duplicado) ... ok
+test_sanea_espacios_y_repeticiones_sin_cambiar_identidad (test_tareas_cierre_medidas.CierreMedidasTests.test_sanea_espacios_y_repeticiones_sin_cambiar_identidad) ... ok
+test_comparador_con_booleano (test_tareas_consulta.TestChequeoDeTipos.test_comparador_con_booleano) ... ok
+test_operador_logico_con_entero (test_tareas_consulta.TestChequeoDeTipos.test_operador_logico_con_entero) ... ok
+test_raiz_entera_es_invalida (test_tareas_consulta.TestChequeoDeTipos.test_raiz_entera_es_invalida) ... ok
+test_desetiquetar_consulta_con_ids_sale_2 (test_tareas_consulta.TestCliDesetiquetarConsulta.test_desetiquetar_consulta_con_ids_sale_2) ... ok
+test_desetiquetar_consulta_invalida_no_escribe_y_sale_2 (test_tareas_consulta.TestCliDesetiquetarConsulta.test_desetiquetar_consulta_invalida_no_escribe_y_sale_2) ... ok
+test_desetiquetar_por_consulta_respeta_condicion (test_tareas_consulta.TestCliDesetiquetarConsulta.test_desetiquetar_por_consulta_respeta_condicion) ... ok
+test_listar_con_tql_filtra_abiertas (test_tareas_consulta.TestCliListarConsulta.test_listar_con_tql_filtra_abiertas) ... ok
+test_listar_con_tql_y_cerradas (test_tareas_consulta.TestCliListarConsulta.test_listar_con_tql_y_cerradas) ... ok
+test_listar_con_tql_y_todas (test_tareas_consulta.TestCliListarConsulta.test_listar_con_tql_y_todas) ... ok
+test_listar_consulta_invalida_sale_codigo_2_sin_traceback (test_tareas_consulta.TestCliListarConsulta.test_listar_consulta_invalida_sale_codigo_2_sin_traceback) ... ok
+test_listar_explicar_sale_0_sin_tracker (test_tareas_consulta.TestCliListarConsulta.test_listar_explicar_sale_0_sin_tracker) ... ok
+test_listar_negacion_y_prioridad (test_tareas_consulta.TestCliListarConsulta.test_listar_negacion_y_prioridad) ... ok
+test_listar_orden_por_id_e_invertir (test_tareas_consulta.TestCliListarConsulta.test_listar_orden_por_id_e_invertir) ... ok
+test_init_sin_readme_y_auditoria (test_tareas_consulta.TestCliReferenciasCwdEInit.test_init_sin_readme_y_auditoria) ... ok
+test_referencias_sin_id_desde_carpeta_de_tarea (test_tareas_consulta.TestCliReferenciasCwdEInit.test_referencias_sin_id_desde_carpeta_de_tarea) ... ok
+test_referencias_sin_id_fuera_de_tarea_sale_2 (test_tareas_consulta.TestCliReferenciasCwdEInit.test_referencias_sin_id_fuera_de_tarea_sale_2) ... ok
+test_asociatividad_por_izquierda (test_tareas_consulta.TestCompiladorYPrecedencia.test_asociatividad_por_izquierda) ... ok
+test_consulta_vacia_equivale_a_cualquiera (test_tareas_consulta.TestCompiladorYPrecedencia.test_consulta_vacia_equivale_a_cualquiera) ... ok
+test_corchete_de_cierre_inesperado (test_tareas_consulta.TestCompiladorYPrecedencia.test_corchete_de_cierre_inesperado) ... ok
+test_corchete_sin_cerrar (test_tareas_consulta.TestCompiladorYPrecedencia.test_corchete_sin_cerrar) ... ok
+test_corchetes_alteran_precedencia (test_tareas_consulta.TestCompiladorYPrecedencia.test_corchetes_alteran_precedencia) ... ok
+test_doble_negacion (test_tareas_consulta.TestCompiladorYPrecedencia.test_doble_negacion) ... ok
+test_operador_colgante_al_final (test_tareas_consulta.TestCompiladorYPrecedencia.test_operador_colgante_al_final) ... ok
+test_palabras_clave_primarias (test_tareas_consulta.TestCompiladorYPrecedencia.test_palabras_clave_primarias) ... ok
+test_precedencia_no_sobre_y_o (test_tareas_consulta.TestCompiladorYPrecedencia.test_precedencia_no_sobre_y_o) ... ok
+test_precedencia_y_sobre_o (test_tareas_consulta.TestCompiladorYPrecedencia.test_precedencia_y_sobre_o) ... ok
+test_comparacion_de_prioridad (test_tareas_consulta.TestEvaluacionEnMemoria.test_comparacion_de_prioridad) ... ok
+test_etiquetada_y_cualquiera (test_tareas_consulta.TestEvaluacionEnMemoria.test_etiquetada_y_cualquiera) ... ok
+test_etiquetas_insensible_a_mayusculas (test_tareas_consulta.TestEvaluacionEnMemoria.test_etiquetas_insensible_a_mayusculas) ... ok
+test_explicar_emite_tokens_y_ast (test_tareas_consulta.TestEvaluacionEnMemoria.test_explicar_emite_tokens_y_ast) ... ok
+test_id_exacto (test_tareas_consulta.TestEvaluacionEnMemoria.test_id_exacto) ... ok
+test_columna_cuenta_caracteres_unicode (test_tareas_consulta.TestTokenizador.test_columna_cuenta_caracteres_unicode) ... ok
+test_comparadores_en_palabras_y_simbolos (test_tareas_consulta.TestTokenizador.test_comparadores_en_palabras_y_simbolos) ... ok
+test_corchetes_aislados_y_pegados (test_tareas_consulta.TestTokenizador.test_corchetes_aislados_y_pegados) ... ok
+test_enteros_con_signo (test_tareas_consulta.TestTokenizador.test_enteros_con_signo) ... ok
+test_error_dos_puntos_vacio (test_tareas_consulta.TestTokenizador.test_error_dos_puntos_vacio) ... ok
+test_etiquetas_con_caracteres_unicode (test_tareas_consulta.TestTokenizador.test_etiquetas_con_caracteres_unicode) ... ok
+test_identificador_de_tarea (test_tareas_consulta.TestTokenizador.test_identificador_de_tarea) ... ok
+test_tokens_basicos (test_tareas_consulta.TestTokenizador.test_tokens_basicos) ... ok
+test_con_ids_o_invalida_sale_dos_sin_escribir (test_tareas_consulta_revision.DesetiquetarConsultaTests.test_con_ids_o_invalida_sale_dos_sin_escribir) ... ok
+test_quita_solo_en_las_que_cumplen_y_respeta_el_estado (test_tareas_consulta_revision.DesetiquetarConsultaTests.test_quita_solo_en_las_que_cumplen_y_respeta_el_estado) ... ok
+test_consultas_invalidas_salen_dos_con_posicion (test_tareas_consulta_revision.ErroresTests.test_consultas_invalidas_salen_dos_con_posicion) ... ok
+test_el_error_de_tipo_no_espera_a_leer_tareas (test_tareas_consulta_revision.ErroresTests.test_el_error_de_tipo_no_espera_a_leer_tareas) ... ok
+test_la_columna_cuenta_caracteres_y_no_bytes (test_tareas_consulta_revision.ErroresTests.test_la_columna_cuenta_caracteres_y_no_bytes) ... ok
+test_explicar_no_lista_ni_exige_tracker (test_tareas_consulta_revision.ExplicarYOrdenTests.test_explicar_no_lista_ni_exige_tracker) ... ok
+test_orden_por_id_invertir_y_los_dos (test_tareas_consulta_revision.ExplicarYOrdenTests.test_orden_por_id_invertir_y_los_dos) ... ok
+test_comparadores_en_el_borde (test_tareas_consulta_revision.LenguajeTests.test_comparadores_en_el_borde) ... ok
+test_enteros_negativos_y_comparaciones_con_la_prioridad_a_la_derecha (test_tareas_consulta_revision.LenguajeTests.test_enteros_negativos_y_comparaciones_con_la_prioridad_a_la_derecha) ... ok
+test_etiqueta_no_y_o (test_tareas_consulta_revision.LenguajeTests.test_etiqueta_no_y_o) ... ok
+test_etiquetas_sin_distinguir_mayusculas (test_tareas_consulta_revision.LenguajeTests.test_etiquetas_sin_distinguir_mayusculas) ... ok
+test_id_exacto_y_no_prefijo (test_tareas_consulta_revision.LenguajeTests.test_id_exacto_y_no_prefijo) ... ok
+test_la_consulta_se_suma_a_las_banderas (test_tareas_consulta_revision.LenguajeTests.test_la_consulta_se_suma_a_las_banderas) ... ok
+test_sin_consulta_es_cualquiera (test_tareas_consulta_revision.LenguajeTests.test_sin_consulta_es_cualquiera) ... ok
+test_y_liga_antes_que_o_y_no_se_aplica_a_una_primaria (test_tareas_consulta_revision.LenguajeTests.test_y_liga_antes_que_o_y_no_se_aplica_a_una_primaria) ... ok
+test_init_sin_readme (test_tareas_consulta_revision.ReferenciasEInitTests.test_init_sin_readme) ... ok
+test_referencias_sin_id_desde_la_tarea_o_un_subdirectorio (test_tareas_consulta_revision.ReferenciasEInitTests.test_referencias_sin_id_desde_la_tarea_o_un_subdirectorio) ... ok
+test_referencias_sin_id_desde_una_carpeta_oculta_no_la_toma_por_tarea (test_tareas_consulta_revision.ReferenciasEInitTests.test_referencias_sin_id_desde_una_carpeta_oculta_no_la_toma_por_tarea)
+Sobreviviente de mutación: `auditar_tareas` salta las carpetas con punto, y un TAREA.md ... ok
+test_referencias_sin_id_fuera_de_una_tarea_sale_dos (test_tareas_consulta_revision.ReferenciasEInitTests.test_referencias_sin_id_fuera_de_una_tarea_sale_dos) ... ok
+test_desetiquetar_muestra_la_posicion_como_listar (test_tareas_consulta_revision.RevisionDeLaEntregaTests.test_desetiquetar_muestra_la_posicion_como_listar) ... ok
+test_el_id_de_la_consulta_es_el_del_tracker (test_tareas_consulta_revision.RevisionDeLaEntregaTests.test_el_id_de_la_consulta_es_el_del_tracker) ... ok
+test_explicar_devuelve_cero_en_proceso (test_tareas_consulta_revision.RevisionDeLaEntregaTests.test_explicar_devuelve_cero_en_proceso)
+Sobreviviente de mutación: por el CLI un `return None` también sale 0. ... ok
+test_explicar_nombra_cada_primaria (test_tareas_consulta_revision.RevisionDeLaEntregaTests.test_explicar_nombra_cada_primaria)
+Sobrevivientes de mutación: el `explicar` de cinco nodos no lo fijaba ningún test. ... ok
+test_los_simbolos_no_son_comparadores (test_tareas_consulta_revision.RevisionDeLaEntregaTests.test_los_simbolos_no_son_comparadores) ... ok
+test_adjuntar_con_espacios_y_caracteres_unicode (test_tareas_contexto.TestAdjuntar.test_adjuntar_con_espacios_y_caracteres_unicode)
+Evita corromper nombres con espacios, caracteres Unicode y símbolos especiales en Markdown. ... ok
+test_adjuntar_copia_exacta_y_preserva_original (test_tareas_contexto.TestAdjuntar.test_adjuntar_copia_exacta_y_preserva_original)
+Evita mover, alterar o eliminar el archivo de origen durante el adjuntado. ... ok
+test_adjuntar_escapa_barras_invertidas_antes_que_corchetes (test_tareas_contexto.TestAdjuntar.test_adjuntar_escapa_barras_invertidas_antes_que_corchetes)
+Evita que el escape de corchetes se corrompa si el nombre contiene barras invertidas. ... ok
+test_adjuntar_limite_20mib_sin_bandera_y_permite_con_ella (test_tareas_contexto.TestAdjuntar.test_adjuntar_limite_20mib_sin_bandera_y_permite_con_ella)
+Evita saturar el repositorio con archivos grandes sin confirmación explícita. ... ok
+test_adjuntar_rechaza_colision_con_archivo_existente (test_tareas_contexto.TestAdjuntar.test_adjuntar_rechaza_colision_con_archivo_existente)
+Evita sobrescribir adjuntos preexistentes con el mismo nombre. ... ok
+test_adjuntar_rechaza_enlace_simbolico_de_origen (test_tareas_contexto.TestAdjuntar.test_adjuntar_rechaza_enlace_simbolico_de_origen)
+Evita adjuntar mediante symlinks que puedan inducir lecturas o copias inseguras. ... ok
+test_adjuntar_rechaza_nombre_con_saltos_de_linea (test_tareas_contexto.TestAdjuntar.test_adjuntar_rechaza_nombre_con_saltos_de_linea)
+Evita inyectar líneas en TAREA.md mediante nombres de archivo partidos con ... ok
+test_adjuntar_rechaza_nombre_tarea_md (test_tareas_contexto.TestAdjuntar.test_adjuntar_rechaza_nombre_tarea_md)
+Evita destruir o reemplazar el archivo central TAREA.md mediante un adjunto. ... ok
+test_anotar_agrega_texto_y_preserva_cuerpo_y_permisos (test_tareas_contexto.TestAnotar.test_anotar_agrega_texto_y_preserva_cuerpo_y_permisos)
+Evita perder notas previas, alterar el cuerpo o degradar permisos del archivo. ... ok
+test_anotar_con_url_y_marca_exactas (test_tareas_contexto.TestAnotar.test_anotar_con_url_y_marca_exactas)
+Evita corromper parámetros query (?t=...) o perder la marca temporal en recursos. ... ok
+test_anotar_marca_sin_url_se_rechaza (test_tareas_contexto.TestAnotar.test_anotar_marca_sin_url_se_rechaza)
+Evita registrar marcas temporales huérfanas sin una URL asociada. ... ok
+test_anotar_preserva_sangria_y_espacios_significativos (test_tareas_contexto.TestAnotar.test_anotar_preserva_sangria_y_espacios_significativos)
+Evita aplicar strip al texto de la nota perdiendo indentación o espaciado deliberado. ... ok
+test_anotar_rechaza_sin_texto_ni_url (test_tareas_contexto.TestAnotar.test_anotar_rechaza_sin_texto_ni_url)
+Evita crear notas vacías sin información útil. ... ok
+test_anotar_url_invalida_o_con_espacios_se_rechaza (test_tareas_contexto.TestAnotar.test_anotar_url_invalida_o_con_espacios_se_rechaza)
+Evita inyectar esquemas no soportados o URLs mal formadas. ... ok
+test_buscar_encuentra_coincidencias_en_subcarpetas_de_la_tarea (test_tareas_contexto.TestBuscar.test_buscar_encuentra_coincidencias_en_subcarpetas_de_la_tarea)
+Evita restringir la búsqueda a un solo nivel de adjuntos dentro de la tarea. ... ok
+test_buscar_falla_si_hay_registros_invalidos (test_tareas_contexto.TestBuscar.test_buscar_falla_si_hay_registros_invalidos)
+Evita disfrazar carpetas corruptas como si fueran búsquedas vacías exitosas. ... ok
+test_buscar_humano_muestra_omitidos_con_cero_coincidencias (test_tareas_contexto.TestBuscar.test_buscar_humano_muestra_omitidos_con_cero_coincidencias)
+Evita esconder omisiones o alcance parcial en la salida de consola cuando no hay resultados. ... ok
+test_buscar_omite_binarios_con_diagnostico_en_json (test_tareas_contexto.TestBuscar.test_buscar_omite_binarios_con_diagnostico_en_json)
+Evita leer o intentar parsear archivos binarios como texto. ... ok
+test_buscar_omite_fifo_sin_bloquearse (test_tareas_contexto.TestBuscar.test_buscar_omite_fifo_sin_bloquearse)
+Evita bloquear el proceso ante archivos especiales o tuberías nombradas (FIFOs). ... ok
+test_ayudas_de_cada_verbo_no_escriben (test_tareas_contexto.TestComportamientoGlobalP2.test_ayudas_de_cada_verbo_no_escriben)
+Evita que consultar --help en cualquiera de los nuevos verbos cree carpetas o archivos. ... ok
+test_opciones_desconocidas_devuelven_codigo_2 (test_tareas_contexto.TestComportamientoGlobalP2.test_opciones_desconocidas_devuelven_codigo_2)
+Evita ignorar banderas inválidas aportando los argumentos posicionales requeridos. ... ok
+test_referencias_encuentra_menciones_en_codigo_del_proyecto (test_tareas_contexto.TestReferencias.test_referencias_encuentra_menciones_en_codigo_del_proyecto)
+Evita que el rastreo de contexto pierda referencias válidas en el código fuente. ... ok
+test_referencias_falla_si_hay_registros_invalidos (test_tareas_contexto.TestReferencias.test_referencias_falla_si_hay_registros_invalidos)
+Evita devolver éxito en referencias si el tracker contiene registros corruptos. ... ok
+test_referencias_ignora_directorios_excluidos (test_tareas_contexto.TestReferencias.test_referencias_ignora_directorios_excluidos)
+Evita recorrer .git, node_modules o entornos virtuales. ... ok
+test_referencias_no_confunde_id_con_sufijos (test_tareas_contexto.TestReferencias.test_referencias_no_confunde_id_con_sufijos)
+Evita atribuir menciones de tareas derivadas (ej. ID-1) a la tarea base. ... ok
+test_resumen_calcula_totales_estados_y_conserva_mayusculas_de_etiquetas (test_tareas_contexto.TestResumen.test_resumen_calcula_totales_estados_y_conserva_mayusculas_de_etiquetas)
+Evita convertir etiquetas a minúsculas o perder su identidad exacta. ... ok
+test_resumen_falla_si_hay_registros_invalidos (test_tareas_contexto.TestResumen.test_resumen_falla_si_hay_registros_invalidos)
+Evita emitir estadísticas engañosas cuando hay registros rotos en tareas/. ... ok
+test_resumen_vacio_devuelve_cero (test_tareas_contexto.TestResumen.test_resumen_vacio_devuelve_cero)
+Evita fallos cuando el tracker está recién inicializado y sin tareas. ... ok
+test_adjunto_grande_informa_tamano_exacto_antes_de_copiar (test_tareas_contexto_errores.ErroresContextoTests.test_adjunto_grande_informa_tamano_exacto_antes_de_copiar)
+Los bytes exactos permiten decidir si autorizar el adjunto sin redondeos ocultos. ... ok
+test_adjunto_que_crece_informa_bytes_observados_durante_copia (test_tareas_contexto_errores.ErroresContextoTests.test_adjunto_que_crece_informa_bytes_observados_durante_copia)
+Si stat quedó viejo, el diagnóstico informa el acumulado que excedió el límite. ... ok
+test_busqueda_no_acepta_directorio_con_nombre_no_id (test_tareas_contexto_errores.ErroresContextoTests.test_busqueda_no_acepta_directorio_con_nombre_no_id)
+La auditoría descarta estructuras inválidas antes de recorrer notas de tareas. ... ok
+test_colision_posterior_a_comprobacion_conserva_archivo_competidor (test_tareas_contexto_errores.ErroresContextoTests.test_colision_posterior_a_comprobacion_conserva_archivo_competidor)
+Si otro escritor gana O_EXCL, el rollback no borra su archivo. ... ok
+test_copia_ya_eliminada_no_genera_fallo_falso_de_limpieza (test_tareas_contexto_errores.ErroresContextoTests.test_copia_ya_eliminada_no_genera_fallo_falso_de_limpieza)
+Otro actor puede borrar la copia fallida antes del rollback: no queda residuo. ... ok
+test_fallo_de_copia_y_reversion_preserva_ambos_diagnosticos (test_tareas_contexto_errores.ErroresContextoTests.test_fallo_de_copia_y_reversion_preserva_ambos_diagnosticos)
+Si la copia falla y queda un residuo, el usuario recibe causa y ruta recuperable. ... ok
+test_fallo_de_registro_y_reversion_preserva_ambos_diagnosticos (test_tareas_contexto_errores.ErroresContextoTests.test_fallo_de_registro_y_reversion_preserva_ambos_diagnosticos)
+El fallo secundario de limpieza no debe ocultar por qué no se registró la copia. ... ok
+test_fsync_de_copia_fallido_revierte_adjunto (test_tareas_contexto_errores.ErroresContextoTests.test_fsync_de_copia_fallido_revierte_adjunto)
+El adjunto no se confirma ni registra si falla su propia sincronización. ... ok
+test_lectura_no_solicita_mas_del_limite_y_un_byte_de_deteccion (test_tareas_contexto_errores.ErroresContextoTests.test_lectura_no_solicita_mas_del_limite_y_un_byte_de_deteccion)
+El lector tiene un presupuesto de E/S, incluso si el archivo crece sin límite. ... ok
+test_lectura_regular_funciona_sin_flags_opcionales (test_tareas_contexto_errores.ErroresContextoTests.test_lectura_regular_funciona_sin_flags_opcionales)
+La ausencia de extensiones POSIX no debe abrir una nota en modo escritura. ... ok
+test_permiso_denegado_no_se_presenta_como_archivo_ausente (test_tareas_contexto_errores.ErroresContextoTests.test_permiso_denegado_no_se_presenta_como_archivo_ausente)
+Path.exists oculta OSError; la captura conserva el diagnóstico de acceso denegado. ... ok
+test_registro_fallido_con_copia_ya_eliminada_no_inventa_residuo (test_tareas_contexto_errores.ErroresContextoTests.test_registro_fallido_con_copia_ya_eliminada_no_inventa_residuo)
+No se informa una reversión fallida si la copia ya desapareció al fallar registro. ... ok
+test_resumen_deduplica_etiquetas_ya_limpias_sin_cambiar_identidad (test_tareas_contexto_errores.ErroresContextoTests.test_resumen_deduplica_etiquetas_ya_limpias_sin_cambiar_identidad)
+La simplificación conserva conteo por tarea y distingue Bug de bug. ... ok
+test_separadores_unicode_no_generan_enlaces_partidos (test_tareas_contexto_errores.ErroresContextoTests.test_separadores_unicode_no_generan_enlaces_partidos)
+Zl/Zp son saltos para los lectores internos aunque no pertenezcan a Cc. ... ok
+test_adjuntar_error_al_consultar_origen_es_operacional (test_tareas_contexto_mutacion.ContextoMutacionTests.test_adjuntar_error_al_consultar_origen_es_operacional)
+Una consulta de metadatos fallida se informa sin generar ningún adjunto. ... ok
+test_adjuntar_limite_exacto_veinte_mib (test_tareas_contexto_mutacion.ContextoMutacionTests.test_adjuntar_limite_exacto_veinte_mib)
+El tamaño máximo por defecto está incluido, incluso durante la copia acumulada. ... ok
+test_adjuntar_rechaza_crecimiento_durante_la_copia (test_tareas_contexto_mutacion.ContextoMutacionTests.test_adjuntar_rechaza_crecimiento_durante_la_copia)
+El límite se controla también al copiar cuando el tamaño anunciado quedó viejo. ... ok
+test_adjuntar_rechaza_origen_ausente_directorio_y_control_del (test_tareas_contexto_mutacion.ContextoMutacionTests.test_adjuntar_rechaza_origen_ausente_directorio_y_control_del)
+La fuente debe ser regular y su nombre no debe introducir controles en Markdown. ... ok
+test_anotar_fallo_lectura_no_modifica_documento (test_tareas_contexto_mutacion.ContextoMutacionTests.test_anotar_fallo_lectura_no_modifica_documento)
+Una lectura fallida del registro no emite confirmación de nota guardada. ... ok
+test_anotar_solo_url_conserva_datos_y_fecha_utc (test_tareas_contexto_mutacion.ContextoMutacionTests.test_anotar_solo_url_conserva_datos_y_fecha_utc)
+Una URL sola es una nota útil y devuelve el ID, documento y fecha de captura. ... ok
+test_busqueda_archivo_raiz_es_literal_sin_distincion_de_caja (test_tareas_contexto_mutacion.ContextoMutacionTests.test_busqueda_archivo_raiz_es_literal_sin_distincion_de_caja)
+Las notas del tracker fuera de tareas conservan ruta, texto y números de línea. ... ok
+test_busqueda_publica_declara_omisiones_tanto_en_raiz_como_en_tarea (test_tareas_contexto_mutacion.ContextoMutacionTests.test_busqueda_publica_declara_omisiones_tanto_en_raiz_como_en_tarea)
+La búsqueda distingue ausencia de coincidencias de archivos no examinados. ... ok
+test_busqueda_vacia_falla (test_tareas_contexto_mutacion.ContextoMutacionTests.test_busqueda_vacia_falla)
+Un término vacío no equivale a encontrar todas las líneas del tracker. ... ok
+test_captura_documento_ausente_invalido_o_no_utf8_falla (test_tareas_contexto_mutacion.ContextoMutacionTests.test_captura_documento_ausente_invalido_o_no_utf8_falla)
+La captura exige un registro legible y válido; no deja un adjunto huérfano. ... ok
+test_capturas_humanas_informan_id_y_rutas (test_tareas_contexto_mutacion.ContextoMutacionTests.test_capturas_humanas_informan_id_y_rutas)
+Las confirmaciones humanas permiten localizar el documento y la copia creados. ... ok
+test_capturas_no_siguen_documento_simbolico (test_tareas_contexto_mutacion.ContextoMutacionTests.test_capturas_no_siguen_documento_simbolico)
+La nota central enlazada no permite escribir en otro documento del proyecto. ... ok
+test_capturas_preservan_crlf_y_separan_bloque_previo (test_tareas_contexto_mutacion.ContextoMutacionTests.test_capturas_preservan_crlf_y_separan_bloque_previo)
+Notas y adjuntos preservan bytes anteriores y el estilo CRLF, con cualquier final. ... ok
+test_consultas_humanas_muestran_hallazgos_y_omisiones (test_tareas_contexto_mutacion.ContextoMutacionTests.test_consultas_humanas_muestran_hallazgos_y_omisiones)
+La salida humana incluye contexto utilizable y reconoce lo que no examinó. ... ok
+test_consultas_no_ocultan_errores_de_lectura (test_tareas_contexto_mutacion.ContextoMutacionTests.test_consultas_no_ocultan_errores_de_lectura)
+Fallar al leer una nota raíz o anidada invalida la consulta, también referencias. ... ok
+test_consultas_no_ocultan_fallo_de_recorrido (test_tareas_contexto_mutacion.ContextoMutacionTests.test_consultas_no_ocultan_fallo_de_recorrido)
+Un recorrido incompleto por E/S debe fallar aunque no haya coincidencias. ... ok
+test_lector_admite_exactamente_dos_mib_y_omite_el_byte_siguiente (test_tareas_contexto_mutacion.ContextoMutacionTests.test_lector_admite_exactamente_dos_mib_y_omite_el_byte_siguiente)
+El borde documentado admite 2 MiB, pero no un archivo apenas mayor. ... ok
+test_lector_distingue_omisiones_de_error_operacional (test_tareas_contexto_mutacion.ContextoMutacionTests.test_lector_distingue_omisiones_de_error_operacional)
+Binarios, codificación y extensión ajenas son omisiones; la ausencia es error. ... ok
+test_lector_no_exige_extension_y_conserva_lineas_vacias (test_tareas_contexto_mutacion.ContextoMutacionTests.test_lector_no_exige_extension_y_conserva_lineas_vacias)
+Una nota sin extensión sigue siendo texto UTF-8 y mantiene su numeración. ... ok
+test_lector_omite_crecimiento_posterior_a_stat (test_tareas_contexto_mutacion.ContextoMutacionTests.test_lector_omite_crecimiento_posterior_a_stat)
+Un archivo que crece tras consultar su tamaño no se lee como texto completo. ... ok
+test_lector_reporta_fallo_de_apertura_como_error (test_tareas_contexto_mutacion.ContextoMutacionTests.test_lector_reporta_fallo_de_apertura_como_error)
+Un permiso denegado no debe convertirse en omisión exitosa ni traceback. ... ok
+test_nota_blanca_no_modifica_documento (test_tareas_contexto_mutacion.ContextoMutacionTests.test_nota_blanca_no_modifica_documento)
+Una cadena explícita de espacios no se registra como nota vacía. ... ok
+test_referencias_sin_menciones_y_resumen_sin_etiquetas_son_exitos (test_tareas_contexto_mutacion.ContextoMutacionTests.test_referencias_sin_menciones_y_resumen_sin_etiquetas_son_exitos)
+Los resultados vacíos tienen diagnóstico humano y código cero. ... ok
+test_resumen_humano_cuenta_estados_y_etiquetas_sin_duplicados (test_tareas_contexto_mutacion.ContextoMutacionTests.test_resumen_humano_cuenta_estados_y_etiquetas_sin_duplicados)
+El resumen humano comunica los mismos totales que el JSON, sin duplicar etiquetas. ... ok
+test_url_rechaza_del_controles_y_tipos_ajenos (test_tareas_contexto_mutacion.ContextoMutacionTests.test_url_rechaza_del_controles_y_tipos_ajenos)
+La validación excluye controles y valores ajenos sin normalizar URLs válidas. ... ok
+test_verbos_con_id_reportan_id_ausente (test_tareas_contexto_mutacion.ContextoMutacionTests.test_verbos_con_id_reportan_id_ausente)
+Un ID inexistente no se confunde con una operación exitosa sin resultado. ... ok
+test_verbos_reportan_tracker_ausente_y_no_lo_crean (test_tareas_contexto_mutacion.ContextoMutacionTests.test_verbos_reportan_tracker_ausente_y_no_lo_crean)
+Los verbos P2 requieren inicialización explícita y conservan el código operacional 1. ... ok
+test_cmd_init_idempotente_segunda_vez_devuelve_0_exacto (test_tareas_errores.TestCasosPositivosComandos.test_cmd_init_idempotente_segunda_vez_devuelve_0_exacto)
+Evita que reinicializar un tracker existente falle cuando README.md ya existe. ... ok
+test_cmd_listar_filtro_cerradas_positivo_devuelve_0_exacto (test_tareas_errores.TestCasosPositivosComandos.test_cmd_listar_filtro_cerradas_positivo_devuelve_0_exacto)
+Evita que el listado con --cerradas omita filtrar abiertas o devuelva código distinto de 0. ... ok
+test_cmd_ver_opcion_ruta_devuelve_0_exacto (test_tareas_errores.TestCasosPositivosComandos.test_cmd_ver_opcion_ruta_devuelve_0_exacto)
+Evita que la opción --ruta en cmd_ver devuelva código distinto de 0 o emita líneas espurias. ... ok
+test_despachar_ayuda_vacia_y_flags_devuelven_0_exacto (test_tareas_errores.TestDespachoYMain.test_despachar_ayuda_vacia_y_flags_devuelven_0_exacto)
+Evita que pedir ayuda en despachar devuelva un código distinto de 0. ... ok
+test_despachar_comandos_p2_captura_y_traduce_oserror_a_1_exacto (test_tareas_errores.TestDespachoYMain.test_despachar_comandos_p2_captura_y_traduce_oserror_a_1_exacto)
+Evita que excepciones OSError en comandos P2 escapen sin traducción o devuelvan código distinto de 1. ... ok
+test_despachar_comandos_p2_captura_y_traduce_tarea_error_a_1_exacto (test_tareas_errores.TestDespachoYMain.test_despachar_comandos_p2_captura_y_traduce_tarea_error_a_1_exacto)
+Evita que excepciones TareaError en comandos P2 escapen sin traducción o devuelvan código distinto de 1. ... ok
+test_despachar_seguimiento_y_hechos_delega_correctamente (test_tareas_errores.TestDespachoYMain.test_despachar_seguimiento_y_hechos_delega_correctamente)
+Evita que despachar altere los argumentos o código de salida al delegar a seguimiento y hechos. ... ok
+test_despachar_verbo_desconocido_devuelve_1_exacto (test_tareas_errores.TestDespachoYMain.test_despachar_verbo_desconocido_devuelve_1_exacto)
+Evita que un verbo desconocido devuelva un código distinto de 1. ... ok
+test_main_ayuda_vacio_y_flags_devuelven_0_exacto (test_tareas_errores.TestDespachoYMain.test_main_ayuda_vacio_y_flags_devuelven_0_exacto)
+Evita que invocar main sin argumentos o con flags de ayuda devuelva código distinto de 0. ... ok
+test_main_con_argv_explicito_pasa_verbo_y_argumentos (test_tareas_errores.TestDespachoYMain.test_main_con_argv_explicito_pasa_verbo_y_argumentos)
+Evita que main con lista explícita altere el verbo o descarte argumentos hacia despachar. ... ok
+test_main_con_sys_argv_por_defecto (test_tareas_errores.TestDespachoYMain.test_main_con_sys_argv_por_defecto)
+Evita que main con argv=None falle al consumir sys.argv[1:] o propague errores indebidos. ... ok
+test_cmd_cerrar_carpeta_sin_tarea_md_retorna_1_exacto (test_tareas_errores.TestErroresActualizarEstado.test_cmd_cerrar_carpeta_sin_tarea_md_retorna_1_exacto)
+Evita que cmd_cerrar ante una carpeta sin TAREA.md devuelva código distinto de 1. ... ok
+test_cmd_cerrar_fallos_actualizar_estado_tarea_retorna_1_exacto (test_tareas_errores.TestErroresActualizarEstado.test_cmd_cerrar_fallos_actualizar_estado_tarea_retorna_1_exacto)
+Evita que errores de validación o E/S en actualizar_estado_tarea al cerrar devuelvan código distinto de 1. ... ok
+test_cmd_cerrar_id_inexistente_retorna_1_exacto (test_tareas_errores.TestErroresActualizarEstado.test_cmd_cerrar_id_inexistente_retorna_1_exacto)
+Evita que cmd_cerrar ante un ID inexistente devuelva código distinto de 1. ... ok
+test_cmd_cerrar_tarea_md_enlace_que_escapa_retorna_1_exacto (test_tareas_errores.TestErroresActualizarEstado.test_cmd_cerrar_tarea_md_enlace_que_escapa_retorna_1_exacto)
+Evita que cmd_cerrar permita modificar enlaces simbólicos que escapan de tareas/. ... ok
+test_cmd_reabrir_carpeta_sin_tarea_md_retorna_1_exacto (test_tareas_errores.TestErroresActualizarEstado.test_cmd_reabrir_carpeta_sin_tarea_md_retorna_1_exacto)
+Evita que cmd_reabrir ante una carpeta sin TAREA.md devuelva código distinto de 1. ... ok
+test_cmd_reabrir_fallos_actualizar_estado_tarea_retorna_1_exacto (test_tareas_errores.TestErroresActualizarEstado.test_cmd_reabrir_fallos_actualizar_estado_tarea_retorna_1_exacto)
+Evita que errores de validación o E/S en actualizar_estado_tarea al reabrir devuelvan código distinto de 1. ... ok
+test_cmd_reabrir_id_inexistente_retorna_1_exacto (test_tareas_errores.TestErroresActualizarEstado.test_cmd_reabrir_id_inexistente_retorna_1_exacto)
+Evita que cmd_reabrir ante un ID inexistente devuelva código distinto de 1. ... ok
+test_cmd_reabrir_tarea_md_enlace_que_escapa_retorna_1_exacto (test_tareas_errores.TestErroresActualizarEstado.test_cmd_reabrir_tarea_md_enlace_que_escapa_retorna_1_exacto)
+Evita que cmd_reabrir permita modificar enlaces simbólicos que escapan de tareas/. ... ok
+test_cmd_nueva_etiqueta_con_retorno_carro_cr_retorna_1_exacto (test_tareas_errores.TestErroresEntradaNueva.test_cmd_nueva_etiqueta_con_retorno_carro_cr_retorna_1_exacto)
+Evita que una etiqueta con '\r' sea aceptada o devuelva código distinto de 1. ... ok
+test_cmd_nueva_etiqueta_con_salto_de_linea_lf_retorna_1_exacto (test_tareas_errores.TestErroresEntradaNueva.test_cmd_nueva_etiqueta_con_salto_de_linea_lf_retorna_1_exacto)
+Evita que una etiqueta con '\n' sea aceptada o devuelva código distinto de 1. ... ok
+test_cmd_nueva_titulo_con_retorno_carro_cr_retorna_1_exacto (test_tareas_errores.TestErroresEntradaNueva.test_cmd_nueva_titulo_con_retorno_carro_cr_retorna_1_exacto)
+Evita que un título con retorno de carro '\r' sea aceptado o devuelva código distinto de 1. ... ok
+test_cmd_nueva_titulo_con_salto_de_linea_lf_retorna_1_exacto (test_tareas_errores.TestErroresEntradaNueva.test_cmd_nueva_titulo_con_salto_de_linea_lf_retorna_1_exacto)
+Evita que un título con salto de línea '\n' sea aceptado o devuelva código distinto de 1. ... ok
+test_cmd_nueva_titulo_solo_espacios_retorna_1_exacto (test_tareas_errores.TestErroresEntradaNueva.test_cmd_nueva_titulo_solo_espacios_retorna_1_exacto)
+Evita que un título compuesto exclusivamente por espacios devuelva código distinto de 1. ... ok
+test_cmd_nueva_titulo_vacio_retorna_1_exacto (test_tareas_errores.TestErroresEntradaNueva.test_cmd_nueva_titulo_vacio_retorna_1_exacto)
+Evita que un título vacío devuelva código distinto de 1. ... ok
+test_cmd_init_error_mkdir_retorna_1_exacto (test_tareas_errores.TestErroresIOYArchivo.test_cmd_init_error_mkdir_retorna_1_exacto)
+Evita que fallos de E/S al crear tareas/ propaguen excepción o devuelvan código distinto de 1. ... ok
+test_cmd_init_error_open_readme_retorna_1_exacto (test_tareas_errores.TestErroresIOYArchivo.test_cmd_init_error_open_readme_retorna_1_exacto)
+Evita que fallos de E/S al crear README.md devuelvan código distinto de 1. ... ok
+test_cmd_nueva_error_crear_carpeta_atomica_retorna_1_exacto (test_tareas_errores.TestErroresIOYArchivo.test_cmd_nueva_error_crear_carpeta_atomica_retorna_1_exacto)
+Evita que fallos de E/S al crear la carpeta de la tarea devuelvan código distinto de 1. ... ok
+test_cmd_nueva_error_write_text_retorna_1_exacto (test_tareas_errores.TestErroresIOYArchivo.test_cmd_nueva_error_write_text_retorna_1_exacto)
+Evita que fallos de E/S al escribir TAREA.md devuelvan código distinto de 1. ... ok
+test_cmd_ver_banderas_incompatibles_ruta_y_json_retorna_1_exacto (test_tareas_errores.TestErroresIOYArchivo.test_cmd_ver_banderas_incompatibles_ruta_y_json_retorna_1_exacto)
+Evita que combinar --ruta y --json en cmd_ver sea aceptado o devuelva código distinto de 1. ... ok
+test_cmd_ver_carpeta_sin_tarea_md_retorna_1_exacto (test_tareas_errores.TestErroresIOYArchivo.test_cmd_ver_carpeta_sin_tarea_md_retorna_1_exacto)
+Evita que cmd_ver ante carpeta sin TAREA.md devuelva código distinto de 1. ... ok
+test_cmd_ver_error_read_bytes_retorna_1_exacto (test_tareas_errores.TestErroresIOYArchivo.test_cmd_ver_error_read_bytes_retorna_1_exacto)
+Evita que un fallo de lectura de bytes en TAREA.md devuelva código distinto de 1. ... ok
+test_cmd_ver_id_inexistente_retorna_1_exacto (test_tareas_errores.TestErroresIOYArchivo.test_cmd_ver_id_inexistente_retorna_1_exacto)
+Evita que cmd_ver ante un ID no encontrado devuelva código distinto de 1. ... ok
+test_cmd_ver_tarea_invalida_retorna_1_exacto (test_tareas_errores.TestErroresIOYArchivo.test_cmd_ver_tarea_invalida_retorna_1_exacto)
+Evita que TAREA.md con metadatos inválidos o mal formados devuelva código distinto de 1. ... ok
+test_cmd_ver_tarea_md_enlace_que_escapa_retorna_1_exacto (test_tareas_errores.TestErroresIOYArchivo.test_cmd_ver_tarea_md_enlace_que_escapa_retorna_1_exacto)
+Evita que cmd_ver permita leer enlaces simbólicos que apuntan fuera de tareas/. ... ok
+test_cmd_ver_tarea_md_no_utf8_retorna_1_exacto (test_tareas_errores.TestErroresIOYArchivo.test_cmd_ver_tarea_md_no_utf8_retorna_1_exacto)
+Evita que TAREA.md con codificación no UTF-8 devuelva código distinto de 1. ... ok
+test_cmd_cerrar_raiz_invalida_retorna_1_exacto (test_tareas_errores.TestErroresRaizYDirectorio.test_cmd_cerrar_raiz_invalida_retorna_1_exacto)
+Evita que cmd_cerrar ante raíz no resuelta devuelva código distinto de 1. ... ok
+test_cmd_init_directorio_tareas_enlace_simbolico_retorna_1_exacto (test_tareas_errores.TestErroresRaizYDirectorio.test_cmd_init_directorio_tareas_enlace_simbolico_retorna_1_exacto)
+Evita que inicializar sobre un directorio tareas/ que es enlace simbólico devuelva código distinto de 1. ... ok
+test_cmd_init_raiz_invalida_retorna_1_exacto (test_tareas_errores.TestErroresRaizYDirectorio.test_cmd_init_raiz_invalida_retorna_1_exacto)
+Evita que un fallo al resolver la raíz al inicializar devuelva código distinto de 1. ... ok
+test_cmd_init_readme_enlace_simbolico_retorna_1_exacto (test_tareas_errores.TestErroresRaizYDirectorio.test_cmd_init_readme_enlace_simbolico_retorna_1_exacto)
+Evita que inicializar sobre un README.md que es enlace simbólico devuelva código distinto de 1. ... ok
+test_cmd_listar_raiz_invalida_retorna_1_exacto (test_tareas_errores.TestErroresRaizYDirectorio.test_cmd_listar_raiz_invalida_retorna_1_exacto)
+Evita que cmd_listar ante raíz no resuelta devuelva código distinto de 1. ... ok
+test_cmd_nueva_directorio_tareas_enlace_simbolico_retorna_1_exacto (test_tareas_errores.TestErroresRaizYDirectorio.test_cmd_nueva_directorio_tareas_enlace_simbolico_retorna_1_exacto)
+Evita que cmd_nueva permita escribir cuando tareas/ es enlace simbólico o devuelva código distinto de 1. ... ok
+test_cmd_nueva_raiz_invalida_retorna_1_exacto (test_tareas_errores.TestErroresRaizYDirectorio.test_cmd_nueva_raiz_invalida_retorna_1_exacto)
+Evita que cmd_nueva ante raíz no resuelta devuelva código distinto de 1. ... ok
+test_cmd_reabrir_raiz_invalida_retorna_1_exacto (test_tareas_errores.TestErroresRaizYDirectorio.test_cmd_reabrir_raiz_invalida_retorna_1_exacto)
+Evita que cmd_reabrir ante raíz no resuelta devuelva código distinto de 1. ... ok
+test_cmd_revisar_raiz_invalida_retorna_1_exacto (test_tareas_errores.TestErroresRaizYDirectorio.test_cmd_revisar_raiz_invalida_retorna_1_exacto)
+Evita que cmd_revisar ante raíz no resuelta devuelva código distinto de 1. ... ok
+test_cmd_ver_raiz_invalida_retorna_1_exacto (test_tareas_errores.TestErroresRaizYDirectorio.test_cmd_ver_raiz_invalida_retorna_1_exacto)
+Evita que cmd_ver ante raíz no resuelta devuelva código distinto de 1. ... ok
+test_cmd_revisar_fallos_modo_humano_retorna_1_exacto (test_tareas_errores.TestErroresRevisar.test_cmd_revisar_fallos_modo_humano_retorna_1_exacto)
+Evita que una auditoría con problemas en formato humano devuelva código distinto de 1. ... ok
+test_cmd_revisar_fallos_modo_json_retorna_1_exacto (test_tareas_errores.TestErroresRevisar.test_cmd_revisar_fallos_modo_json_retorna_1_exacto)
+Evita que una auditoría con problemas en formato JSON devuelva 0 o emita ok=true. ... ok
+test_cmd_revisar_sin_problemas_humano_y_json_retornan_0_exacto (test_tareas_errores.TestErroresRevisar.test_cmd_revisar_sin_problemas_humano_y_json_retornan_0_exacto)
+Evita que una auditoría sin problemas falle o devuelva código distinto de 0. ... ok
+test_archivos_ignorados_no_desaparecen_del_diagnostico (test_tareas_git.SeguimientoGitTests.test_archivos_ignorados_no_desaparecen_del_diagnostico)
+Un directorio ignorado completo sigue mostrando sus adjuntos individuales. ... ok
+test_ayuda_y_argumentos_invalidos_no_ejecutan_git (test_tareas_git.SeguimientoGitTests.test_ayuda_y_argumentos_invalidos_no_ejecutan_git)
+La ayuda y errores de sintaxis se resuelven antes de consultar el proyecto. ... ok
+test_borrados_locales_y_del_indice_conservan_su_rastro (test_tareas_git.SeguimientoGitTests.test_borrados_locales_y_del_indice_conservan_su_rastro)
+Un archivo borrado todavía presente en HEAD no desaparece del informe. ... ok
+test_consulta_no_modifica_indice_ni_archivos (test_tareas_git.SeguimientoGitTests.test_consulta_no_modifica_indice_ni_archivos)
+Consultar cobertura no hace git add ni refresca el índice en disco. ... ok
+test_error_git_no_se_disfraza_de_archivos_sin_seguimiento (test_tareas_git.SeguimientoGitTests.test_error_git_no_se_disfraza_de_archivos_sin_seguimiento)
+Un fallo de Git devuelve error operacional y no un diagnóstico vacío exitoso. ... ok
+test_git_dir_heredado_no_redirige_el_proyecto (test_tareas_git.SeguimientoGitTests.test_git_dir_heredado_no_redirige_el_proyecto)
+El diagnóstico observa el proyecto pedido aunque la shell seleccione otro Git. ... ok
+test_local_indice_y_commit_son_tres_observaciones_distintas (test_tareas_git.SeguimientoGitTests.test_local_indice_y_commit_son_tres_observaciones_distintas)
+Un archivo recién creado o añadido no se presenta como contenido confirmado. ... ok
+test_nombres_con_saltos_y_unicode_no_rompen_el_formato (test_tareas_git.SeguimientoGitTests.test_nombres_con_saltos_y_unicode_no_rompen_el_formato)
+La salida NUL de Git conserva nombres que no caben en un parser por líneas. ... ok
+test_raiz_simbolica_se_rechaza_y_adjuntos_externos_no_se_recorren (test_tareas_git.SeguimientoGitTests.test_raiz_simbolica_se_rechaza_y_adjuntos_externos_no_se_recorren)
+Los enlaces del tracker no permiten leer contenido de carpetas externas. ... ok
+test_retirar_del_indice_no_oculta_el_borrado_pendiente (test_tareas_git.SeguimientoGitTests.test_retirar_del_indice_no_oculta_el_borrado_pendiente)
+Un archivo conservado en disco puede ser a la vez borrado del índice y untracked. ... ok
+test_sin_repositorio_se_informa_sin_afirmar_seguimiento (test_tareas_git.SeguimientoGitTests.test_sin_repositorio_se_informa_sin_afirmar_seguimiento)
+Una carpeta independiente es utilizable pero no tiene historia comprobada. ... ok
+test_hechos_determinismo_byte_por_byte (test_tareas_hechos.TestHechosEsquemaYDeterminismo.test_hechos_determinismo_byte_por_byte)
+Dos corridas sobre el mismo árbol estable deben emitir el mismo JSON byte por byte. ... ok
+test_hechos_esquema_y_siete_claves_siempre_presentes (test_tareas_hechos.TestHechosEsquemaYDeterminismo.test_hechos_esquema_y_siete_claves_siempre_presentes)
+Las siete relaciones están siempre, incluso vacías: una relación que aparece sólo cuando ... ok
+test_hechos_git_con_repositorio_y_commits (test_tareas_hechos.TestHechosIntegracionGit.test_hechos_git_con_repositorio_y_commits)
+Si se pasa --git en un repo con commits, audita HEAD e índice de Git. ... ok
+test_hechos_git_sin_repositorio (test_tareas_hechos.TestHechosIntegracionGit.test_hechos_git_sin_repositorio)
+Si se pasa --git en un directorio sin repositorio Git, reporta sin_repositorio. ... ok
+test_hechos_archivo_markdown_adjunto_grande_se_omite (test_tareas_hechos.TestHechosLimitesYErrores.test_hechos_archivo_markdown_adjunto_grande_se_omite)
+Archivos Markdown adjuntos mayores a 2 MiB se omiten con completa=False sin abortar el proceso. ... ok
+test_hechos_ayuda_no_escribe_en_disco (test_tareas_hechos.TestHechosLimitesYErrores.test_hechos_ayuda_no_escribe_en_disco)
+La opción --help devuelve código 0 y no crea tareas/ ni escribe en disco. ... ok
+test_hechos_metadata_corrupta_falla_con_codigo_1 (test_tareas_hechos.TestHechosLimitesYErrores.test_hechos_metadata_corrupta_falla_con_codigo_1)
+La existencia de tareas corruptas aborta con código 1 sin emitir JSON parcial. ... ok
+test_hechos_opcion_desconocida_devuelve_codigo_2 (test_tareas_hechos.TestHechosLimitesYErrores.test_hechos_opcion_desconocida_devuelve_codigo_2)
+Banderas u opciones no reconocidas devuelven código 2 de argparse. ... ok
+test_hechos_permiso_denegado_falla_con_codigo_1 (test_tareas_hechos.TestHechosLimitesYErrores.test_hechos_permiso_denegado_falla_con_codigo_1)
+Un archivo o directorio con permiso denegado falla con código 1 sin convertirse en falsa ausencia. ... ok
+test_hechos_tarea_md_central_grande_o_simbolico_falla_codigo_1 (test_tareas_hechos.TestHechosLimitesYErrores.test_hechos_tarea_md_central_grande_o_simbolico_falla_codigo_1)
+Un documento TAREA.md central mayor a 2 MiB o simbólico falla con código 1 en prechequeo. ... ok
+test_hechos_cerca_de_codigo_con_texto_no_cierra_bloque (test_tareas_hechos.TestHechosReferenciasMarkdown.test_hechos_cerca_de_codigo_con_texto_no_cierra_bloque)
+Una línea con ```texto dentro de un bloque cercado no actúa como cierre. ... ok
+test_hechos_componente_archivo_con_puntos_es_ausente (test_tareas_hechos.TestHechosReferenciasMarkdown.test_hechos_componente_archivo_con_puntos_es_ausente)
+Navegar a través de un archivo regular como si fuera directorio da ausente. ... ok
+test_hechos_corchetes_escapados_no_son_enlaces (test_tareas_hechos.TestHechosReferenciasMarkdown.test_hechos_corchetes_escapados_no_son_enlaces)
+Los corchetes precedidos por barra invertida son literales y no deben extraerse como enlaces. ... ok
+test_hechos_esquemas_mayusculas_y_autolinks (test_tareas_hechos.TestHechosReferenciasMarkdown.test_hechos_esquemas_mayusculas_y_autolinks)
+Clasifica URLs http/https como remotas sin importar mayúsculas y preserva texto original. ... ok
+test_hechos_multiples_apariciones_en_misma_linea (test_tareas_hechos.TestHechosReferenciasMarkdown.test_hechos_multiples_apariciones_en_misma_linea)
+Conserva una fila por cada aparición aunque compartan el mismo destino en la misma línea. ... ok
+test_hechos_nombres_unicode_espacios_y_percent_encoding (test_tareas_hechos.TestHechosReferenciasMarkdown.test_hechos_nombres_unicode_espacios_y_percent_encoding)
+Conserva destino_declarado exacto con percent encoding y resuelve presencia de archivos Unicode. ... ok
+test_hechos_omisiones_sintaxis_no_soportada_y_esquemas_invalidos (test_tareas_hechos.TestHechosReferenciasMarkdown.test_hechos_omisiones_sintaxis_no_soportada_y_esquemas_invalidos)
+Registra omisión explícita ante enlaces por referencia [texto][clave], definiciones reales y esquemas ajenos. ... ok
+test_hechos_referencia_puente_symlink_con_puntos_causa_omision (test_tareas_hechos.TestHechosReferenciasMarkdown.test_hechos_referencia_puente_symlink_con_puntos_causa_omision)
+La ruta puente/../parece-local.txt con puente simbólico no se normaliza a presente. ... ok
+test_hechos_referencias_escape_fuera_del_proyecto (test_tareas_hechos.TestHechosReferenciasMarkdown.test_hechos_referencias_escape_fuera_del_proyecto)
+Referencias que intentan escapar de la raíz se marcan como fuera_del_proyecto sin leerlas. ... ok
+test_hechos_referencias_locales_presentes_y_rotas (test_tareas_hechos.TestHechosReferenciasMarkdown.test_hechos_referencias_locales_presentes_y_rotas)
+Distingue referencias locales presentes de rotas/ausentes en disco. ... ok
+test_hechos_sintaxis_multilinea_o_incompleta_genera_omision (test_tareas_hechos.TestHechosReferenciasMarkdown.test_hechos_sintaxis_multilinea_o_incompleta_genera_omision)
+Sintaxis de enlace partida en múltiples líneas no se pierde silenciosamente sino que genera omisión. ... ok
+test_hechos_datos_declarados_tarea (test_tareas_hechos.TestHechosTareasYArchivos.test_hechos_datos_declarados_tarea)
+Verifica metadatos declarados y hash SHA-256 del documento TAREA.md. ... ok
+test_hechos_inventario_archivos_y_auxiliares (test_tareas_hechos.TestHechosTareasYArchivos.test_hechos_inventario_archivos_y_auxiliares)
+Verifica clasificación de documento, adjunto y auxiliares documentados. ... ok
+test_hechos_no_lee_binarios_ni_se_bloquea_en_fifo (test_tareas_hechos.TestHechosTareasYArchivos.test_hechos_no_lee_binarios_ni_se_bloquea_en_fifo)
+Comprueba que adjuntos binarios sólo inventarían stat y FIFOs causan omisión sin bloqueo. ... ok
+test_el_sha_y_el_asunto_de_cada_commit_del_mas_nuevo_al_mas_viejo (test_tareas_hechos_commits.CommitsDelRepositorioTests.test_el_sha_y_el_asunto_de_cada_commit_del_mas_nuevo_al_mas_viejo) ... ok
+test_sin_repositorio_devuelve_None_y_no_una_lista_vacia (test_tareas_hechos_commits.CommitsDelRepositorioTests.test_sin_repositorio_devuelve_None_y_no_una_lista_vacia)
+«No hay con qué mirar» es distinto de «no hay commits», y de esa diferencia depende que ... ok
+test_un_asunto_con_el_separador_adentro_no_parte_la_fila (test_tareas_hechos_commits.CommitsDelRepositorioTests.test_un_asunto_con_el_separador_adentro_no_parte_la_fila)
+El separador es \x1f, que no aparece en un mensaje escrito por una persona; el test está ... ok
+test_un_repositorio_sin_un_solo_commit_no_es_un_error (test_tareas_hechos_commits.CommitsDelRepositorioTests.test_un_repositorio_sin_un_solo_commit_no_es_un_error) ... ok
+test_dos_corridas_sobre_la_misma_historia_emiten_lo_mismo (test_tareas_hechos_commits.HechosConCommitsTests.test_dos_corridas_sobre_la_misma_historia_emiten_lo_mismo) ... ok
+test_los_commits_llegan_y_cada_tarea_cuenta_los_suyos (test_tareas_hechos_commits.HechosConCommitsTests.test_los_commits_llegan_y_cada_tarea_cuenta_los_suyos) ... ok
+test_sin_git_la_relacion_viene_vacia (test_tareas_hechos_commits.HechosConCommitsTests.test_sin_git_la_relacion_viene_vacia)
+Sin `--git` no se le pregunta a la historia, y lo que no se miró no se inventa. ... ok
+test_sin_repositorio_no_es_superficial (test_tareas_hechos_commits.HistoriaSuperficialTests.test_sin_repositorio_no_es_superficial) ... ok
+test_un_clon_superficial_se_declara_como_omision (test_tareas_hechos_commits.HistoriaSuperficialTests.test_un_clon_superficial_se_declara_como_omision) ... ok
+test_el_cierre_es_done_y_nada_mas (test_tareas_hechos_commits.LecturaDelAsuntoTests.test_el_cierre_es_done_y_nada_mas)
+Estricto a propósito: un asunto que sigue con otra cosa —una firma pegada, por ejemplo— ... ok
+test_lo_que_se_parece_a_un_id_y_no_lo_es (test_tareas_hechos_commits.LecturaDelAsuntoTests.test_lo_que_se_parece_a_un_id_y_no_lo_es) ... ok
+test_un_commit_que_no_nombra_ninguna_tarea (test_tareas_hechos_commits.LecturaDelAsuntoTests.test_un_commit_que_no_nombra_ninguna_tarea) ... ok
+test_un_commit_que_nombra_una_tarea_que_existe (test_tareas_hechos_commits.LecturaDelAsuntoTests.test_un_commit_que_nombra_una_tarea_que_existe) ... ok
+test_un_commit_que_nombra_una_tarea_que_no_existe (test_tareas_hechos_commits.LecturaDelAsuntoTests.test_un_commit_que_nombra_una_tarea_que_no_existe) ... ok
+test_un_id_sin_sufijo_tambien_es_un_id (test_tareas_hechos_commits.LecturaDelAsuntoTests.test_un_id_sin_sufijo_tambien_es_un_id) ... ok
+test_backtick_escapado_no_oculta_un_enlace_roto (test_tareas_hechos_mutacion.GramaticaHechosTests.test_backtick_escapado_no_oculta_un_enlace_roto)
+Una apertura literal no inicia código; dentro del código una barra no anula el cierre. ... ok
+test_enlaces_con_posiciones_y_destinos_exactos (test_tareas_hechos_mutacion.GramaticaHechosTests.test_enlaces_con_posiciones_y_destinos_exactos)
+Fija spans consumidos, destinos balanceados, imágenes y adyacencia sin perder caracteres. ... ok
+test_etiquetas_vacias_anidadas_y_espaciado_impar (test_tareas_hechos_mutacion.GramaticaHechosTests.test_etiquetas_vacias_anidadas_y_espaciado_impar)
+El escaneo conserva el corchete inicial real, incluso tras texto entre corchetes. ... ok
+test_paridad_de_escape_y_limites_de_codigo (test_tareas_hechos_mutacion.GramaticaHechosTests.test_paridad_de_escape_y_limites_de_codigo)
+Dos barras restauran el enlace; un span incluye inicio y excluye fin. ... ok
+test_rachas_completas_y_terminacion (test_tareas_hechos_mutacion.GramaticaHechosTests.test_rachas_completas_y_terminacion)
+Un cierre largo no aporta su sufijo; entradas incompletas terminan con resultado exacto. ... ok
+test_sintaxis_incompleta_y_referencias_escapadas (test_tareas_hechos_mutacion.GramaticaHechosTests.test_sintaxis_incompleta_y_referencias_escapadas)
+La omisión conserva la etiqueta real y los literales no producen falsos avisos. ... ok
+test_titulo_requiere_separador_y_cierre_tras_espacios (test_tareas_hechos_mutacion.GramaticaHechosTests.test_titulo_requiere_separador_y_cierre_tras_espacios)
+No se acepta un título pegado al destino ni se pierde el cierre tras un espacio impar. ... ok
+test_autolink_dentro_de_url_y_enlace_no_se_duplica (test_tareas_hechos_mutacion.DatosHechosTests.test_autolink_dentro_de_url_y_enlace_no_se_duplica)
+Las posiciones cubiertas evitan doble fila pero conservan apariciones independientes. ... ok
+test_auxiliares_y_ocultos_no_son_documentos_centrales (test_tareas_hechos_mutacion.DatosHechosTests.test_auxiliares_y_ocultos_no_son_documentos_centrales)
+Un TAREA.md bajo carpeta oculta se inventaría como archivo, sin prechequeo de tarea central. ... ok
+test_cercas_de_distinto_caracter_y_tamano (test_tareas_hechos_mutacion.DatosHechosTests.test_cercas_de_distinto_caracter_y_tamano)
+Una cerca corta o de otro carácter no cierra; el primer enlace tras cierre sí aparece. ... ok
+test_cmd_json_utf8_valido_y_codigo_de_error (test_tareas_hechos_mutacion.DatosHechosTests.test_cmd_json_utf8_valido_y_codigo_de_error)
+El despacho emite UTF-8 válido con escapes de nombres Unix, y no emite hechos ante error. ... ok
+test_enlace_de_adjunto_no_reinterpreta_barras_percent_encoded (test_tareas_hechos_mutacion.DatosHechosTests.test_enlace_de_adjunto_no_reinterpreta_barras_percent_encoded)
+Un nombre con barra antes de paréntesis conserva esa barra al consumir el enlace que produce P2. ... ok
+test_error_de_listado_y_de_lectura_no_se_ocultan (test_tareas_hechos_mutacion.DatosHechosTests.test_error_de_listado_y_de_lectura_no_se_ocultan)
+Permisos y errores de E/S deben cortar la extracción en vez de generar evidencia parcial. ... ok
+test_extraccion_sin_git_no_invoca_el_sensor (test_tareas_hechos_mutacion.DatosHechosTests.test_extraccion_sin_git_no_invoca_el_sensor)
+El argumento omitido no habilita el proceso Git ni siquiera en un proyecto sin repositorio. ... ok
+test_frontera_exacta_despues_de_stat_y_presupuesto_central (test_tareas_hechos_mutacion.DatosHechosTests.test_frontera_exacta_despues_de_stat_y_presupuesto_central)
+La lectura de exactamente 2 MiB sigue siendo válida aunque el archivo crezca tras el stat. ... ok
+test_git_borrados_clasificacion_y_filas_presentes (test_tareas_hechos_mutacion.DatosHechosTests.test_git_borrados_clasificacion_y_filas_presentes)
+La unión Git incluye borrados sin duplicar presentes ni inventar ausencias para lo existente. ... ok
+test_git_sin_fila_para_archivo_recien_creado (test_tareas_hechos_mutacion.DatosHechosTests.test_git_sin_fila_para_archivo_recien_creado)
+Una creación entre inventarios queda observada en disco, sin fingir inclusión en índice o HEAD. ... ok
+test_host_codificado_no_consulta_disco (test_tareas_hechos_mutacion.DatosHechosTests.test_host_codificado_no_consulta_disco)
+El percent encoding no permite tratar un host UNC como una ruta local. ... ok
+test_identidad_de_referencia_y_rutas_locales (test_tareas_hechos_mutacion.DatosHechosTests.test_identidad_de_referencia_y_rutas_locales)
+La identidad distingue auxiliares de tareas y las rutas no atraviesan archivos ni ausencias. ... ok
+test_inventario_y_omisiones_exactas (test_tareas_hechos_mutacion.DatosHechosTests.test_inventario_y_omisiones_exactas)
+Especiales, repositorios y enlaces dejan motivos de archivo completo y no se recorren. ... ok
+test_lecturas_acotadas_y_crecimiento_tras_stat (test_tareas_hechos_mutacion.DatosHechosTests.test_lecturas_acotadas_y_crecimiento_tras_stat)
+Cada lectura pide sólo 2 MiB más el centinela y detecta crecimiento posterior al stat. ... ok
+test_markdown_invalido_y_frontera_exacta (test_tareas_hechos_mutacion.DatosHechosTests.test_markdown_invalido_y_frontera_exacta)
+Dos MiB se leen; el byte adicional, NUL y UTF-8 inválido dejan omisiones exactas. ... ok
+test_nul_codificado_se_omite_sin_consultar_el_destino (test_tareas_hechos_mutacion.DatosHechosTests.test_nul_codificado_se_omite_sin_consultar_el_destino)
+%00 es sintaxis visible válida en UTF-8, pero nunca debe llegar como NUL a lstat. ... ok
+test_omisiones_sintacticas_con_lineas_exactas (test_tareas_hechos_mutacion.DatosHechosTests.test_omisiones_sintacticas_con_lineas_exactas)
+La política de lectura necesita motivos y líneas fieles, incluso con etiqueta distinta de clave. ... ok
+test_origen_inexistente_o_archivo_no_puede_contener_hijos (test_tareas_hechos_mutacion.DatosHechosTests.test_origen_inexistente_o_archivo_no_puede_contener_hijos)
+Un padre ausente o regular no admite navegación con puntos ni nombres de hijos. ... ok
+test_prechequeo_ausencia_y_archivos_no_directorio (test_tareas_hechos_mutacion.DatosHechosTests.test_prechequeo_ausencia_y_archivos_no_directorio)
+Una entrada desaparecida o regular no se interpreta como carpeta de tarea. ... ok
+test_referencias_a_origen_bajo_enlace_no_atraviesan_puente (test_tareas_hechos_mutacion.DatosHechosTests.test_referencias_a_origen_bajo_enlace_no_atraviesan_puente)
+También se verifica el directorio origen, aunque un llamador aporte una ruta simbólica. ... ok
+test_sufijo_de_directorio_no_acepta_archivo_regular (test_tareas_hechos_mutacion.DatosHechosTests.test_sufijo_de_directorio_no_acepta_archivo_regular)
+La existencia de archivo no prueba archivo/ ni archivo/.; también se conserva en ruta absoluta. ... ok
+test_sufijos_sobre_symlink_no_borran_la_omision (test_tareas_hechos_mutacion.DatosHechosTests.test_sufijos_sobre_symlink_no_borran_la_omision)
+Exigir directorio no permite atravesar el symlink ni ocultarlo detrás de puntos. ... ok
+test_titulo_incompleto_omite_resto_de_linea_sin_exponer_su_contenido (test_tareas_hechos_mutacion.DatosHechosTests.test_titulo_incompleto_omite_resto_de_linea_sin_exponer_su_contenido)
+Un título sin cierre fiable deja omisión; sus aparentes enlaces o autolinks no son evidencia. ... ok
+test_titulos_consumidos_no_aportan_enlaces_ni_definiciones (test_tareas_hechos_mutacion.DatosHechosTests.test_titulos_consumidos_no_aportan_enlaces_ni_definiciones)
+Paréntesis, enlaces y autolinks escritos dentro del título no son referencias del documento. ... ok
+test_url_con_angulos_parciales_conserva_declaracion (test_tareas_hechos_mutacion.DatosHechosTests.test_url_con_angulos_parciales_conserva_declaracion)
+La envoltura de autolink se retira sólo cuando ambos ángulos pertenecen al token completo. ... ok
+test_walk_propaga_error_en_vez_de_inventario_parcial (test_tareas_hechos_mutacion.DatosHechosTests.test_walk_propaga_error_en_vez_de_inventario_parcial)
+Un fallo de scandir no puede dejar completa=true omitiendo una carpeta inaccesible. ... ok
+test_auditoria_de_tracker_ausente_y_simbolico_devuelve_problemas (test_tareas_limites.LimitesDeTareasTests.test_auditoria_de_tracker_ausente_y_simbolico_devuelve_problemas)
+Los llamadores necesitan la pareja tareas/problemas incluso cuando no pueden recorrer. ... ok
+test_auditoria_no_oculta_enlace_roto_dentro_del_tracker (test_tareas_limites.LimitesDeTareasTests.test_auditoria_no_oculta_enlace_roto_dentro_del_tracker)
+Resolver sin existencia convertiría un enlace roto interno en una entrada ignorada. ... ok
+test_colisiones_agotadas_tienen_un_presupuesto_finito (test_tareas_limites.LimitesDeTareasTests.test_colisiones_agotadas_tienen_un_presupuesto_finito)
+Una carpeta ocupada por cada reintento no permite superar 10.000 reservas ni esperar sin fin. ... ok
+test_confinamiento_rechaza_destinos_internos_inexistentes (test_tareas_limites.LimitesDeTareasTests.test_confinamiento_rechaza_destinos_internos_inexistentes)
+Estar dentro del tracker no basta: un destino roto no acredita un archivo utilizable. ... ok
+test_enlace_roto_directo_se_diagnostica_como_ruta_insegura (test_tareas_limites.LimitesDeTareasTests.test_enlace_roto_directo_se_diagnostica_como_ruta_insegura)
+Un enlace roto con ID parcial no debe ocultarse como una tarea simplemente inexistente. ... ok
+test_error_al_enumerar_no_filtra_excepcion_desde_los_comandos (test_tareas_limites.LimitesDeTareasTests.test_error_al_enumerar_no_filtra_excepcion_desde_los_comandos)
+Listar, revisar y resolver un prefijo no pueden presentar una lectura fallida como éxito. ... ok
+test_etiqueta_vacia_se_omite_sin_invalidar_la_tarea (test_tareas_limites.LimitesDeTareasTests.test_etiqueta_vacia_se_omite_sin_invalidar_la_tarea)
+El rechazo de saltos no cambia el permiso de omitir etiquetas vacías. ... ok
+test_init_crea_los_padres_del_proyecto_pedido (test_tareas_limites.LimitesDeTareasTests.test_init_crea_los_padres_del_proyecto_pedido)
+Una ruta explícita nueva puede tener varios padres ausentes y debe quedar utilizable. ... ok
+test_parser_no_exige_linea_vacia_tras_titulo (test_tareas_limites.LimitesDeTareasTests.test_parser_no_exige_linea_vacia_tras_titulo)
+Saltar dos líneas después del título perdía ESTADO en el documento mínimo válido. ... ok
+test_parser_vacio_es_error_de_dominio_sin_indexerror (test_tareas_limites.LimitesDeTareasTests.test_parser_vacio_es_error_de_dominio_sin_indexerror)
+Un documento vacío o sólo con saltos de línea debe rechazarse como TareaInvalida. ... ok
+test_separadores_unicode_no_crean_documentos_invalidos (test_tareas_limites.LimitesDeTareasTests.test_separadores_unicode_no_crean_documentos_invalidos)
+Los separadores de splitlines también rompen título/metadatos, aunque no sean CR/LF. ... ok
+test_ver_json_devuelve_exito_explicito_y_el_documento_leido (test_tareas_limites.LimitesDeTareasTests.test_ver_json_devuelve_exito_explicito_y_el_documento_leido)
+Emitir JSON correcto no basta si el código de salida declara fallo o no devuelve un entero. ... ok
+test_actualizar_estado_idempotente_retorna_false_estricto (test_tareas_mutacion.TestMutacionActualizacionAtomaYCrlf.test_actualizar_estado_idempotente_retorna_false_estricto)
+Evita que actualizar_estado_tarea retorne None o valores ambiguos ante un estado ya fijado. ... ok
+test_actualizar_estado_preserva_crlf_orden_metadata_y_espaciado (test_tareas_mutacion.TestMutacionActualizacionAtomaYCrlf.test_actualizar_estado_preserva_crlf_orden_metadata_y_espaciado)
+Evita que la actualización de estado corrompa saltos CRLF o trastoque metadatos previos a ESTADO. ... ok
+test_cmd_cerrar_y_reabrir_mensajes_cambio_e_idempotencia (test_tareas_mutacion.TestMutacionCliComandosYCodigos.test_cmd_cerrar_y_reabrir_mensajes_cambio_e_idempotencia)
+Evita que cerrar o reabrir reporten mensajes invertidos o fallen ante estados ya fijados. ... ok
+test_cmd_listar_incompatibilidad_cerradas_y_todas_devuelve_codigo_1 (test_tareas_mutacion.TestMutacionCliComandosYCodigos.test_cmd_listar_incompatibilidad_cerradas_y_todas_devuelve_codigo_1)
+Evita que combinar --cerradas y --todas se procese exitosamente o devuelva código distinto a 1. ... ok
+test_cmd_listar_por_defecto_solo_abiertas_y_filtros_etiqueta_texto (test_tareas_mutacion.TestMutacionCliComandosYCodigos.test_cmd_listar_por_defecto_solo_abiertas_y_filtros_etiqueta_texto)
+Evita que el listado por defecto muestre cerradas o que los filtros de etiqueta y texto fallen. ... ok
+test_cmd_nueva_con_sufijo_vacio_no_pone_ninguno (test_tareas_mutacion.TestMutacionCliComandosYCodigos.test_cmd_nueva_con_sufijo_vacio_no_pone_ninguno)
+`--sufijo ""` es una elección, no una ausencia: el ID queda sólo con fecha y hora. ... ok
+test_cmd_nueva_corta_el_sufijo_en_una_palabra_entera (test_tareas_mutacion.TestMutacionCliComandosYCodigos.test_cmd_nueva_corta_el_sufijo_en_una_palabra_entera)
+Media palabra se lee peor que una palabra menos, y el listado está para leerse de un ... ok
+test_cmd_nueva_prioridad_por_defecto_50_y_sufijo_custom (test_tareas_mutacion.TestMutacionCliComandosYCodigos.test_cmd_nueva_prioridad_por_defecto_50_y_sufijo_custom)
+Evita que la prioridad por defecto difiera de 50 o que --sufijo sea ignorado si el título existe. ... ok
+test_cmd_nueva_recorte_de_slug_largo (test_tareas_mutacion.TestMutacionCliComandosYCodigos.test_cmd_nueva_recorte_de_slug_largo)
+El ID entero es el prefijo de cada commit de esa tarea: eran 40 caracteres, y por un ... ok
+test_cmd_revisar_json_y_humano_exito_y_fallo (test_tareas_mutacion.TestMutacionCliComandosYCodigos.test_cmd_revisar_json_y_humano_exito_y_fallo)
+Evita que cmd_revisar omita el código 1 ante problemas o emita estructura JSON incorrecta. ... ok
+test_cmd_ver_ruta_y_formato_humano (test_tareas_mutacion.TestMutacionCliComandosYCodigos.test_cmd_ver_ruta_y_formato_humano)
+Evita que cmd_ver confunda --ruta y --json o emita etiquetas erróneas en formato humano. ... ok
+test_parser_subcomando_opcion_invalida_sale_con_codigo_2_exacto (test_tareas_mutacion.TestMutacionCliComandosYCodigos.test_parser_subcomando_opcion_invalida_sale_con_codigo_2_exacto)
+Evita que errores de sintaxis o banderas desconocidas devuelvan un código distinto a 2. ... ok
+test_crear_carpeta_atomica_desambiguador_secuencial_exacto (test_tareas_mutacion.TestMutacionCreacionYColisiones.test_crear_carpeta_atomica_desambiguador_secuencial_exacto)
+Evita que colisiones temporales salten números o comiencen desambiguadores en 2 en vez de 1. ... ok
+test_sanear_slug_translitera_acentos_sin_insertar_guiones_espurios (test_tareas_mutacion.TestMutacionCreacionYColisiones.test_sanear_slug_translitera_acentos_sin_insertar_guiones_espurios)
+Evita que el filtrado de combining characters se desactive rompiendo palabras con acentos. ... ok
+test_parsear_tarea_campos_adicionales_se_guardan_y_estandar_se_excluyen (test_tareas_mutacion.TestMutacionParseoTarea.test_parsear_tarea_campos_adicionales_se_guardan_y_estandar_se_excluyen)
+Evita que metadatos personalizados se omitan o que campos estándar se dupliquen en adicionales. ... ok
+test_parsear_tarea_etiquetas_espacios_y_elementos_vacios (test_tareas_mutacion.TestMutacionParseoTarea.test_parsear_tarea_etiquetas_espacios_y_elementos_vacios)
+Evita que comas repetidas o espacios residuales contaminen la tupla de etiquetas de la tarea. ... ok
+test_parsear_tarea_lineas_en_blanco_al_inicio (test_tareas_mutacion.TestMutacionParseoTarea.test_parsear_tarea_lineas_en_blanco_al_inicio)
+Evita que líneas en blanco iniciales antes del título H1 causen rechazo indebido del documento. ... ok
+test_parsear_tarea_titulo_un_solo_caracter_valido_y_rechazo_espacio_vacio (test_tareas_mutacion.TestMutacionParseoTarea.test_parsear_tarea_titulo_un_solo_caracter_valido_y_rechazo_espacio_vacio)
+Evita que títulos válidos de 1 carácter sean rechazados o que '# ' sin título sea admitido. ... ok
+test_asegurar_confinamiento_acepta_rutas_seguras_y_rechaza_escapes (test_tareas_mutacion.TestMutacionResolucionIdYConfinamiento.test_asegurar_confinamiento_acepta_rutas_seguras_y_rechaza_escapes)
+Evita que asegurar_confinamiento tolere escapes fuera de tareas/ o rechace rutas válidas. ... ok
+test_resolver_id_carpeta_directa_y_prefijo_inequivoco (test_tareas_mutacion.TestMutacionResolucionIdYConfinamiento.test_resolver_id_carpeta_directa_y_prefijo_inequivoco)
+Evita que resolver_id_o_prefijo falle en la ruta directa o confunda un prefijo único con ambiguo. ... ok
+test_validar_seguridad_id_rechaza_casos_inseguros (test_tareas_mutacion.TestMutacionResolucionIdYConfinamiento.test_validar_seguridad_id_rechaza_casos_inseguros)
+Evita que identificadores vacíos, no texto o con caracteres de escape eludan la validación. ... ok
+test_resolver_raiz_con_argv_proyecto_seguido_de_otra_bandera (test_tareas_mutacion.TestMutacionResolucionRaiz.test_resolver_raiz_con_argv_proyecto_seguido_de_otra_bandera)
+Evita que una bandera subsiguiente se tome erróneamente como ruta del proyecto. ... ok
+test_resolver_raiz_con_argv_proyecto_sin_valor_al_final (test_tareas_mutacion.TestMutacionResolucionRaiz.test_resolver_raiz_con_argv_proyecto_sin_valor_al_final)
+Evita IndexError o comportamiento errático si --proyecto se pasa como último argumento en argv. ... ok
+test_resolver_raiz_con_ruta_explicita_permitir_crear_en_directorio_sin_tareas (test_tareas_mutacion.TestMutacionResolucionRaiz.test_resolver_raiz_con_ruta_explicita_permitir_crear_en_directorio_sin_tareas)
+Evita que resolver_raiz_tracker rechace una ruta explícita al inicializar cuando tareas/ aún no existe. ... ok
+test_resolver_raiz_con_variable_entorno_apunta_a_archivo (test_tareas_mutacion.TestMutacionResolucionRaiz.test_resolver_raiz_con_variable_entorno_apunta_a_archivo)
+Evita que un archivo ordinario configurado en $ORACLE_PROYECTO se acepte como raíz de proyecto. ... ok
+test_resolver_raiz_con_variable_entorno_permitir_crear_y_sin_tareas (test_tareas_mutacion.TestMutacionResolucionRaiz.test_resolver_raiz_con_variable_entorno_permitir_crear_y_sin_tareas)
+Evita que $ORACLE_PROYECTO falle al inicializar si tareas/ aún no existe y permitir_crear=True. ... ok
+test_adjuntar_escapa_nombre_y_preserva_origen_y_cuerpo (test_tareas_p2_revision.RevisionContextoTests.test_adjuntar_escapa_nombre_y_preserva_origen_y_cuerpo)
+Un nombre con espacios, Unicode, corchetes y numeral produce un enlace utilizable. ... ok
+test_busqueda_encuentra_nota_y_declara_omisiones (test_tareas_p2_revision.RevisionContextoTests.test_busqueda_encuentra_nota_y_declara_omisiones)
+La consulta distingue sin coincidencias de archivos que no examinó. ... ok
+test_busqueda_no_abre_fifos_ni_dispositivos (test_tareas_p2_revision.RevisionContextoTests.test_busqueda_no_abre_fifos_ni_dispositivos)
+Un archivo especial junto a una tarea no puede bloquear una consulta de texto. ... ok
+test_busqueda_recupera_notas_en_subcarpetas (test_tareas_p2_revision.RevisionContextoTests.test_busqueda_recupera_notas_en_subcarpetas)
+Agrupar notas dentro de la tarea no las vuelve invisibles para buscar. ... ok
+test_colision_con_enlace_roto_no_toca_destino_externo (test_tareas_p2_revision.RevisionContextoTests.test_colision_con_enlace_roto_no_toca_destino_externo)
+Adjuntar no sigue ni reemplaza un enlace existente con el nombre elegido. ... ok
+test_consultas_no_ocultan_documentos_de_tarea_rotos (test_tareas_p2_revision.RevisionContextoTests.test_consultas_no_ocultan_documentos_de_tarea_rotos)
+Buscar y resumir no dan éxito parcial si el registro central es inválido. ... ok
+test_documento_roto_revierte_la_copia_del_adjunto (test_tareas_p2_revision.RevisionContextoTests.test_documento_roto_revierte_la_copia_del_adjunto)
+El fallo al registrar un adjunto no deja una copia huérfana ni pierde el original. ... ok
+test_error_al_enumerar_tracker_tiene_diagnostico_sin_traceback (test_tareas_p2_revision.RevisionContextoTests.test_error_al_enumerar_tracker_tiene_diagnostico_sin_traceback)
+Un tracker sin permiso de lectura falla limpiamente también antes de abrir tareas. ... ok
+test_fallo_de_lectura_no_se_disfraza_de_omision_exitosa (test_tareas_p2_revision.RevisionContextoTests.test_fallo_de_lectura_no_se_disfraza_de_omision_exitosa)
+Un permiso denegado al leer contexto invalida la consulta con la ruta afectada. ... ok
+test_limite_de_adjuntos_requiere_eleccion_explicita (test_tareas_p2_revision.RevisionContextoTests.test_limite_de_adjuntos_requiere_eleccion_explicita)
+Un video grande no se copia accidentalmente al tracker. ... ok
+test_nota_con_url_marca_y_sangria_preserva_texto_y_documento (test_tareas_p2_revision.RevisionContextoTests.test_nota_con_url_marca_y_sangria_preserva_texto_y_documento)
+Capturar una cita conserva su sangría y URL exacta sin alterar bytes anteriores. ... ok
+test_referencias_no_incluyen_sufijos_ni_repos_anidados (test_tareas_p2_revision.RevisionContextoTests.test_referencias_no_incluyen_sufijos_ni_repos_anidados)
+Una mención del ID exacto no se confunde con otra tarea ni otro repositorio. ... ok
+test_resumen_conserva_la_identidad_de_etiquetas (test_tareas_p2_revision.RevisionContextoTests.test_resumen_conserva_la_identidad_de_etiquetas)
+Resumen y listar deben reconocer las mismas etiquetas sin mezclar mayúsculas. ... ok
+test_salida_humana_informa_archivos_no_examinados (test_tareas_p2_revision.RevisionContextoTests.test_salida_humana_informa_archivos_no_examinados)
+Sin JSON también se informa que una imagen fue omitida de la búsqueda. ... ok
+test_seguimiento_publico_funciona_sin_catalogo (test_tareas_p2_revision.RevisionContextoTests.test_seguimiento_publico_funciona_sin_catalogo)
+El despacho de seguimiento no necesita interpretar el oracle.json del consumidor. ... ok
+test_urls_invalidas_no_dejan_cambios (test_tareas_p2_revision.RevisionContextoTests.test_urls_invalidas_no_dejan_cambios)
+URLs no absolutas, con controles o esquemas ajenos no se registran como referencias. ... ok
+test_ayuda_no_requiere_tracker_ni_escribe (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_ayuda_no_requiere_tracker_ni_escribe)
+Consultar el contrato no inicia ni modifica tareas. ... ok
+test_cada_aparicion_se_conserva_sin_duplicar_autolink_interno (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_cada_aparicion_se_conserva_sin_duplicar_autolink_interno)
+Dos enlaces en una línea son dos declaraciones; un destino entre ángulos es una sola. ... ok
+test_carpeta_central_simbolica_no_salta_la_validacion (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_carpeta_central_simbolica_no_salta_la_validacion)
+Una carpeta de tarea simbólica no permite leer un central que evitó el prechequeo. ... ok
+test_central_grande_falla_antes_de_emitir_una_tarea_parcial (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_central_grande_falla_antes_de_emitir_una_tarea_parcial)
+El documento central también respeta el límite de lectura declarado. ... ok
+test_central_simbolico_interno_no_se_lee_como_documento_propio (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_central_simbolico_interno_no_se_lee_como_documento_propio)
+La política de no seguir enlaces también alcanza al archivo central de una tarea. ... ok
+test_enlace_multilinea_deja_omision_si_no_se_resuelve (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_enlace_multilinea_deja_omision_si_no_se_resuelve)
+Un enlace válido escrito en dos líneas no desaparece detrás de completa=true. ... ok
+test_enlaces_de_codigo_no_son_referencias_del_documento (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_enlaces_de_codigo_no_son_referencias_del_documento)
+Ejemplos en código no inventan referencias rotas de la tarea. ... ok
+test_enlaces_de_p2_y_defecto_local_producen_testigos (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_enlaces_de_p2_y_defecto_local_producen_testigos)
+El enlace escapado de adjuntar se resuelve y una referencia ausente queda como defecto. ... /home/workstation/Dev/trackertast/.venv/lib/python3.13/site-packages/oracle_metalenguaje/nucleo/medida.py:586: DeprecationWarning: __package__ != __spec__.parent
+  from .forma import leer_texto
+/home/workstation/Dev/trackertast/.venv/lib/python3.13/site-packages/oracle_metalenguaje/nucleo/medida.py:596: DeprecationWarning: __package__ != __spec__.parent
+  from .forma import datos_en_forma_unica
+ok
+test_escapes_y_enlaces_simbolicos_no_se_declaran_presentes (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_escapes_y_enlaces_simbolicos_no_se_declaran_presentes)
+La existencia fuera del proyecto o detrás de un symlink no prueba una referencia local. ... ok
+test_esquema_http_no_depende_de_mayusculas (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_esquema_http_no_depende_de_mayusculas)
+Una URL aceptada por anotar conserva su categoría remota al extraer hechos. ... ok
+test_evidencia_determinista_declarada_y_observada (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_evidencia_determinista_declarada_y_observada)
+Una lectura repetida conserva bytes y no presenta CERRADA como trabajo verificado. ... /home/workstation/Dev/trackertast/.venv/lib/python3.13/site-packages/oracle_metalenguaje/nucleo/relacion.py:426: DeprecationWarning: __package__ != __spec__.parent
+  from .forma import leer_texto
+/home/workstation/Dev/trackertast/.venv/lib/python3.13/site-packages/oracle_metalenguaje/nucleo/relacion.py:432: DeprecationWarning: __package__ != __spec__.parent
+  from .forma import error_forma
+ok
+test_falso_cierre_de_cerca_no_expone_codigo_como_enlace (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_falso_cierre_de_cerca_no_expone_codigo_como_enlace)
+Una cerca de cierre con texto extra no termina el bloque de código. ... ok
+test_git_optativo_y_politica_de_confirmacion (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_git_optativo_y_politica_de_confirmacion)
+Una política de Git falla sin comprobación y sólo pasa tras confirmar el contenido. ... ok
+test_inventario_no_lee_adjuntos_especiales (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_inventario_no_lee_adjuntos_especiales)
+Un FIFO junto al Markdown se inventaría sin bloquear la extracción. ... ok
+test_literales_escapados_no_se_convierten_en_referencias (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_literales_escapados_no_se_convierten_en_referencias)
+Escapar el corchete de apertura permite escribir ejemplos literales sin enlace. ... ok
+test_markdown_grande_se_declara_omitido (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_markdown_grande_se_declara_omitido)
+La evidencia informa el límite de lectura en vez de afirmar inspección completa. ... ok
+test_parent_dotdot_no_oculta_un_componente_simbolico (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_parent_dotdot_no_oculta_un_componente_simbolico)
+Normalizar .. antes de inspeccionar componentes puede borrar un symlink de la ruta. ... ok
+test_parentesis_escapados_y_titulo_no_alteran_destino (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_parentesis_escapados_y_titulo_no_alteran_destino)
+La ruta declarada conserva escapes y un título opcional no se vuelve parte del nombre. ... ok
+test_permiso_denegado_no_se_confunde_con_referencia_ausente (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_permiso_denegado_no_se_confunde_con_referencia_ausente)
+No poder comprobar un destino es un fallo de lectura, no evidencia de ausencia. ... ok
+test_registro_roto_no_emite_json_parcial (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_registro_roto_no_emite_json_parcial)
+Un error del documento central invalida la lectura en lugar de perder la tarea. ... ok
+test_ruta_absoluta_tampoco_elimina_un_symlink_antes_de_comprobarlo (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_ruta_absoluta_tampoco_elimina_un_symlink_antes_de_comprobarlo)
+La comprobación por componentes también se aplica a destinos absolutos declarados. ... ok
+test_sintaxis_omitida_impide_afirmar_lectura_completa (test_tareas_p3_revision.EvidenciaTareasRevisionTests.test_sintaxis_omitida_impide_afirmar_lectura_completa)
+Enlaces Markdown por referencia no soportados dejan una omisión medible. ... /home/workstation/Dev/trackertast/.venv/lib/python3.13/site-packages/oracle_metalenguaje/nucleo/medida.py:586: DeprecationWarning: __package__ != __spec__.parent
+  from .forma import leer_texto
+/home/workstation/Dev/trackertast/.venv/lib/python3.13/site-packages/oracle_metalenguaje/nucleo/medida.py:596: DeprecationWarning: __package__ != __spec__.parent
+  from .forma import datos_en_forma_unica
+ok
+test_corpus_ejercita_ambas_polaridades_de_cada_politica (test_tareas_p3_revision.PoliticasSeguimientoTests.test_corpus_ejercita_ambas_polaridades_de_cada_politica)
+Cada política optativa tiene defectos que rechaza y estados correctos que acepta. ... /home/workstation/Dev/trackertast/.venv/lib/python3.13/site-packages/oracle_metalenguaje/nucleo/caso.py:577: DeprecationWarning: __package__ != __spec__.parent
+  from .forma import leer_texto
+/home/workstation/Dev/trackertast/.venv/lib/python3.13/site-packages/oracle_metalenguaje/nucleo/caso.py:591: DeprecationWarning: __package__ != __spec__.parent
+  from .forma import error_forma
+ok
+test_mutacion_no_deja_politicas_sin_fijar (test_tareas_p3_revision.PoliticasSeguimientoTests.test_mutacion_no_deja_politicas_sin_fijar)
+Cambiar filtros, precondiciones o umbrales de las políticas debe ser observable. ... ok
+test_ejemplo_carga_desde_checkout_y_muestra_testigo (test_tareas_p4_revision.ConsumidorDesdeCheckoutTests.test_ejemplo_carga_desde_checkout_y_muestra_testigo)
+Desde el checkout, las políticas del ejemplo juzgan evidencia con `oracle juzgar` (0.18.0 ... ok
+test_git_ausente_da_error_de_dominio (test_tareas_p4_revision.LimiteGitP4Tests.test_git_ausente_da_error_de_dominio)
+La ausencia del ejecutable se traduce en la frontera que realmente lanza FileNotFoundError. ... ok
+test_git_tiene_limite_de_30_segundos_y_traduce_timeout (test_tareas_p4_revision.LimiteGitP4Tests.test_git_tiene_limite_de_30_segundos_y_traduce_timeout)
+La ronda dejó pasar 30→31 aunque el contrato anuncia un máximo de 30 segundos. ... ok
+test_directorio_simbolico_sin_git_tambien_se_omite (test_tareas_p4_revision.RevisionGitP4Tests.test_directorio_simbolico_sin_git_tambien_se_omite)
+Exigir simultáneamente symlink y subrepo permitía recorrer un enlace ordinario. ... ok
+test_git_con_arbol_externo_falla_sin_traceback (test_tareas_p4_revision.RevisionGitP4Tests.test_git_con_arbol_externo_falla_sin_traceback)
+Una configuración core.worktree externa no debe filtrar ValueError desde hechos. ... ok
+test_json_es_utf8_aunque_un_nombre_local_no_lo_sea (test_tareas_p4_revision.RevisionGitP4Tests.test_json_es_utf8_aunque_un_nombre_local_no_lo_sea)
+ensure_ascii protege nombres Unix con bytes inválidos: JSON debe seguir decodificando. ... ok
+test_nombre_del_repositorio_con_salto_final_se_preserva (test_tareas_p4_revision.RevisionGitP4Tests.test_nombre_del_repositorio_con_salto_final_se_preserva)
+rstrip borraba caracteres del nombre además del terminador de rev-parse. ... ok
+test_retiro_del_indice_sigue_siendo_un_cambio_pendiente (test_tareas_p4_revision.RevisionGitP4Tests.test_retiro_del_indice_sigue_siendo_un_cambio_pendiente)
+Conservar el archivo en disco después de git rm --cached no lo vuelve nuevo sin historia. ... ok
+test_salida_humana_distingue_sin_commits_de_head_real (test_tareas_p4_revision.RevisionGitP4Tests.test_salida_humana_distingue_sin_commits_de_head_real)
+El JSON estaba fijado, pero la salida humana podía perder HEAD o imprimir None. ... ok
+test_salida_humana_sin_repositorio_y_codigo_del_despacho (test_tareas_p4_revision.RevisionGitP4Tests.test_salida_humana_sin_repositorio_y_codigo_del_despacho)
+El despacho devuelve éxito explícito y enumera archivos aunque no haya Git. ... ok
+test_archivo_simbolico_externo_no_se_lee_ni_modifica (test_tareas_revision.RevisionTareas.test_archivo_simbolico_externo_no_se_lee_ni_modifica)
+Ver y revisar seguían TAREA.md fuera del tracker aunque su carpeta fuese interna. ... ok
+test_ayuda_de_cada_verbo_no_escribe (test_tareas_revision.RevisionTareas.test_ayuda_de_cada_verbo_no_escribe)
+Pedir ayuda a init creaba un tracker en el directorio actual. ... ok
+test_cambio_de_estado_preserva_bytes_ajenos_al_valor (test_tareas_revision.RevisionTareas.test_cambio_de_estado_preserva_bytes_ajenos_al_valor)
+Cerrar convertía el cuerpo CRLF a LF y normalizaba la línea de estado. ... ok
+test_carpeta_simbolica_externa_no_se_audita_como_valida (test_tareas_revision.RevisionTareas.test_carpeta_simbolica_externa_no_se_audita_como_valida)
+La auditoría no aplicaba el confinamiento que sí tenía ver por ID. ... ok
+test_cerrar_conserva_los_permisos_del_documento (test_tareas_revision.RevisionTareas.test_cerrar_conserva_los_permisos_del_documento)
+El temporal de reemplazo convertía un documento compartido 0640 a 0600. ... ok
+test_creaciones_concurrentes_no_pierden_tareas (test_tareas_revision.RevisionTareas.test_creaciones_concurrentes_no_pierden_tareas)
+Comprobar exists antes de mkdir no reserva el ID frente a otro proceso. ... ok
+test_estado_normalizado_tambien_se_puede_actualizar (test_tareas_revision.RevisionTareas.test_estado_normalizado_tambien_se_puede_actualizar)
+La lectura aceptaba estado en minúsculas y cerrar no encontraba su valor. ... ok
+test_gitignore_del_proyecto_no_oculta_las_tareas (test_tareas_revision.RevisionTareas.test_gitignore_del_proyecto_no_oculta_las_tareas)
+La regla histórica TAREA.md ocultaba todos los registros del nuevo tracker. ... ok
+test_init_con_archivo_como_raiz_no_da_traceback (test_tareas_revision.RevisionTareas.test_init_con_archivo_como_raiz_no_da_traceback)
+Un destino que era archivo provocaba una excepción sin traducir en init. ... ok
+test_init_no_escribe_por_readme_simbolico (test_tareas_revision.RevisionTareas.test_init_no_escribe_por_readme_simbolico)
+Init seguía un README simbólico roto y creaba un archivo fuera del tracker. ... ok
+test_links_rotos_y_ciclicos_tienen_diagnostico (test_tareas_revision.RevisionTareas.test_links_rotos_y_ciclicos_tienen_diagnostico)
+Un enlace roto desaparecía del censo sin figurar como registro inválido. ... ok
+test_no_crea_documentos_invalidos_desde_titulo_o_etiqueta (test_tareas_revision.RevisionTareas.test_no_crea_documentos_invalidos_desde_titulo_o_etiqueta)
+Un salto de línea inyectaba cabeceras y nueva devolvía éxito con datos rotos. ... ok
+test_nombre_de_carpeta_invalido_no_desaparece_ni_pasa (test_tareas_revision.RevisionTareas.test_nombre_de_carpeta_invalido_no_desaparece_ni_pasa)
+Una carpeta ajena al contrato de identidad se aceptaba como tarea válida. ... ok
+test_opcion_antes_del_titulo_no_cambia_el_titulo (test_tareas_revision.RevisionTareas.test_opcion_antes_del_titulo_no_cambia_el_titulo)
+El valor bug de --etiqueta se tomaba por título de la tarea. ... ok
+test_opciones_desconocidas_no_se_ignoran (test_tareas_revision.RevisionTareas.test_opciones_desconocidas_no_se_ignoran)
+Listar --inventada devolvía éxito como si hubiese aplicado un filtro. ... ok
+test_raiz_simbolica_no_redirige_escrituras (test_tareas_revision.RevisionTareas.test_raiz_simbolica_no_redirige_escrituras)
+Resolver tareas/ antes de comprobarlo permitía inicializar fuera del proyecto. ... ok
+test_titulo_y_etiqueta_iguales_no_pierden_argumentos (test_tareas_revision.RevisionTareas.test_titulo_y_etiqueta_iguales_no_pierden_argumentos)
+Eliminar argumentos por igualdad borraba el valor de --etiqueta. ... ok
+test_utf8_invalido_falla_sin_traceback (test_tareas_revision.RevisionTareas.test_utf8_invalido_falla_sin_traceback)
+Cerrar no traducía errores de codificación a diagnóstico del tracker. ... ok
+test_ver_rechaza_la_misma_identidad_que_revisar (test_tareas_revision.RevisionTareas.test_ver_rechaza_la_misma_identidad_que_revisar)
+Ver aceptaba por coincidencia directa un ID que revisar consideraba inválido. ... ok
+test_ambiguo_enumera_ids_ordenados (test_tareas_sufijo.TestSufijos.test_ambiguo_enumera_ids_ordenados) ... ok
+test_cli_error_no_muta (test_tareas_sufijo.TestSufijos.test_cli_error_no_muta) ... ok
+test_cli_ver_anotar_cerrar_reabrir (test_tareas_sufijo.TestSufijos.test_cli_ver_anotar_cerrar_reabrir) ... ok
+test_confinamiento_y_validacion (test_tareas_sufijo.TestSufijos.test_confinamiento_y_validacion) ... ok
+test_id_completo_tiene_precedencia (test_tareas_sufijo.TestSufijos.test_id_completo_tiene_precedencia) ... ok
+test_sin_similitud_o_tracker_vacio (test_tareas_sufijo.TestSufijos.test_sin_similitud_o_tracker_vacio) ... ok
+test_sufijo_completo_con_guiones_y_colision_numerica (test_tareas_sufijo.TestSufijos.test_sufijo_completo_con_guiones_y_colision_numerica) ... ok
+test_sufijo_unico_id_y_prefijo (test_tareas_sufijo.TestSufijos.test_sufijo_unico_id_y_prefijo) ... ok
+test_sugerencias_limitadas_y_deterministas (test_tareas_sufijo.TestSufijos.test_sugerencias_limitadas_y_deterministas) ... ok
+test_sugiere_typo_y_timestamp_erroneo (test_tareas_sufijo.TestSufijos.test_sugiere_typo_y_timestamp_erroneo) ... ok
+test_una_similitud_justo_en_el_umbral_se_sugiere (test_tareas_sufijo.TestSufijos.test_una_similitud_justo_en_el_umbral_se_sugiere) ... ok
+test_alineacion_con_tareas_sin_etiquetas (test_tareas_tatr.TestAlineacionDinamicaListar.test_alineacion_con_tareas_sin_etiquetas) ... ok
+test_alineacion_dinamica_con_ids_largos_cortos_y_sin_trailing_whitespace (test_tareas_tatr.TestAlineacionDinamicaListar.test_alineacion_dinamica_con_ids_largos_cortos_y_sin_trailing_whitespace) ... ok
+test_clasificacion_como_auxiliar_en_hechos (test_tareas_tatr.TestCatalogoEtiquetas.test_clasificacion_como_auxiliar_en_hechos) ... ok
+test_etiqueta_con_numeral_no_es_comentario (test_tareas_tatr.TestCatalogoEtiquetas.test_etiqueta_con_numeral_no_es_comentario) ... ok
+test_formato_valido_comas_espacios_y_descripcion_vacia (test_tareas_tatr.TestCatalogoEtiquetas.test_formato_valido_comas_espacios_y_descripcion_vacia) ... ok
+test_redefinicion_en_etiquetas_no_rompe_otras_operaciones (test_tareas_tatr.TestCatalogoEtiquetas.test_redefinicion_en_etiquetas_no_rompe_otras_operaciones) ... ok
+test_redefinicion_falla_revisar_con_linea_y_avisa_en_resumen (test_tareas_tatr.TestCatalogoEtiquetas.test_redefinicion_falla_revisar_con_linea_y_avisa_en_resumen) ... ok
+test_symlink_falla_revisar_y_es_ignorado_en_resumen (test_tareas_tatr.TestCatalogoEtiquetas.test_symlink_falla_revisar_y_es_ignorado_en_resumen) ... ok
+test_utf8_invalido_falla_revisar_y_resumen_sin_traceback (test_tareas_tatr.TestCatalogoEtiquetas.test_utf8_invalido_falla_revisar_y_resumen_sin_traceback) ... ok
+test_ayudas_de_verbos_nuevos_sin_tocar_disco (test_tareas_tatr.TestCliIntegracionYAyudas.test_ayudas_de_verbos_nuevos_sin_tocar_disco) ... ok
+test_desetiquetar_id_explicito_admite_tarea_cerrada (test_tareas_tatr.TestEtiquetarYDesetiquetar.test_desetiquetar_id_explicito_admite_tarea_cerrada) ... ok
+test_desetiquetar_ids_con_banderas_de_estado_da_error_2 (test_tareas_tatr.TestEtiquetarYDesetiquetar.test_desetiquetar_ids_con_banderas_de_estado_da_error_2) ... ok
+test_desetiquetar_masivo_afecta_solo_abiertas_por_defecto (test_tareas_tatr.TestEtiquetarYDesetiquetar.test_desetiquetar_masivo_afecta_solo_abiertas_por_defecto) ... ok
+test_desetiquetar_masivo_con_todas_y_ultima_etiqueta_queda_como_nueva (test_tareas_tatr.TestEtiquetarYDesetiquetar.test_desetiquetar_masivo_con_todas_y_ultima_etiqueta_queda_como_nueva) ... ok
+test_desetiquetar_por_id_y_prefijo (test_tareas_tatr.TestEtiquetarYDesetiquetar.test_desetiquetar_por_id_y_prefijo) ... ok
+test_etiquetar_con_registro_roto_aborta_sin_tocar_ninguna (test_tareas_tatr.TestEtiquetarYDesetiquetar.test_etiquetar_con_registro_roto_aborta_sin_tocar_ninguna) ... ok
+test_etiquetar_idempotencia_no_reescribe_disco (test_tareas_tatr.TestEtiquetarYDesetiquetar.test_etiquetar_idempotencia_no_reescribe_disco) ... ok
+test_etiquetar_inserta_linea_si_no_existia (test_tareas_tatr.TestEtiquetarYDesetiquetar.test_etiquetar_inserta_linea_si_no_existia) ... ok
+test_etiquetar_multiples_etiquetas_en_una_invocacion (test_tareas_tatr.TestEtiquetarYDesetiquetar.test_etiquetar_multiples_etiquetas_en_una_invocacion) ... ok
+test_etiquetar_por_id_y_prefijo (test_tareas_tatr.TestEtiquetarYDesetiquetar.test_etiquetar_por_id_y_prefijo) ... ok
+test_etiquetar_preserva_crlf_campos_desconocidos_y_cuerpo (test_tareas_tatr.TestEtiquetarYDesetiquetar.test_etiquetar_preserva_crlf_campos_desconocidos_y_cuerpo) ... ok
+test_etiquetar_tarea_sin_salto_de_linea_final_no_corrompe (test_tareas_tatr.TestEtiquetarYDesetiquetar.test_etiquetar_tarea_sin_salto_de_linea_final_no_corrompe) ... ok
+test_modificar_etiquetas_sin_eol_final_no_agrega_eol (test_tareas_tatr.TestEtiquetarYDesetiquetar.test_modificar_etiquetas_sin_eol_final_no_agrega_eol) ... ok
+test_grafo_dot_escapado_y_determinismo (test_tareas_tatr.TestGrafo.test_grafo_dot_escapado_y_determinismo) ... ok
+test_grafo_falla_con_codigo_1_ante_tarea_rota (test_tareas_tatr.TestGrafo.test_grafo_falla_con_codigo_1_ante_tarea_rota) ... ok
+test_grafo_referencias_validas_y_frontera_de_tokens (test_tareas_tatr.TestGrafo.test_grafo_referencias_validas_y_frontera_de_tokens) ... ok
+test_grafo_vacio_cuando_no_hay_aristas (test_tareas_tatr.TestGrafo.test_grafo_vacio_cuando_no_hay_aristas) ... ok
+test_resumen_sin_etiquetas_y_descripciones (test_tareas_tatr.TestResumenMetricas.test_resumen_sin_etiquetas_y_descripciones) ... ok
+test_enlace_simbolico_no_se_sigue (test_tareas_tatr_revision.ArchivoEtiquetasTests.test_enlace_simbolico_no_se_sigue) ... ok
+test_hechos_lo_inventaria_como_auxiliar (test_tareas_tatr_revision.ArchivoEtiquetasTests.test_hechos_lo_inventaria_como_auxiliar) ... ok
+test_redefinicion_falla_revisar_con_linea_y_no_resumen (test_tareas_tatr_revision.ArchivoEtiquetasTests.test_redefinicion_falla_revisar_con_linea_y_no_resumen) ... ok
+test_resumen_muestra_descripciones_y_tareas_sin_etiquetas (test_tareas_tatr_revision.ArchivoEtiquetasTests.test_resumen_muestra_descripciones_y_tareas_sin_etiquetas) ... ok
+test_revisar_acepta_el_archivo_como_auxiliar (test_tareas_tatr_revision.ArchivoEtiquetasTests.test_revisar_acepta_el_archivo_como_auxiliar) ... ok
+test_utf8_invalido_es_diagnostico_sin_traceback (test_tareas_tatr_revision.ArchivoEtiquetasTests.test_utf8_invalido_es_diagnostico_sin_traceback) ... ok
+test_ayuda_de_verbos_nuevos_no_escribe (test_tareas_tatr_revision.AyudaTests.test_ayuda_de_verbos_nuevos_no_escribe) ... ok
+test_ids_explicitos_con_filtro_de_estado_es_error_sin_escrituras (test_tareas_tatr_revision.DesetiquetarTests.test_ids_explicitos_con_filtro_de_estado_es_error_sin_escrituras) ... ok
+test_ids_explicitos_ignoran_estado (test_tareas_tatr_revision.DesetiquetarTests.test_ids_explicitos_ignoran_estado) ... ok
+test_masivo_con_todas_incluye_cerradas_y_la_ultima_queda_como_nueva (test_tareas_tatr_revision.DesetiquetarTests.test_masivo_con_todas_incluye_cerradas_y_la_ultima_queda_como_nueva) ... ok
+test_masivo_toca_solo_abiertas_por_defecto (test_tareas_tatr_revision.DesetiquetarTests.test_masivo_toca_solo_abiertas_por_defecto) ... ok
+test_etiquetar_sin_ids_o_sin_etiqueta_falla (test_tareas_tatr_revision.EtiquetarTests.test_etiquetar_sin_ids_o_sin_etiqueta_falla) ... ok
+test_idempotente_e_insensible_a_mayusculas_no_reescribe (test_tareas_tatr_revision.EtiquetarTests.test_idempotente_e_insensible_a_mayusculas_no_reescribe) ... ok
+test_inserta_la_linea_ausente_al_final_del_bloque (test_tareas_tatr_revision.EtiquetarTests.test_inserta_la_linea_ausente_al_final_del_bloque) ... ok
+test_prefijo_inequivoco (test_tareas_tatr_revision.EtiquetarTests.test_prefijo_inequivoco) ... ok
+test_preserva_crlf_campos_desconocidos_y_cuerpo (test_tareas_tatr_revision.EtiquetarTests.test_preserva_crlf_campos_desconocidos_y_cuerpo) ... ok
+test_registro_roto_no_escribe_ninguna_tarea (test_tareas_tatr_revision.EtiquetarTests.test_registro_roto_no_escribe_ninguna_tarea) ... ok
+test_lectura_fallida_tras_la_auditoria_sale_exactamente_uno (test_tareas_tatr_revision.GrafoErroresOperacionalesTests.test_lectura_fallida_tras_la_auditoria_sale_exactamente_uno) ... ok
+test_sin_tracker_sale_exactamente_uno (test_tareas_tatr_revision.GrafoErroresOperacionalesTests.test_sin_tracker_sale_exactamente_uno) ... ok
+test_borde_de_token_autoarista_duplicados_y_cerradas (test_tareas_tatr_revision.GrafoTests.test_borde_de_token_autoarista_duplicados_y_cerradas) ... ok
+test_dot_escapa_y_es_determinista_sin_escribir_archivos (test_tareas_tatr_revision.GrafoTests.test_dot_escapa_y_es_determinista_sin_escribir_archivos) ... ok
+test_registro_roto_sale_uno (test_tareas_tatr_revision.GrafoTests.test_registro_roto_sale_uno) ... ok
+test_sin_aristas_es_grafo_vacio_valido (test_tareas_tatr_revision.GrafoTests.test_sin_aristas_es_grafo_vacio_valido) ... ok
+test_ids_largos_y_cortos_comparten_columnas_sin_espacios_finales (test_tareas_tatr_revision.ListarAlineadoTests.test_ids_largos_y_cortos_comparten_columnas_sin_espacios_finales) ... ok
+test_desetiquetar_cerradas_no_toca_abiertas (test_tareas_tatr_revision.SobrevivientesTareasTests.test_desetiquetar_cerradas_no_toca_abiertas) ... ok
+test_desetiquetar_con_registro_roto_sale_uno_sin_escribir (test_tareas_tatr_revision.SobrevivientesTareasTests.test_desetiquetar_con_registro_roto_sale_uno_sin_escribir) ... ok
+test_documento_en_blanco_es_tarea_invalida (test_tareas_tatr_revision.SobrevivientesTareasTests.test_documento_en_blanco_es_tarea_invalida) ... ok
+test_error_de_lectura_del_archivo_de_etiquetas (test_tareas_tatr_revision.SobrevivientesTareasTests.test_error_de_lectura_del_archivo_de_etiquetas) ... ok
+test_errores_de_entrada_salen_exactamente_uno (test_tareas_tatr_revision.SobrevivientesTareasTests.test_errores_de_entrada_salen_exactamente_uno) ... ok
+test_etiquetas_como_primer_metadato (test_tareas_tatr_revision.SobrevivientesTareasTests.test_etiquetas_como_primer_metadato) ... ok
+test_fallo_de_escritura_a_mitad_informa_las_escritas_y_sale_uno (test_tareas_tatr_revision.SobrevivientesTareasTests.test_fallo_de_escritura_a_mitad_informa_las_escritas_y_sale_uno) ... ok
+test_insercion_informa_la_linea_insertada (test_tareas_tatr_revision.SobrevivientesTareasTests.test_insercion_informa_la_linea_insertada) ... ok
+test_insercion_usa_el_fin_de_linea_del_documento (test_tareas_tatr_revision.SobrevivientesTareasTests.test_insercion_usa_el_fin_de_linea_del_documento) ... ok
+test_json_sale_exactamente_cero (test_tareas_tatr_revision.SobrevivientesTareasTests.test_json_sale_exactamente_cero) ... ok
+test_limite_de_dos_mib_en_el_borde (test_tareas_tatr_revision.SobrevivientesTareasTests.test_limite_de_dos_mib_en_el_borde) ... ok
+test_linea_en_blanco_antes_del_titulo (test_tareas_tatr_revision.SobrevivientesTareasTests.test_linea_en_blanco_antes_del_titulo) ... ok
+test_listar_formato_exacto_con_y_sin_etiquetas (test_tareas_tatr_revision.SobrevivientesTareasTests.test_listar_formato_exacto_con_y_sin_etiquetas) ... ok
+test_rechazo_al_releer_la_tarea_sale_exactamente_uno (test_tareas_tatr_revision.SobrevivientesTareasTests.test_rechazo_al_releer_la_tarea_sale_exactamente_uno) ... ok
+test_salto_de_linea_en_la_etiqueta_se_rechaza_sin_escribir (test_tareas_tatr_revision.SobrevivientesTareasTests.test_salto_de_linea_en_la_etiqueta_se_rechaza_sin_escribir) ... ok
+test_titulo_sin_metadatos_ni_fin_de_linea (test_tareas_tatr_revision.SobrevivientesTareasTests.test_titulo_sin_metadatos_ni_fin_de_linea) ... ok
+
+----------------------------------------------------------------------
+Ran 500 tests in 10.267s
+
+OK
+docs/guia.md: 27 pasos, 0 salidas actualizadas

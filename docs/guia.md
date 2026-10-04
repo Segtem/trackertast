@@ -1,10 +1,100 @@
 # Guía paso a paso de oracle-task
 
-Esta guía recorre el ciclo completo de uso de **oracle-task** (`tasks`), desde la inicialización hasta el cierre de una tarea, pasando por consultas avanzadas con TQL, notas de avance, adjuntos, referencias cruzadas, el grafo de dependencias y el seguimiento en Git.
+Esta guía recorre el ciclo completo de uso de **oracle-task** (`tasks`), explicando cómo comenzar desde cero, cómo se organizan las tareas en Markdown y cómo personas y agentes colaboran sin perder contexto ni depender de servicios externos.
 
-`oracle-task` es el comando principal y `tasks` su alias compatible. La guía usa el alias, y funciona sobre las mismas carpetas de tareas existentes.
+`oracle-task` es el comando principal y `tasks` su alias liviano y compatible.
 
-Cada paso muestra el comando ejecutado y la salida real obtenida.
+## Empezar desde cero: qué instalar y verificar
+
+Para usar Oracle Task necesitás un entorno estándar de desarrollo:
+
+1. **Python 3.11 o posterior**: Oracle Task no tiene dependencias de ejecución externas y utiliza exclusivamente la biblioteca estándar de Python.
+2. **Terminal**: una ventana para escribir comandos. Abrí PowerShell desde Inicio en Windows, Terminal en macOS o la aplicación Terminal en Linux. El recorrido avanzado de esta página usa sintaxis de bash/zsh; en Windows podés usar WSL para esos bloques. Los comandos básicos de tasks funcionan también en PowerShell.
+3. **Editor de texto plano**: por ejemplo [Visual Studio Code](https://code.visualstudio.com/download), para leer y modificar Markdown. No uses Word. Elegí Archivo → Abrir carpeta para abrir el proyecto. En Windows activá las extensiones de nombre de archivo: evitá TAREA.md.txt. Guardá como texto UTF-8.
+4. **Git**: instalalo desde [su página oficial](https://git-scm.com/install/) si querés conservar historia y compartir el proyecto. El tracker puede crear tareas sin Git; los pasos de seguimiento del historial necesitan un repositorio Git.
+5. **Herramienta de instalación (`uv`)**: recomendamos [`uv`](https://docs.astral.sh/uv/) por su velocidad y aislamiento.
+
+### Instalá uv primero
+
+La [guía oficial de uv](https://docs.astral.sh/uv/getting-started/installation/) describe todas las opciones. En macOS/Linux, desde Terminal:
+
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+En Windows, desde PowerShell:
+
+```powershell
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+Cerrá y abrí otra terminal; `uv --version` debe imprimir una versión. Si tu Linux no tiene curl, consultá la alternativa wget de esa guía oficial. Pegá una línea, presioná Enter y esperá a que termine; resolvé cualquier error antes de seguir.
+
+### Instalación de la herramienta
+
+Instalá la versión `0.2.0` de `oracle-task` como herramienta global con `uv`:
+
+```bash
+uv python install 3.13
+uv tool install --python 3.13 oracle-task==0.2.0
+uv tool update-shell
+```
+
+`uv tool update-shell` configura el acceso a los comandos en la terminal. Cerrá y abrí otra sesión para aplicar el cambio. Si preferís un entorno virtual tradicional con pip:
+
+```bash
+pip install oracle-task==0.2.0
+```
+
+### Verificar el comando y el alias `tasks`
+
+Comprobá que el sistema reconozca tanto el ejecutable canónico como su alias:
+
+```bash
+oracle-task --version
+tasks --version
+```
+
+Ambos comandos invocan el mismo programa. En el resto de esta guía utilizaremos el alias `tasks`.
+
+## Principios fundamentales y responsabilidades
+
+Antes de crear la primera tarea, es fundamental comprender qué hace y qué no hace el tracker:
+
+- **Tareas y adjuntos locales en Markdown**: Cada tarea es una subcarpeta dentro del directorio `tareas/`, compuesta por su archivo central `TAREA.md` y sus adjuntos locales (archivos `.csv`, capturas, esquemas, volcados de logs). Todo vive dentro del repositorio y es legible con cualquier editor.
+- **Git guarda historia SOLO si la persona hace `git add` y `git commit`**: Oracle Task no crea commits automáticos en Git ni interactúa con servidores remotos en segundo plano. El registro de versiones en el historial de Git es responsabilidad de la persona o de los scripts de integración explícitos del proyecto.
+- **`tasks close` no ejecuta trabajo ni exige revisiones**: El comando `tasks close` marca atómicamente el campo `- ESTADO: CERRADA` en `TAREA.md`. No ejecuta tests, no comprueba si el software funciona, no exige aprobaciones ni crea commits en Git. Es un cambio de estado del tracker.
+- **`tasks review` comprueba la integridad del tracker, NO la calidad del software**: El comando `tasks review` audita la integridad estructural del directorio `tareas/` (que existan los archivos `TAREA.md`, que las etiquetas y prioridades respeten la especificación y que los enlaces a adjuntos locales apunten a archivos reales existentes). No ejecuta compiladores ni suites de pruebas de tu aplicación.
+- **`tasks facts` emite observaciones; Oracle evalúa medidas**: `tasks facts` emite un volcado JSON estructurado con los hechos verificables del repositorio y de las tareas. La evaluación de políticas y límites formales se delega a **Oracle**, una herramienta de evaluación separada.
+- **Priorización P**: Las tareas cuentan con un campo de prioridad entera `PRIORIDAD: <n>` (típicamente entre 0 y 100, por defecto 50). `tasks list` ordena por defecto las tareas de mayor a menor prioridad (P80 antes que P70, y P70 antes que P40). La imagen del tablero es explicativa; no hay un tablero kanban ni sincronización en la nube dentro de esta CLI.
+- **Resolución suficiente y ambigüedad de IDs**:
+  - Un ID canónico de tarea tiene el formato `YYYYMMDD-HHMMSS[-sufijo]` (por ejemplo `20260927-120000-sensor`).
+  - Para operar con comandos como `tasks show`, `tasks note` o `tasks close`, podés especificar el ID completo o un prefijo/sufijo suficiente (por ejemplo `sensor`).
+  - Si el término coincide con una única tarea, el comando la resuelve exitosamente.
+  - Si el término coincide con más de una tarea, el CLI rechaza la operación informando ambigüedad (`IdAmbiguo`), evitando mutar la tarea equivocada.
+  - En instrucciones para personas y guías, siempre es conveniente usar un sufijo explícito (`tasks new --sufijo primer-paso`) o el ID exacto obtenido con `tasks list`, evitando patrones glob o IDs arbitrarios.
+- **Protocolo de relevo colaborativo**:
+  - Al transferir el trabajo entre una persona y un agente (o entre sesiones de agentes), la regla central es mantener **un único encabezado `## Próximo paso` al final de `TAREA.md`**.
+  - No deben acumularse múltiples secciones de próximo paso: cada sesión actualiza el contenido de esta única sección describiendo qué falta hacer, registrando los descubrimientos intermedios con `tasks note`.
+
+## Prepará la carpeta para el recorrido
+
+Creá una carpeta vacía y entrá en ella. Estos comandos se usan igual en Terminal o PowerShell:
+
+```bash
+mkdir mi-primer-tracker
+cd mi-primer-tracker
+git init
+```
+
+Los siguientes comandos se ejecutan desde esa carpeta. Antes del primer commit, configurá identidad local de Git sustituyendo nombre/correo; no requiere cuenta de GitHub, y esos datos serán visibles si compartís el historial:
+
+```bash
+git config user.name "Tu nombre"
+git config user.email "tu-correo@example.invalid"
+```
+
+Las salidas de abajo se ejecutan en una carpeta temporal en las pruebas: normalizamos fechas, IDs y rutas para que puedan compararse. No copies sus IDs de ejemplo para tus comandos: usá el sufijo único creado en el paso anterior o recuperá el ID con `tasks list`. Comandos y salidas están rotulados por separado. La ejecución completa se verifica en Linux; macOS/Windows todavía requieren ejecución real y no hay piloto con una persona principiante.
 
 ## 1. Inicializar el tracker
 
@@ -22,14 +112,6 @@ Tracker de tareas inicializado en ./tareas
 Creamos tres tareas utilizando `--sufijo` explícito para asignarles nombres memorables y estables:
 
 ```bash paso
-tasks new "Diseñar sensor de velocidad" --etiqueta sensor --prioridad 70 --sufijo sensor
-```
-```text salida
-Tarea creada: 20260927-120000-sensor
-Ruta: ./tareas/20260927-120000-sensor/TAREA.md
-```
-
-```bash paso
 tasks new "Escribir arnés de prueba" --etiqueta sensor --etiqueta arnes --prioridad 80 --sufijo arnes
 ```
 ```text salida
@@ -43,6 +125,14 @@ tasks new "Corregir fuga en actuador" --etiqueta bug --prioridad 40 --sufijo fug
 ```text salida
 Tarea creada: 20260927-120000-fuga
 Ruta: ./tareas/20260927-120000-fuga/TAREA.md
+```
+
+```bash paso
+tasks new "Diseñar sensor de velocidad" --etiqueta sensor --prioridad 70 --sufijo sensor
+```
+```text salida
+Tarea creada: 20260927-120000-sensor
+Ruta: ./tareas/20260927-120000-sensor/TAREA.md
 ```
 
 ## 3. Consultas y filtrado con TQL
@@ -235,7 +325,20 @@ digraph tareas {
 }
 ```
 
-## 8. Seguimiento con Git
+## 8. Revisar la integridad del tracker con `tasks review`
+
+Antes de confirmar en Git o compartir el repositorio, `tasks review` (alias `revisar`) comprueba la validez estructural de todas las tareas bajo `tareas/`:
+
+```bash paso
+tasks review
+```
+```text salida
+REVISIÓN OK: 3 tarea(s) válida(s) en ./tareas
+```
+
+> **Recordatorio:** `tasks review` audita la integridad estructural del tracker (archivos `TAREA.md`, metadatos y adjuntos locales); **no evalúa la calidad del software**, ni si el código compila ni si las pruebas del proyecto pasan.
+
+## 9. Seguimiento con Git
 
 El comando `tasks follow` (alias `seguimiento`) audita el estado de todos los archivos del tracker frente al índice y a `HEAD` de Git.
 
@@ -278,7 +381,7 @@ Repositorio: . · HEAD: <commit>
 
 Ahora todos los documentos figuran como `sin_cambios` e integrados en `HEAD`.
 
-## 9. Resumen y cierre de tareas
+## 10. Resumen, cierre y reapertura de tareas
 
 Podemos obtener un censo rápido del estado del tracker con `tasks summary` (alias `resumen`):
 
@@ -297,7 +400,7 @@ Resumen del tracker de tareas (./tareas):
     · sensor: 2
 ```
 
-### Cerrar una tarea
+### Cerrar una tarea con `tasks close`
 
 Cuando el trabajo de una tarea termina, la marcamos como `CERRADA` mediante `tasks close` (alias `cerrar`):
 
@@ -308,7 +411,7 @@ tasks close fuga
 Tarea cerrada: 20260927-120000-fuga
 ```
 
-Podemos consultar el listado completo incluyendo tareas abiertas y cerradas pasando `--todas`:
+El listado completo con `--todas` muestra tareas abiertas y cerradas:
 
 ```bash paso
 tasks list --todas
@@ -318,3 +421,33 @@ tasks list --todas
 20260927-120000-sensor ABIERTA P70 [sensor]        Diseñar sensor de velocidad
 20260927-120000-fuga   CERRADA P40 [bug]           Corregir fuga en actuador
 ```
+
+### Reabrir una tarea con `tasks reopen`
+
+Si un defecto reaparece o se descubre trabajo pendiente, `tasks reopen` (alias `reabrir`) restaura el estado a `ABIERTA` de forma atómica:
+
+```bash paso
+tasks reopen fuga
+```
+```text salida
+Tarea reabierta: 20260927-120000-fuga
+```
+
+Volvemos a cerrarla para concluir el ejemplo:
+
+```bash paso
+tasks close fuga
+```
+```text salida
+Tarea cerrada: 20260927-120000-fuga
+```
+
+## 11. Hechos observables y evaluación con Oracle
+
+Para auditar el estado del tracker o integrarlo en flujos de verificación continua, `tasks facts` (alias `hechos`) emite una representación relacional en JSON:
+
+```bash
+tasks facts --git
+```
+
+El comando extrae hechos observables (tareas abiertas y cerradas, referencias a adjuntos, commits enlazados). **Oracle**, de manera separada, evalúa esos hechos contra un catálogo formal de políticas y límites (por ejemplo, comprobar que ningún commit apunte a una tarea inexistente o que toda tarea cerrada tenga su commit de cierre). El tracker emite los hechos; Oracle evalúa las reglas.

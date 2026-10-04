@@ -6,12 +6,10 @@
 <title>Oracle Task — El tracker de tareas en Markdown para personas y agentes</title>
 <meta name="description" content="Tracker local de tareas en archivos Markdown dentro del repositorio, pensado para que personas y agentes se pasen el trabajo sin perder contexto.">
 <link rel="canonical" href="https://segtem.github.io/trackertast/">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&family=Silkscreen&display=swap">
 <link rel="stylesheet" href="assets/sitio.css">
 <link rel="stylesheet" href="assets/portada.css">
 <link rel="icon" href="assets/emblema.svg" type="image/svg+xml">
+<script src="assets/portada.js" defer></script>
 </head>
 <body>
 <a class="saltar" href="#contenido">Saltar al contenido</a>
@@ -38,42 +36,218 @@
     <p class="bajada">
       Un tracker de tareas en archivos Markdown dentro de tu proyecto, pensado para que personas y agentes
       de programación se pasen el trabajo sin perder contexto, sin bases de datos y sin servicios externos.
-      Cada tarea vive en su propia carpeta bajo <code>tareas/</code> y Git guarda la historia.
+      Cada tarea vive en su propia carpeta bajo <code>tareas/</code> y Git guarda la historia cuando hacés commit.
     </p>
     <div class="acciones">
-      <a class="boton" href="guia.html">Recorrido completo</a>
-      <a class="boton secundario" href="agentes.html">Para agentes</a>
+      <a class="boton" href="#taller-recorrido">Ver el taller interactivo ↓</a>
+      <a class="boton secundario" href="guia.html">Guía paso a paso</a>
     </div>
-    <p class="instalar">
-      <code>uv tool install oracle-task==0.2.0</code>
-      <span>Corte preparado para PyPI · Python 3.11+ · alias tasks · MIT</span>
-    </p>
+    <div class="instalar-caja">
+      <div class="instalar">
+        <code>uv tool install oracle-task==0.2.0</code>
+        <code>uv tool update-shell</code>
+      </div>
+      <span class="instalar-sub">Publicado en PyPI · Python 3.11+ · alias tasks · Cero dependencias · MIT</span>
+    </div>
   </div>
-  <div class="terminal" aria-label="Terminal de bienvenida a Oracle Task">
+  <div class="terminal" aria-label="Terminal de ejemplo ilustrativo de Oracle Task">
+    <p class="ejemplo-aviso">Ejemplo ilustrativo: recuperá tus IDs reales con tasks list. Mayor número P significa mayor prioridad.</p>
     <div class="terminal-barra pixel">
       <span>terminal · tasks</span>
       <span class="t-cyan">bash</span>
     </div>
     <pre><code><span class="t-gris">$ tasks list</span>
-20260927-182033-web    <span class="t-verde">ABIERTA</span> P80 []       La web de Oracle Task
-20260911-180000-sensor <span class="t-verde">ABIERTA</span> P70 [sensor] Investigar defecto en sensor
+20261004-012404-arnes  <span class="t-verde">ABIERTA</span> P80 [arnes]  Escribir arnés de prueba
+20261004-012404-sensor <span class="t-verde">ABIERTA</span> P70 [sensor] Diseñar sensor de velocidad
 
-<span class="t-gris">$ tasks show web</span>
-<span class="t-cyan">ID:</span>        20260927-182033-web
-<span class="t-cyan">Título:</span>    La web de Oracle Task
+<span class="t-gris">$ tasks show sensor</span>
+<span class="t-cyan">ID:</span>        20261004-012404-sensor
+<span class="t-cyan">Título:</span>    Diseñar sensor de velocidad
 <span class="t-cyan">Estado:</span>    ABIERTA
-<span class="t-cyan">Prioridad:</span> 80
-<span class="t-cyan">Ruta:</span>      tareas/20260927-182033-web/TAREA.md</code></pre>
+<span class="t-cyan">Prioridad:</span> 70
+<span class="t-cyan">Ruta:</span>      tareas/20261004-012404-sensor/TAREA.md</code></pre>
   </div>
 </section>
 
+<!-- Escena pixel art interactiva nativa -->
+<section id="taller-recorrido" class="taller-seccion envoltura" aria-labelledby="t-taller">
+  <div class="taller-cabecera">
+    <div>
+      <p class="ceja pixel">taller interactivo</p>
+      <h2 id="t-taller">El ciclo de vida de una tarea local</h2>
+    </div>
+    <span class="etiqueta-demo">ESCENA PIXEL ART NATIVA</span>
+  </div>
+
+  <div class="scene-scroll" tabindex="0" aria-label="Escena pixel art del taller de trabajo. Se puede desplazar horizontalmente en pantallas pequeñas.">
+    <canvas id="escena-canvas" width="960" height="320" aria-label="Escena interactiva pixel art mostrando el ciclo de vida de una tarea: creación, evidencia, relevo colaborativo, cierre registrado en Git y reapertura.">
+      El ciclo de vida de una tarea en Oracle Task consta de cinco etapas:
+      1. Crear tarea: se genera la subcarpeta tareas/<id>/ y TAREA.md con estado ABIERTA.
+      2. Registrar evidencia: notas de avance en UTC y copia de archivos locales como calibracion.csv.
+      3. Relevo colaborativo: redacción del único ## Próximo paso al final para pasar el testigo a otra persona o agente.
+      4. Cierre y Git: tasks close marca CERRADA atómicamente; la persona confirma en Git (git commit) para registrar historia de versiones.
+      5. Reabrir: tasks reopen restaura ABIERTA conservando íntegras todas las notas históricas.
+      Consultá los detalles debajo.
+    </canvas>
+  </div>
+
+  <div class="barra-transporte">
+    <div class="transporte-botones">
+      <button id="btn-reiniciar" class="btn-icono" type="button" aria-label="Volver al inicio" title="Volver al inicio">↺</button>
+      <button id="btn-anterior" class="btn-icono" type="button" aria-label="Etapa anterior" title="Etapa anterior">←</button>
+      <button id="btn-play" class="btn-play" type="button" aria-pressed="false">
+        <span id="icono-play" aria-hidden="true">▶</span>
+        <span id="texto-play">Reproducir</span>
+      </button>
+      <button id="btn-siguiente" class="btn-icono" type="button" aria-label="Etapa siguiente" title="Etapa siguiente">→</button>
+    </div>
+    <p id="estado-movimiento" class="estado-movimiento">Avanzá a tu ritmo o reproducí el recorrido animado.</p>
+    <span id="contador-etapas" class="contador-etapas">01 / 05</span>
+  </div>
+
+  <nav class="nav-etapas" aria-label="Navegar por las etapas del ciclo de trabajo">
+    <button type="button" class="btn-etapa activa" data-etapa="0" aria-current="step">
+      <span class="num">01</span>
+      <span class="nom">Crear tarea</span>
+    </button>
+    <button type="button" class="btn-etapa" data-etapa="1">
+      <span class="num">02</span>
+      <span class="nom">Evidencia</span>
+    </button>
+    <button type="button" class="btn-etapa" data-etapa="2">
+      <span class="num">03</span>
+      <span class="nom">Relevo</span>
+    </button>
+    <button type="button" class="btn-etapa" data-etapa="3">
+      <span class="num">04</span>
+      <span class="nom">Cierre y Git</span>
+    </button>
+    <button type="button" class="btn-etapa" data-etapa="4">
+      <span class="num">05</span>
+      <span class="nom">Reabrir</span>
+    </button>
+  </nav>
+
+  <div class="panel-etapa" id="taller-escena" tabindex="-1">
+    <article class="etapa-caja" aria-live="polite" aria-atomic="true">
+      <div class="etapa-cabeza">
+        <span id="etapa-responsable" class="ceja pixel">PERSONA O AGENTE + CLI</span>
+      </div>
+      <h3 id="etapa-titulo">1. Nace una tarea en su propia carpeta</h3>
+      <p id="etapa-explicacion" class="bajada-etapa">
+        Una persona o un agente inicia el hilo de trabajo. Oracle Task crea la subcarpeta
+        <code>tareas/20261004-012404-sensor/</code> con su plantilla <code>TAREA.md</code>,
+        metadatos estructurados (ESTADO: ABIERTA, PRIORIDAD: 70, ETIQUETAS: sensor) y formato Markdown estándar.
+      </p>
+
+      <div class="comando-copiable-box">
+        <span class="comando-etiqueta">Comando a ejecutar</span>
+        <div class="comando-copiable">
+          <code id="etapa-comando">tasks new "Investigar defecto en sensor" --etiqueta sensor --prioridad 70 --sufijo sensor</code>
+          <button id="btn-copiar-etapa" class="btn-copiar" type="button">Copiar comando</button>
+        </div>
+      </div>
+
+      <dl class="artefactos-dl">
+        <dt>ENTRA</dt>
+        <dd id="etapa-entra">Una necesidad, defecto observado o acuerdo de trabajo.</dd>
+        <dt>SALE</dt>
+        <dd id="etapa-sale">Carpeta tareas/&lt;ID&gt;/ con plantilla TAREA.md y estado ABIERTA.</dd>
+      </dl>
+    </article>
+
+    <aside class="responsabilidad-caja" aria-label="Responsabilidades y límites de la etapa">
+      <h4>Límites y responsabilidades</h4>
+      <div class="responsabilidad-item">
+        <strong>¿Quién hace qué?</strong>
+        <p id="etapa-quien">La persona o el agente ejecuta el comando. El CLI crea los archivos locales en tu disco.</p>
+      </div>
+      <div class="responsabilidad-item">
+        <strong>Límite explícito</strong>
+        <p id="etapa-limite">El tracker no requiere servidores remotos ni bases de datos. Todo vive dentro de tareas/ en tu repositorio.</p>
+      </div>
+    </aside>
+  </div>
+
+  <p class="nota-simulacion" id="etapa-simulacion">
+    <strong>Simulación demostrativa:</strong> ID ilustrativo, no una tarea creada por la página. La CLI genera un ID con fecha UTC y sufijo explícito.
+    En tu máquina, usá <code>tasks new "..." --sufijo &lt;nombre&gt;</code> para crear tareas reales con sufijos memorables.
+  </p>
+
+  <noscript>
+    <div class="nota-simulacion">
+      <strong>Aviso de accesibilidad:</strong> La animación interactiva necesita JavaScript, pero todo el contenido
+      y la guía de comandos están disponibles en texto completo en las secciones siguientes y en <a href="guia.html">la guía paso a paso</a>.
+    </div>
+  </noscript>
+</section>
+
+<!-- Responsabilidades del sistema -->
+<section class="capitulo envoltura" aria-labelledby="t-responsabilidades">
+  <div class="capitulo-cabeza">
+    <p class="ceja pixel">roles y fronteras</p>
+    <h2 id="t-responsabilidades">Cada parte con su responsabilidad</h2>
+    <p class="bajada">
+      Oracle Task no inventa aprobaciones automáticas, no ejecuta tests ni crea commits por sorpresa.
+      Las responsabilidades se reparten así.
+    </p>
+  </div>
+
+  <div class="cuatro-responsabilidades">
+    <article class="tarjeta-resp">
+      <span class="lampara ambar">Persona</span>
+      <strong>La dirección y el juicio</strong>
+      <p>Decide qué construir y cuándo cerrar. Es la responsable de:</p>
+      <ul>
+        <li>Aceptar el alcance y prioridad de la tarea.</li>
+        <li>Ejecutar suites de pruebas y validar el software.</li>
+        <li>Hacer <code>git add</code> y <code>git commit</code> para guardar la historia.</li>
+      </ul>
+    </article>
+
+    <article class="tarjeta-resp">
+      <span class="lampara cyan">Agente</span>
+      <strong>La asistencia técnica</strong>
+      <p>Colabora en la resolución de problemas en sesiones autónomas o asistidas:</p>
+      <ul>
+        <li>Carga el contexto completo con <code>tasks show</code>.</li>
+        <li>Registra notas de avances con <code>tasks note</code>.</li>
+        <li>Redacta el único <code>## Próximo paso</code> antes de terminar su turno.</li>
+      </ul>
+    </article>
+
+    <article class="tarjeta-resp">
+      <span class="lampara verde">Tracker (tasks)</span>
+      <strong>El hilo de trabajo</strong>
+      <p>Administra las carpetas y archivos <code>TAREA.md</code> de forma atómica:</p>
+      <ul>
+        <li>Crea tareas, registra notas y copia adjuntos locales.</li>
+        <li>Cambia atómicamente el estado a <code>ABIERTA</code> o <code>CERRADA</code>.</li>
+        <li>Audita la validez de los archivos con <code>tasks review</code>.</li>
+      </ul>
+    </article>
+
+    <article class="tarjeta-resp">
+      <span class="lampara rojo">Git</span>
+      <strong>El historial de versiones</strong>
+      <p>Conserva los cambios del repositorio y las tareas en el tiempo:</p>
+      <ul>
+        <li>Guarda historia <strong>SOLO</strong> si la persona hace <code>git commit</code>.</li>
+        <li>Los commits nombran la tarea (<code>&lt;ID&gt;: ...</code>).</li>
+        <li><code>tasks follow</code> audita la cobertura de archivos frente a HEAD.</li>
+      </ul>
+    </article>
+  </div>
+</section>
+
+<!-- Recorrido básico en seis pasos con comandos limpios copiables -->
 <section class="capitulo envoltura" aria-labelledby="t-recorrido-60s">
   <div class="capitulo-cabeza">
     <p class="ceja pixel">en marcha</p>
-    <h2 id="t-recorrido-60s">Recorrido de 60 segundos</h2>
+    <h2 id="t-recorrido-60s">Recorrido básico en seis pasos</h2>
     <p class="bajada">
       Seis comandos esenciales para inicializar, crear, documentar, listar, inspeccionar y cerrar tareas,
-      con salidas reales.
+      Las salidas muestran IDs y fechas ilustrativos. La CLI genera tus IDs reales; estos comandos usan el sufijo sensor.
     </p>
   </div>
 
@@ -82,9 +256,12 @@
       <span class="lampara verde">1</span>
       <h3>Inicializar el repositorio</h3>
     </div>
-    <p>Crea el directorio <code>tareas/</code> con su archivo explicativo <code>README.md</code>.</p>
+    <p>Desde la carpeta de tu proyecto, crea el directorio <code>tareas/</code> con su archivo explicativo <code>README.md</code>.</p>
     <div class="terminal">
-      <div class="terminal-barra pixel"><span>tasks init</span></div>
+      <div class="terminal-barra pixel">
+        <span>tasks init</span>
+        <button type="button" class="btn-copiar btn-copiar-cmd" data-cmd="tasks init">Copiar comando</button>
+      </div>
       <pre><code>$ tasks init
 Tracker de tareas inicializado en ./tareas</code></pre>
     </div>
@@ -97,10 +274,13 @@ Tracker de tareas inicializado en ./tareas</code></pre>
     </div>
     <p>Crea una nueva carpeta con su plantilla <code>TAREA.md</code>, metadatos y sufijo determinista.</p>
     <div class="terminal">
-      <div class="terminal-barra pixel"><span>tasks new</span></div>
+      <div class="terminal-barra pixel">
+        <span>tasks new</span>
+        <button type="button" class="btn-copiar btn-copiar-cmd" data-cmd='tasks new "Investigar defecto en sensor" --etiqueta sensor --prioridad 70 --sufijo sensor'>Copiar comando</button>
+      </div>
       <pre><code>$ tasks new "Investigar defecto en sensor" --etiqueta sensor --prioridad 70 --sufijo sensor
-Tarea creada: 20260927-120000-sensor
-Ruta: ./tareas/20260927-120000-sensor/TAREA.md</code></pre>
+Tarea creada: 20261004-012404-sensor
+Ruta: ./tareas/20261004-012404-sensor/TAREA.md</code></pre>
     </div>
   </div>
 
@@ -111,10 +291,13 @@ Ruta: ./tareas/20260927-120000-sensor/TAREA.md</code></pre>
     </div>
     <p>Agrega notas de progreso fechadas en UTC de forma atómica en el cuerpo de la tarea.</p>
     <div class="terminal">
-      <div class="terminal-barra pixel"><span>tasks note</span></div>
+      <div class="terminal-barra pixel">
+        <span>tasks note</span>
+        <button type="button" class="btn-copiar btn-copiar-cmd" data-cmd='tasks note sensor "Medición preliminar en banco de pruebas"'>Copiar comando</button>
+      </div>
       <pre><code>$ tasks note sensor "Medición preliminar en banco de pruebas"
-Nota agregada a la tarea 20260927-120000-sensor
-Documento: ./tareas/20260927-120000-sensor/TAREA.md</code></pre>
+Nota agregada a la tarea 20261004-012404-sensor
+Documento: ./tareas/20261004-012404-sensor/TAREA.md</code></pre>
     </div>
   </div>
 
@@ -123,11 +306,14 @@ Documento: ./tareas/20260927-120000-sensor/TAREA.md</code></pre>
       <span class="lampara verde">4</span>
       <h3>Listar tareas abiertas</h3>
     </div>
-    <p>Muestra las tareas con su ID, estado, prioridad y etiquetas, ordenadas dinámicamente.</p>
+    <p>Muestra las tareas con su ID, estado, prioridad y etiquetas, ordenadas por prioridad descendente.</p>
     <div class="terminal">
-      <div class="terminal-barra pixel"><span>tasks list</span></div>
+      <div class="terminal-barra pixel">
+        <span>tasks list</span>
+        <button type="button" class="btn-copiar btn-copiar-cmd" data-cmd="tasks list">Copiar comando</button>
+      </div>
       <pre><code>$ tasks list
-20260927-120000-sensor ABIERTA P70 [sensor] Investigar defecto en sensor</code></pre>
+20261004-012404-sensor ABIERTA P70 [sensor] Investigar defecto en sensor</code></pre>
     </div>
   </div>
 
@@ -138,14 +324,17 @@ Documento: ./tareas/20260927-120000-sensor/TAREA.md</code></pre>
     </div>
     <p>Lee el estado, metadatos y todas las notas acumuladas para retomar el trabajo sin fricción.</p>
     <div class="terminal">
-      <div class="terminal-barra pixel"><span>tasks show</span></div>
+      <div class="terminal-barra pixel">
+        <span>tasks show</span>
+        <button type="button" class="btn-copiar btn-copiar-cmd" data-cmd="tasks show sensor">Copiar comando</button>
+      </div>
       <pre><code>$ tasks show sensor
-ID:        20260927-120000-sensor
+ID:        20261004-012404-sensor
 Título:    Investigar defecto en sensor
 Estado:    ABIERTA
 Prioridad: 70
 Etiquetas: sensor
-Ruta:      ./tareas/20260927-120000-sensor/TAREA.md
+Ruta:      ./tareas/20261004-012404-sensor/TAREA.md
 
 (sin descripción adicional)</code></pre>
     </div>
@@ -158,13 +347,17 @@ Ruta:      ./tareas/20260927-120000-sensor/TAREA.md
     </div>
     <p>Actualiza el estado a <code>CERRADA</code> mediante reemplazo atómico, preservando el resto del archivo.</p>
     <div class="terminal">
-      <div class="terminal-barra pixel"><span>tasks close</span></div>
+      <div class="terminal-barra pixel">
+        <span>tasks close</span>
+        <button type="button" class="btn-copiar btn-copiar-cmd" data-cmd="tasks close sensor">Copiar comando</button>
+      </div>
       <pre><code>$ tasks close sensor
-Tarea cerrada: 20260927-120000-sensor</code></pre>
+Tarea cerrada: 20261004-012404-sensor</code></pre>
     </div>
   </div>
 </section>
 
+<!-- Principios de diseño -->
 <section class="capitulo envoltura" aria-labelledby="t-principios">
   <div class="capitulo-cabeza">
     <p class="ceja pixel">arquitectura</p>
@@ -176,15 +369,15 @@ Tarea cerrada: 20260927-120000-sensor</code></pre>
       <strong>La tarea es la verdad</strong>
       <p>
         Sin servicios en la nube ni bases de datos desconectadas. Clonás el repositorio y tenés todas las tareas,
-        sus notas y sus adjuntos locales listos para leer con cualquier editor.
+        sus notas y sus adjuntos locales listos para leer con cualquier editor de texto habitual.
       </p>
     </div>
     <div class="tarjeta">
       <span class="lampara verde">Relevo</span>
-      <strong>Entre personas y agentes</strong>
+      <strong>Un único próximo paso</strong>
       <p>
         El contexto no se pierde cuando se reinicia una sesión de chat o se llena la ventana de un modelo.
-        El agente lee <code>tasks show</code> y antes de terminar deja anotado el próximo paso con <code>tasks note</code>.
+        El colaborador lee <code>tasks show</code> y antes de terminar deja anotado el próximo paso exacto en <code>TAREA.md</code>.
       </p>
     </div>
     <div class="tarjeta">
@@ -192,12 +385,13 @@ Tarea cerrada: 20260927-120000-sensor</code></pre>
       <strong>Auditoría y trazabilidad</strong>
       <p>
         Los commits nombran la tarea (<code>&lt;ID&gt;: …</code>) y <code>tasks follow</code> audita la cobertura.
-        Además, <code>tasks facts</code> emite evidencia estructurada para validar contra políticas de Oracle.
+        Además, <code>tasks facts</code> emite evidencia relacional para validar contra políticas de Oracle.
       </p>
     </div>
   </div>
 </section>
 
+<!-- Por dónde seguir -->
 <section class="capitulo envoltura" aria-labelledby="t-recorridos">
   <div class="capitulo-cabeza">
     <p class="ceja pixel">documentación</p>
@@ -207,12 +401,12 @@ Tarea cerrada: 20260927-120000-sensor</code></pre>
     <a class="recorrido" href="guia.html">
       <span class="pixel">paso a paso</span>
       <strong>Guía completa</strong>
-      <span>Recorrido con consultas TQL, adjuntos locales, referencias cruzadas y grafo en DOT.</span>
+      <span>Instalación desde cero con uv, recorrido por TQL, adjuntos locales, referencias cruzadas y grafo en DOT.</span>
     </a>
     <a class="recorrido" href="agentes.html">
       <span class="pixel">agentes</span>
       <strong>Para agentes</strong>
-      <span>El protocolo de relevo entre sesiones, ejemplo de AGENTS.md y convención de commits.</span>
+      <span>El protocolo de relevo entre sesiones, ejemplo de AGENTS.md y convención de commits vinculados a tareas.</span>
     </a>
     <a class="recorrido" href="oracle.html">
       <span class="pixel">auditoría</span>
@@ -222,7 +416,7 @@ Tarea cerrada: 20260927-120000-sensor</code></pre>
     <a class="recorrido" href="referencia.html">
       <span class="pixel">cli</span>
       <strong>Referencia de comandos</strong>
-      <span>Todos los verbos canónicos, sus opciones detalladas y sus alias en español.</span>
+      <span>Todos los verbos canónicos, sus opciones detalladas y sus alias en español generados de la ayuda real.</span>
     </a>
   </div>
 </section>
@@ -232,7 +426,7 @@ Tarea cerrada: 20260927-120000-sensor</code></pre>
 <footer class="pie envoltura">
   <img src="assets/emblema.svg" alt="" width="28" height="28">
   <span>Oracle Task 0.2.0</span>
-  <span>MIT · Python 3.11 o posterior · cero dependencias</span>
+  <span>MIT · Python 3.11 o posterior · cero dependencias · 100% offline</span>
   <a href="https://github.com/Segtem/trackertast" rel="noopener">GitHub</a>
   <a href="guia.html">Guía</a>
   <a href="agentes.html">Para agentes</a>

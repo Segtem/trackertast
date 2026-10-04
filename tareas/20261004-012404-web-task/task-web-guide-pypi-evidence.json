@@ -1,0 +1,325 @@
+{
+  "python": "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+  "commands": [
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "init"
+      ],
+      "returncode": 0,
+      "output": "Tracker de tareas inicializado en /tmp/oracle_task-guia-3pjqsegj/tareas\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "new",
+        "Escribir arnés de prueba",
+        "--etiqueta",
+        "sensor",
+        "--etiqueta",
+        "arnes",
+        "--prioridad",
+        "80",
+        "--sufijo",
+        "arnes"
+      ],
+      "returncode": 0,
+      "output": "Tarea creada: 20261004-015324-arnes\nRuta: /tmp/oracle_task-guia-3pjqsegj/tareas/20261004-015324-arnes/TAREA.md\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "new",
+        "Corregir fuga en actuador",
+        "--etiqueta",
+        "bug",
+        "--prioridad",
+        "40",
+        "--sufijo",
+        "fuga"
+      ],
+      "returncode": 0,
+      "output": "Tarea creada: 20261004-015324-fuga\nRuta: /tmp/oracle_task-guia-3pjqsegj/tareas/20261004-015324-fuga/TAREA.md\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "new",
+        "Diseñar sensor de velocidad",
+        "--etiqueta",
+        "sensor",
+        "--prioridad",
+        "70",
+        "--sufijo",
+        "sensor"
+      ],
+      "returncode": 0,
+      "output": "Tarea creada: 20261004-015324-sensor\nRuta: /tmp/oracle_task-guia-3pjqsegj/tareas/20261004-015324-sensor/TAREA.md\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "list"
+      ],
+      "returncode": 0,
+      "output": "20261004-015324-arnes  ABIERTA P80 [sensor, arnes] Escribir arnés de prueba\n20261004-015324-sensor ABIERTA P70 [sensor]        Diseñar sensor de velocidad\n20261004-015324-fuga   ABIERTA P40 [bug]           Corregir fuga en actuador\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "list",
+        ":sensor"
+      ],
+      "returncode": 0,
+      "output": "20261004-015324-arnes  ABIERTA P80 [sensor, arnes] Escribir arnés de prueba\n20261004-015324-sensor ABIERTA P70 [sensor]        Diseñar sensor de velocidad\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "list",
+        "prioridad desde 70"
+      ],
+      "returncode": 0,
+      "output": "20261004-015324-arnes  ABIERTA P80 [sensor, arnes] Escribir arnés de prueba\n20261004-015324-sensor ABIERTA P70 [sensor]        Diseñar sensor de velocidad\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "list",
+        ":sensor y prioridad desde 75"
+      ],
+      "returncode": 0,
+      "output": "20261004-015324-arnes ABIERTA P80 [sensor, arnes] Escribir arnés de prueba\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "list",
+        ":bug o :arnes"
+      ],
+      "returncode": 0,
+      "output": "20261004-015324-arnes ABIERTA P80 [sensor, arnes] Escribir arnés de prueba\n20261004-015324-fuga  ABIERTA P40 [bug]           Corregir fuga en actuador\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "list",
+        "no :bug"
+      ],
+      "returncode": 0,
+      "output": "20261004-015324-arnes  ABIERTA P80 [sensor, arnes] Escribir arnés de prueba\n20261004-015324-sensor ABIERTA P70 [sensor]        Diseñar sensor de velocidad\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "list",
+        ":sensor y prioridad desde 75",
+        "--explicar"
+      ],
+      "returncode": 0,
+      "output": "TOKENS:\n  [0] :sensor\n  [8] y\n  [10] prioridad\n  [20] desde\n  [26] 75\nCOMPILADO:\n  (:sensor y (prioridad desde 75))\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "show",
+        "sensor"
+      ],
+      "returncode": 0,
+      "output": "ID:        20261004-015324-sensor\nTítulo:    Diseñar sensor de velocidad\nEstado:    ABIERTA\nPrioridad: 70\nEtiquetas: sensor\nRuta:      /tmp/oracle_task-guia-3pjqsegj/tareas/20261004-015324-sensor/TAREA.md\n\n(sin descripción adicional)\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "note",
+        "sensor",
+        "Medición preliminar en banco de pruebas"
+      ],
+      "returncode": 0,
+      "output": "Nota agregada a la tarea 20261004-015324-sensor\nDocumento: /tmp/oracle_task-guia-3pjqsegj/tareas/20261004-015324-sensor/TAREA.md\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "note",
+        "sensor",
+        "Hoja de datos del fabricante",
+        "--url",
+        "https://ejemplo.com/sensor.pdf",
+        "--marca",
+        "página 12"
+      ],
+      "returncode": 0,
+      "output": "Nota agregada a la tarea 20261004-015324-sensor\nDocumento: /tmp/oracle_task-guia-3pjqsegj/tareas/20261004-015324-sensor/TAREA.md\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "attach",
+        "sensor",
+        "calibracion.csv"
+      ],
+      "returncode": 0,
+      "output": "Archivo adjuntado a la tarea 20261004-015324-sensor\nRuta:      /tmp/oracle_task-guia-3pjqsegj/tareas/20261004-015324-sensor/calibracion.csv\nDocumento: /tmp/oracle_task-guia-3pjqsegj/tareas/20261004-015324-sensor/TAREA.md\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "search",
+        "calibracion"
+      ],
+      "returncode": 0,
+      "output": "tareas/20261004-015324-sensor/TAREA.md:16: - Adjunto: [calibracion.csv](calibracion.csv)\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "note",
+        "arnes",
+        "Bloqueado por 20261004-015324-sensor"
+      ],
+      "returncode": 0,
+      "output": "Nota agregada a la tarea 20261004-015324-arnes\nDocumento: /tmp/oracle_task-guia-3pjqsegj/tareas/20261004-015324-arnes/TAREA.md\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "refs",
+        "sensor"
+      ],
+      "returncode": 0,
+      "output": "Referencias encontradas para «20261004-015324-sensor»:\ntareas/20261004-015324-arnes/TAREA.md:9: Bloqueado por 20261004-015324-sensor\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "graph"
+      ],
+      "returncode": 0,
+      "output": "digraph tareas {\n  \"20261004-015324-arnes\" [label=\"Escribir arnés de prueba (ABIERTA)\"];\n  \"20261004-015324-sensor\" [label=\"Diseñar sensor de velocidad (ABIERTA)\"];\n  \"20261004-015324-arnes\" -> \"20261004-015324-sensor\";\n}\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "review"
+      ],
+      "returncode": 0,
+      "output": "REVISIÓN OK: 3 tarea(s) válida(s) en /tmp/oracle_task-guia-3pjqsegj/tareas\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "follow"
+      ],
+      "returncode": 0,
+      "output": "Repositorio: /tmp/oracle_task-guia-3pjqsegj · HEAD: sin commits\n  sin_seguimiento: tareas/20261004-015324-arnes/TAREA.md (índice=False, HEAD=False, XY=??)\n  sin_seguimiento: tareas/20261004-015324-fuga/TAREA.md (índice=False, HEAD=False, XY=??)\n  sin_seguimiento: tareas/20261004-015324-sensor/TAREA.md (índice=False, HEAD=False, XY=??)\n  sin_seguimiento: tareas/20261004-015324-sensor/calibracion.csv (índice=False, HEAD=False, XY=??)\n  sin_seguimiento: tareas/README.md (índice=False, HEAD=False, XY=??)\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "follow"
+      ],
+      "returncode": 0,
+      "output": "Repositorio: /tmp/oracle_task-guia-3pjqsegj · HEAD: 3751b35e9d1a32666125b7bd8bbcd6acf0d3cc1c\n  sin_cambios: tareas/20261004-015324-arnes/TAREA.md (índice=True, HEAD=True, XY=  )\n  sin_cambios: tareas/20261004-015324-fuga/TAREA.md (índice=True, HEAD=True, XY=  )\n  sin_cambios: tareas/20261004-015324-sensor/TAREA.md (índice=True, HEAD=True, XY=  )\n  sin_cambios: tareas/20261004-015324-sensor/calibracion.csv (índice=True, HEAD=True, XY=  )\n  sin_cambios: tareas/README.md (índice=True, HEAD=True, XY=  )\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "summary"
+      ],
+      "returncode": 0,
+      "output": "Resumen del tracker de tareas (/tmp/oracle_task-guia-3pjqsegj/tareas):\n  Total tareas: 3\n  Abiertas:     3\n  Cerradas:     0\n  Sin etiquetas: 0\n  Etiquetas:\n    · arnes: 1\n    · bug: 1\n    · sensor: 2\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "close",
+        "fuga"
+      ],
+      "returncode": 0,
+      "output": "Tarea cerrada: 20261004-015324-fuga\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "list",
+        "--todas"
+      ],
+      "returncode": 0,
+      "output": "20261004-015324-arnes  ABIERTA P80 [sensor, arnes] Escribir arnés de prueba\n20261004-015324-sensor ABIERTA P70 [sensor]        Diseñar sensor de velocidad\n20261004-015324-fuga   CERRADA P40 [bug]           Corregir fuga en actuador\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "reopen",
+        "fuga"
+      ],
+      "returncode": 0,
+      "output": "Tarea reabierta: 20261004-015324-fuga\n"
+    },
+    {
+      "args": [
+        "/tmp/oracle-new-sites-pypi-ohi3g4_m/oracle-task/tools/oracle-task/bin/python",
+        "-m",
+        "oracle_task.cli",
+        "close",
+        "fuga"
+      ],
+      "returncode": 0,
+      "output": "Tarea cerrada: 20261004-015324-fuga\n"
+    }
+  ],
+  "returncode": 0
+}

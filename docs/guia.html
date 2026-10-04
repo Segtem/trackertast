@@ -4,9 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Guía paso a paso de oracle-task — Oracle Task</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;600&family=Silkscreen&display=swap">
 <link rel="stylesheet" href="./assets/sitio.css">
 <link rel="icon" href="./assets/emblema.svg" type="image/svg+xml">
 </head>
@@ -30,24 +27,58 @@
   </details>
   <main id="contenido" class="prosa">
 <h1 id="guía-paso-a-paso-de-oracle-task">Guía paso a paso de oracle-task<a class="ancla" href="#guía-paso-a-paso-de-oracle-task" aria-label="Enlace a esta sección">#</a></h1>
-<p>Esta guía recorre el ciclo completo de uso de <strong>oracle-task</strong> (<code>tasks</code>), desde la inicialización hasta el cierre de una tarea, pasando por consultas avanzadas con TQL, notas de avance, adjuntos, referencias cruzadas, el grafo de dependencias y el seguimiento en Git.</p>
-<p><code>oracle-task</code> es el comando principal y <code>tasks</code> su alias compatible. La guía usa el alias, y funciona sobre las mismas carpetas de tareas existentes.</p>
-<p>Cada paso muestra el comando ejecutado y la salida real obtenida.</p>
+<p>Esta guía recorre el ciclo completo de uso de <strong>oracle-task</strong> (<code>tasks</code>), explicando cómo comenzar desde cero, cómo se organizan las tareas en Markdown y cómo personas y agentes colaboran sin perder contexto ni depender de servicios externos.</p>
+<p><code>oracle-task</code> es el comando principal y <code>tasks</code> su alias liviano y compatible.</p>
+<h2 id="empezar-desde-cero-qué-instalar-y-verificar">Empezar desde cero: qué instalar y verificar<a class="ancla" href="#empezar-desde-cero-qué-instalar-y-verificar" aria-label="Enlace a esta sección">#</a></h2>
+<p>Para usar Oracle Task necesitás un entorno estándar de desarrollo:</p>
+<ol><li><strong>Python 3.11 o posterior</strong>: Oracle Task no tiene dependencias de ejecución externas y utiliza exclusivamente la biblioteca estándar de Python.</li><li><strong>Terminal</strong>: una ventana para escribir comandos. Abrí PowerShell desde Inicio en Windows, Terminal en macOS o la aplicación Terminal en Linux. El recorrido avanzado de esta página usa sintaxis de bash/zsh; en Windows podés usar WSL para esos bloques. Los comandos básicos de tasks funcionan también en PowerShell.</li><li><strong>Editor de texto plano</strong>: por ejemplo <a href="https://code.visualstudio.com/download" rel="noopener">Visual Studio Code</a>, para leer y modificar Markdown. No uses Word. Elegí Archivo → Abrir carpeta para abrir el proyecto. En Windows activá las extensiones de nombre de archivo: evitá TAREA.md.txt. Guardá como texto UTF-8.</li><li><strong>Git</strong>: instalalo desde <a href="https://git-scm.com/install/" rel="noopener">su página oficial</a> si querés conservar historia y compartir el proyecto. El tracker puede crear tareas sin Git; los pasos de seguimiento del historial necesitan un repositorio Git.</li><li><strong>Herramienta de instalación (<code>uv</code>)</strong>: recomendamos <a href="https://docs.astral.sh/uv/" rel="noopener"><code>uv</code></a> por su velocidad y aislamiento.</li></ol>
+<h3 id="instalá-uv-primero">Instalá uv primero<a class="ancla" href="#instalá-uv-primero" aria-label="Enlace a esta sección">#</a></h3>
+<p>La <a href="https://docs.astral.sh/uv/getting-started/installation/" rel="noopener">guía oficial de uv</a> describe todas las opciones. En macOS/Linux, desde Terminal:</p>
+<pre data-lenguaje="bash"><code>curl -LsSf https://astral.sh/uv/install.sh | sh</code></pre>
+<p>En Windows, desde PowerShell:</p>
+<pre data-lenguaje="powershell"><code>powershell -ExecutionPolicy ByPass -c &quot;irm https://astral.sh/uv/install.ps1 | iex&quot;</code></pre>
+<p>Cerrá y abrí otra terminal; <code>uv --version</code> debe imprimir una versión. Si tu Linux no tiene curl, consultá la alternativa wget de esa guía oficial. Pegá una línea, presioná Enter y esperá a que termine; resolvé cualquier error antes de seguir.</p>
+<h3 id="instalación-de-la-herramienta">Instalación de la herramienta<a class="ancla" href="#instalación-de-la-herramienta" aria-label="Enlace a esta sección">#</a></h3>
+<p>Instalá la versión <code>0.2.0</code> de <code>oracle-task</code> como herramienta global con <code>uv</code>:</p>
+<pre data-lenguaje="bash"><code>uv python install 3.13
+uv tool install --python 3.13 oracle-task==0.2.0
+uv tool update-shell</code></pre>
+<p><code>uv tool update-shell</code> configura el acceso a los comandos en la terminal. Cerrá y abrí otra sesión para aplicar el cambio. Si preferís un entorno virtual tradicional con pip:</p>
+<pre data-lenguaje="bash"><code>pip install oracle-task==0.2.0</code></pre>
+<h3 id="verificar-el-comando-y-el-alias-tasks">Verificar el comando y el alias <code>tasks</code><a class="ancla" href="#verificar-el-comando-y-el-alias-tasks" aria-label="Enlace a esta sección">#</a></h3>
+<p>Comprobá que el sistema reconozca tanto el ejecutable canónico como su alias:</p>
+<pre data-lenguaje="bash"><code>oracle-task --version
+tasks --version</code></pre>
+<p>Ambos comandos invocan el mismo programa. En el resto de esta guía utilizaremos el alias <code>tasks</code>.</p>
+<h2 id="principios-fundamentales-y-responsabilidades">Principios fundamentales y responsabilidades<a class="ancla" href="#principios-fundamentales-y-responsabilidades" aria-label="Enlace a esta sección">#</a></h2>
+<p>Antes de crear la primera tarea, es fundamental comprender qué hace y qué no hace el tracker:</p>
+<ul><li><strong>Tareas y adjuntos locales en Markdown</strong>: Cada tarea es una subcarpeta dentro del directorio <code>tareas/</code>, compuesta por su archivo central <code>TAREA.md</code> y sus adjuntos locales (archivos <code>.csv</code>, capturas, esquemas, volcados de logs). Todo vive dentro del repositorio y es legible con cualquier editor.</li><li><strong>Git guarda historia SOLO si la persona hace <code>git add</code> y <code>git commit</code></strong>: Oracle Task no crea commits automáticos en Git ni interactúa con servidores remotos en segundo plano. El registro de versiones en el historial de Git es responsabilidad de la persona o de los scripts de integración explícitos del proyecto.</li><li><strong><code>tasks close</code> no ejecuta trabajo ni exige revisiones</strong>: El comando <code>tasks close</code> marca atómicamente el campo <code>- ESTADO: CERRADA</code> en <code>TAREA.md</code>. No ejecuta tests, no comprueba si el software funciona, no exige aprobaciones ni crea commits en Git. Es un cambio de estado del tracker.</li><li><strong><code>tasks review</code> comprueba la integridad del tracker, NO la calidad del software</strong>: El comando <code>tasks review</code> audita la integridad estructural del directorio <code>tareas/</code> (que existan los archivos <code>TAREA.md</code>, que las etiquetas y prioridades respeten la especificación y que los enlaces a adjuntos locales apunten a archivos reales existentes). No ejecuta compiladores ni suites de pruebas de tu aplicación.</li><li><strong><code>tasks facts</code> emite observaciones; Oracle evalúa medidas</strong>: <code>tasks facts</code> emite un volcado JSON estructurado con los hechos verificables del repositorio y de las tareas. La evaluación de políticas y límites formales se delega a <strong>Oracle</strong>, una herramienta de evaluación separada.</li><li><strong>Priorización P</strong>: Las tareas cuentan con un campo de prioridad entera <code>PRIORIDAD: &lt;n&gt;</code> (típicamente entre 0 y 100, por defecto 50). <code>tasks list</code> ordena por defecto las tareas de mayor a menor prioridad (P80 antes que P70, y P70 antes que P40). La imagen del tablero es explicativa; no hay un tablero kanban ni sincronización en la nube dentro de esta CLI.</li><li><strong>Resolución suficiente y ambigüedad de IDs</strong>:
+<ul><li>Un ID canónico de tarea tiene el formato <code>YYYYMMDD-HHMMSS[-sufijo]</code> (por ejemplo <code>20260927-120000-sensor</code>).</li><li>Para operar con comandos como <code>tasks show</code>, <code>tasks note</code> o <code>tasks close</code>, podés especificar el ID completo o un prefijo/sufijo suficiente (por ejemplo <code>sensor</code>).</li><li>Si el término coincide con una única tarea, el comando la resuelve exitosamente.</li><li>Si el término coincide con más de una tarea, el CLI rechaza la operación informando ambigüedad (<code>IdAmbiguo</code>), evitando mutar la tarea equivocada.</li><li>En instrucciones para personas y guías, siempre es conveniente usar un sufijo explícito (<code>tasks new --sufijo primer-paso</code>) o el ID exacto obtenido con <code>tasks list</code>, evitando patrones glob o IDs arbitrarios.</li></ul></li><li><strong>Protocolo de relevo colaborativo</strong>:
+<ul><li>Al transferir el trabajo entre una persona y un agente (o entre sesiones de agentes), la regla central es mantener <strong>un único encabezado <code>## Próximo paso</code> al final de <code>TAREA.md</code></strong>.</li><li>No deben acumularse múltiples secciones de próximo paso: cada sesión actualiza el contenido de esta única sección describiendo qué falta hacer, registrando los descubrimientos intermedios con <code>tasks note</code>.</li></ul></li></ul>
+<h2 id="prepará-la-carpeta-para-el-recorrido">Prepará la carpeta para el recorrido<a class="ancla" href="#prepará-la-carpeta-para-el-recorrido" aria-label="Enlace a esta sección">#</a></h2>
+<p>Creá una carpeta vacía y entrá en ella. Estos comandos se usan igual en Terminal o PowerShell:</p>
+<pre data-lenguaje="bash"><code>mkdir mi-primer-tracker
+cd mi-primer-tracker
+git init</code></pre>
+<p>Los siguientes comandos se ejecutan desde esa carpeta. Antes del primer commit, configurá identidad local de Git sustituyendo nombre/correo; no requiere cuenta de GitHub, y esos datos serán visibles si compartís el historial:</p>
+<pre data-lenguaje="bash"><code>git config user.name &quot;Tu nombre&quot;
+git config user.email &quot;tu-correo@example.invalid&quot;</code></pre>
+<p>Las salidas de abajo se ejecutan en una carpeta temporal en las pruebas: normalizamos fechas, IDs y rutas para que puedan compararse. No copies sus IDs de ejemplo para tus comandos: usá el sufijo único creado en el paso anterior o recuperá el ID con <code>tasks list</code>. Comandos y salidas están rotulados por separado. La ejecución completa se verifica en Linux; macOS/Windows todavía requieren ejecución real y no hay piloto con una persona principiante.</p>
 <h2 id="1-inicializar-el-tracker">1. Inicializar el tracker<a class="ancla" href="#1-inicializar-el-tracker" aria-label="Enlace a esta sección">#</a></h2>
 <p>El comando <code>tasks init</code> crea la carpeta <code>tareas/</code> y su archivo <code>README.md</code> en la raíz del proyecto actual:</p>
 <pre data-lenguaje="bash"><code>tasks init</code></pre>
 <pre class="salida" data-lenguaje="lo que tenés que ver"><code>Tracker de tareas inicializado en ./tareas</code></pre>
 <h2 id="2-crear-tareas">2. Crear tareas<a class="ancla" href="#2-crear-tareas" aria-label="Enlace a esta sección">#</a></h2>
 <p>Creamos tres tareas utilizando <code>--sufijo</code> explícito para asignarles nombres memorables y estables:</p>
-<pre data-lenguaje="bash"><code>tasks new &quot;Diseñar sensor de velocidad&quot; --etiqueta sensor --prioridad 70 --sufijo sensor</code></pre>
-<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Tarea creada: 20260927-120000-sensor
-Ruta: ./tareas/20260927-120000-sensor/TAREA.md</code></pre>
 <pre data-lenguaje="bash"><code>tasks new &quot;Escribir arnés de prueba&quot; --etiqueta sensor --etiqueta arnes --prioridad 80 --sufijo arnes</code></pre>
 <pre class="salida" data-lenguaje="lo que tenés que ver"><code>Tarea creada: 20260927-120000-arnes
 Ruta: ./tareas/20260927-120000-arnes/TAREA.md</code></pre>
 <pre data-lenguaje="bash"><code>tasks new &quot;Corregir fuga en actuador&quot; --etiqueta bug --prioridad 40 --sufijo fuga</code></pre>
 <pre class="salida" data-lenguaje="lo que tenés que ver"><code>Tarea creada: 20260927-120000-fuga
 Ruta: ./tareas/20260927-120000-fuga/TAREA.md</code></pre>
+<pre data-lenguaje="bash"><code>tasks new &quot;Diseñar sensor de velocidad&quot; --etiqueta sensor --prioridad 70 --sufijo sensor</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Tarea creada: 20260927-120000-sensor
+Ruta: ./tareas/20260927-120000-sensor/TAREA.md</code></pre>
 <h2 id="3-consultas-y-filtrado-con-tql">3. Consultas y filtrado con TQL<a class="ancla" href="#3-consultas-y-filtrado-con-tql" aria-label="Enlace a esta sección">#</a></h2>
 <p>El comando <code>tasks list</code> (alias <code>listar</code> o <code>ls</code>) muestra por defecto las tareas abiertas, ordenadas por prioridad descendente:</p>
 <pre data-lenguaje="bash"><code>tasks list</code></pre>
@@ -136,7 +167,12 @@ tareas/20260927-120000-arnes/TAREA.md:9: Bloqueado por 20260927-120000-sensor</c
   &quot;20260927-120000-sensor&quot; [label=&quot;Diseñar sensor de velocidad (ABIERTA)&quot;];
   &quot;20260927-120000-arnes&quot; -&gt; &quot;20260927-120000-sensor&quot;;
 }</code></pre>
-<h2 id="8-seguimiento-con-git">8. Seguimiento con Git<a class="ancla" href="#8-seguimiento-con-git" aria-label="Enlace a esta sección">#</a></h2>
+<h2 id="8-revisar-la-integridad-del-tracker-con-tasks-review">8. Revisar la integridad del tracker con <code>tasks review</code><a class="ancla" href="#8-revisar-la-integridad-del-tracker-con-tasks-review" aria-label="Enlace a esta sección">#</a></h2>
+<p>Antes de confirmar en Git o compartir el repositorio, <code>tasks review</code> (alias <code>revisar</code>) comprueba la validez estructural de todas las tareas bajo <code>tareas/</code>:</p>
+<pre data-lenguaje="bash"><code>tasks review</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>REVISIÓN OK: 3 tarea(s) válida(s) en ./tareas</code></pre>
+<blockquote><p><strong>Recordatorio:</strong> <code>tasks review</code> audita la integridad estructural del tracker (archivos <code>TAREA.md</code>, metadatos y adjuntos locales); <strong>no evalúa la calidad del software</strong>, ni si el código compila ni si las pruebas del proyecto pasan.</p></blockquote>
+<h2 id="9-seguimiento-con-git">9. Seguimiento con Git<a class="ancla" href="#9-seguimiento-con-git" aria-label="Enlace a esta sección">#</a></h2>
 <p>El comando <code>tasks follow</code> (alias <code>seguimiento</code>) audita el estado de todos los archivos del tracker frente al índice y a <code>HEAD</code> de Git.</p>
 <p>Antes de confirmar en Git, los archivos figuran como <code>sin_seguimiento</code>:</p>
 <pre data-lenguaje="bash"><code>tasks follow</code></pre>
@@ -164,7 +200,7 @@ Repositorio: . · HEAD: &lt;commit&gt;
   sin_cambios: tareas/20260927-120000-sensor/calibracion.csv (índice=True, HEAD=True, XY=  )
   sin_cambios: tareas/README.md (índice=True, HEAD=True, XY=  )</code></pre>
 <p>Ahora todos los documentos figuran como <code>sin_cambios</code> e integrados en <code>HEAD</code>.</p>
-<h2 id="9-resumen-y-cierre-de-tareas">9. Resumen y cierre de tareas<a class="ancla" href="#9-resumen-y-cierre-de-tareas" aria-label="Enlace a esta sección">#</a></h2>
+<h2 id="10-resumen-cierre-y-reapertura-de-tareas">10. Resumen, cierre y reapertura de tareas<a class="ancla" href="#10-resumen-cierre-y-reapertura-de-tareas" aria-label="Enlace a esta sección">#</a></h2>
 <p>Podemos obtener un censo rápido del estado del tracker con <code>tasks summary</code> (alias <code>resumen</code>):</p>
 <pre data-lenguaje="bash"><code>tasks summary</code></pre>
 <pre class="salida" data-lenguaje="lo que tenés que ver"><code>Resumen del tracker de tareas (./tareas):
@@ -176,19 +212,30 @@ Repositorio: . · HEAD: &lt;commit&gt;
     · arnes: 1
     · bug: 1
     · sensor: 2</code></pre>
-<h3 id="cerrar-una-tarea">Cerrar una tarea<a class="ancla" href="#cerrar-una-tarea" aria-label="Enlace a esta sección">#</a></h3>
+<h3 id="cerrar-una-tarea-con-tasks-close">Cerrar una tarea con <code>tasks close</code><a class="ancla" href="#cerrar-una-tarea-con-tasks-close" aria-label="Enlace a esta sección">#</a></h3>
 <p>Cuando el trabajo de una tarea termina, la marcamos como <code>CERRADA</code> mediante <code>tasks close</code> (alias <code>cerrar</code>):</p>
 <pre data-lenguaje="bash"><code>tasks close fuga</code></pre>
 <pre class="salida" data-lenguaje="lo que tenés que ver"><code>Tarea cerrada: 20260927-120000-fuga</code></pre>
-<p>Podemos consultar el listado completo incluyendo tareas abiertas y cerradas pasando <code>--todas</code>:</p>
+<p>El listado completo con <code>--todas</code> muestra tareas abiertas y cerradas:</p>
 <pre data-lenguaje="bash"><code>tasks list --todas</code></pre>
 <pre class="salida" data-lenguaje="lo que tenés que ver"><code>20260927-120000-arnes  ABIERTA P80 [sensor, arnes] Escribir arnés de prueba
 20260927-120000-sensor ABIERTA P70 [sensor]        Diseñar sensor de velocidad
 20260927-120000-fuga   CERRADA P40 [bug]           Corregir fuga en actuador</code></pre>
+<h3 id="reabrir-una-tarea-con-tasks-reopen">Reabrir una tarea con <code>tasks reopen</code><a class="ancla" href="#reabrir-una-tarea-con-tasks-reopen" aria-label="Enlace a esta sección">#</a></h3>
+<p>Si un defecto reaparece o se descubre trabajo pendiente, <code>tasks reopen</code> (alias <code>reabrir</code>) restaura el estado a <code>ABIERTA</code> de forma atómica:</p>
+<pre data-lenguaje="bash"><code>tasks reopen fuga</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Tarea reabierta: 20260927-120000-fuga</code></pre>
+<p>Volvemos a cerrarla para concluir el ejemplo:</p>
+<pre data-lenguaje="bash"><code>tasks close fuga</code></pre>
+<pre class="salida" data-lenguaje="lo que tenés que ver"><code>Tarea cerrada: 20260927-120000-fuga</code></pre>
+<h2 id="11-hechos-observables-y-evaluación-con-oracle">11. Hechos observables y evaluación con Oracle<a class="ancla" href="#11-hechos-observables-y-evaluación-con-oracle" aria-label="Enlace a esta sección">#</a></h2>
+<p>Para auditar el estado del tracker o integrarlo en flujos de verificación continua, <code>tasks facts</code> (alias <code>hechos</code>) emite una representación relacional en JSON:</p>
+<pre data-lenguaje="bash"><code>tasks facts --git</code></pre>
+<p>El comando extrae hechos observables (tareas abiertas y cerradas, referencias a adjuntos, commits enlazados). <strong>Oracle</strong>, de manera separada, evalúa esos hechos contra un catálogo formal de políticas y límites (por ejemplo, comprobar que ningún commit apunte a una tarea inexistente o que toda tarea cerrada tenga su commit de cierre). El tracker emite los hechos; Oracle evalúa las reglas.</p>
     <p class="fuente">Esta página se genera desde <a href="https://github.com/Segtem/trackertast/blob/main/docs/guia.md" rel="noopener">docs/guia.md</a>.</p>
   </main>
   <aside class="en-esta-pagina" aria-label="En esta página">
-    <p class='menu-grupo'>En esta página</p><ul><li class="n2"><a href="#1-inicializar-el-tracker">1. Inicializar el tracker</a></li><li class="n2"><a href="#2-crear-tareas">2. Crear tareas</a></li><li class="n2"><a href="#3-consultas-y-filtrado-con-tql">3. Consultas y filtrado con TQL</a></li><li class="n3"><a href="#filtrar-por-etiquetas">Filtrar por etiquetas</a></li><li class="n3"><a href="#filtrar-por-prioridad-numérica">Filtrar por prioridad numérica</a></li><li class="n3"><a href="#conectores-lógicos-y-o-no">Conectores lógicos: y, o, no</a></li><li class="n3"><a href="#explicar-la-consulta-compilada">Explicar la consulta compilada</a></li><li class="n2"><a href="#4-detalles-y-notas-de-trabajo">4. Detalles y notas de trabajo</a></li><li class="n3"><a href="#registrar-notas-de-avance">Registrar notas de avance</a></li><li class="n2"><a href="#5-adjuntar-evidencia-local">5. Adjuntar evidencia local</a></li><li class="n2"><a href="#6-búsqueda-en-notas-y-documentos">6. Búsqueda en notas y documentos</a></li><li class="n2"><a href="#7-referencias-cruzadas-y-grafo">7. Referencias cruzadas y grafo</a></li><li class="n3"><a href="#buscar-menciones-con-tasks-refs">Buscar menciones con tasks refs</a></li><li class="n3"><a href="#visualizar-dependencias-con-tasks-graph">Visualizar dependencias con tasks graph</a></li><li class="n2"><a href="#8-seguimiento-con-git">8. Seguimiento con Git</a></li><li class="n2"><a href="#9-resumen-y-cierre-de-tareas">9. Resumen y cierre de tareas</a></li><li class="n3"><a href="#cerrar-una-tarea">Cerrar una tarea</a></li></ul>
+    <p class='menu-grupo'>En esta página</p><ul><li class="n2"><a href="#empezar-desde-cero-qué-instalar-y-verificar">Empezar desde cero: qué instalar y verificar</a></li><li class="n3"><a href="#instalá-uv-primero">Instalá uv primero</a></li><li class="n3"><a href="#instalación-de-la-herramienta">Instalación de la herramienta</a></li><li class="n3"><a href="#verificar-el-comando-y-el-alias-tasks">Verificar el comando y el alias tasks</a></li><li class="n2"><a href="#principios-fundamentales-y-responsabilidades">Principios fundamentales y responsabilidades</a></li><li class="n2"><a href="#prepará-la-carpeta-para-el-recorrido">Prepará la carpeta para el recorrido</a></li><li class="n2"><a href="#1-inicializar-el-tracker">1. Inicializar el tracker</a></li><li class="n2"><a href="#2-crear-tareas">2. Crear tareas</a></li><li class="n2"><a href="#3-consultas-y-filtrado-con-tql">3. Consultas y filtrado con TQL</a></li><li class="n3"><a href="#filtrar-por-etiquetas">Filtrar por etiquetas</a></li><li class="n3"><a href="#filtrar-por-prioridad-numérica">Filtrar por prioridad numérica</a></li><li class="n3"><a href="#conectores-lógicos-y-o-no">Conectores lógicos: y, o, no</a></li><li class="n3"><a href="#explicar-la-consulta-compilada">Explicar la consulta compilada</a></li><li class="n2"><a href="#4-detalles-y-notas-de-trabajo">4. Detalles y notas de trabajo</a></li><li class="n3"><a href="#registrar-notas-de-avance">Registrar notas de avance</a></li><li class="n2"><a href="#5-adjuntar-evidencia-local">5. Adjuntar evidencia local</a></li><li class="n2"><a href="#6-búsqueda-en-notas-y-documentos">6. Búsqueda en notas y documentos</a></li><li class="n2"><a href="#7-referencias-cruzadas-y-grafo">7. Referencias cruzadas y grafo</a></li><li class="n3"><a href="#buscar-menciones-con-tasks-refs">Buscar menciones con tasks refs</a></li><li class="n3"><a href="#visualizar-dependencias-con-tasks-graph">Visualizar dependencias con tasks graph</a></li><li class="n2"><a href="#8-revisar-la-integridad-del-tracker-con-tasks-review">8. Revisar la integridad del tracker con tasks review</a></li><li class="n2"><a href="#9-seguimiento-con-git">9. Seguimiento con Git</a></li><li class="n2"><a href="#10-resumen-cierre-y-reapertura-de-tareas">10. Resumen, cierre y reapertura de tareas</a></li><li class="n3"><a href="#cerrar-una-tarea-con-tasks-close">Cerrar una tarea con tasks close</a></li><li class="n3"><a href="#reabrir-una-tarea-con-tasks-reopen">Reabrir una tarea con tasks reopen</a></li><li class="n2"><a href="#11-hechos-observables-y-evaluación-con-oracle">11. Hechos observables y evaluación con Oracle</a></li></ul>
   </aside>
 </div>
 <script>

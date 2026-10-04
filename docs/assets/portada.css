@@ -1,38 +1,179 @@
-/* trackertast — portada.css. Usa los tokens de sitio.css. */
+/* trackertast — portada.css
+ * Estilos específicos de la portada, hero y escena interactiva pixel art nativa.
+ * 100% offline, compatible con tema claro y oscuro, y responsivo de 320px a pantallas anchas.
+ */
 
 .envoltura { max-width: 1180px; margin: 0 auto; padding-inline: var(--gutter); }
 .version { font-size: 11px; color: var(--gris); font-weight: 400; margin-left: 2px; }
 .ceja { color: var(--acento); margin: 0 0 12px; font-weight: 600; }
+.ceja.pixel { font-family: var(--pixel); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; }
 .lectura { max-width: var(--ancho-prosa); font-family: var(--serif); font-size: 18px; line-height: 1.7; }
 .lectura p { margin: 0 0 16px; }
 
 /* ---------------------------------------------------------------- hero */
 .hero {
   display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: clamp(24px, 4.5vw, 64px);
-  align-items: center; padding-block: clamp(36px, 7vw, 84px) clamp(36px, 5vw, 64px);
+  align-items: center; padding-block: clamp(36px, 6vw, 76px) clamp(28px, 4vw, 54px);
 }
 .hero h1 {
-  font-size: clamp(34px, 5.5vw, 64px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.05;
-  margin: 0 0 20px;
+  font-size: clamp(32px, 5vw, 58px); font-weight: 800; letter-spacing: -0.035em; line-height: 1.08;
+  margin: 0 0 18px;
 }
 .bajada {
   font-family: var(--serif); font-size: clamp(17px, 1.8vw, 20px); line-height: 1.6; color: var(--tinta-2);
-  margin: 0 0 26px; max-width: 36em;
+  margin: 0 0 24px; max-width: 38em;
 }
 .acciones { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 22px; }
 .boton {
-  display: inline-flex; align-items: center; padding: 12px 20px; border-radius: 6px; font-weight: 700;
-  font-size: 15px; background: var(--acento); color: var(--sobre-acento); text-decoration: none;
+  display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 10px 20px;
+  border-radius: 6px; font-weight: 700; font-size: 15px; background: var(--acento); color: var(--sobre-acento);
+  text-decoration: none; transition: filter 0.15s ease;
 }
 .boton:hover { filter: brightness(1.1); }
 .boton.secundario { background: transparent; color: var(--tinta); box-shadow: inset 0 0 0 1.5px var(--linea); }
 .boton.secundario:hover { box-shadow: inset 0 0 0 1.5px var(--tinta); }
+.instalar-caja {
+  display: flex; flex-direction: column; gap: 6px; margin-top: 14px;
+}
 .instalar {
-  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin: 0; font-size: 14px; color: var(--gris);
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 12px; margin: 0; font-size: 14px; color: var(--gris);
 }
 .instalar code {
-  background: var(--papel-2); color: var(--tinta); padding: 6px 10px; border-radius: 4px; font-size: 14px;
+  background: var(--papel-2); color: var(--tinta); padding: 8px 12px; border-radius: 6px; font-size: 14px;
+  border: 1px solid var(--linea); font-family: var(--mono);
 }
+.instalar-sub { font-size: 12.5px; color: var(--gris); margin-left: 2px; }
+
+/* ---------------------------------------------------------------- escena pixel art interactiva */
+.taller-seccion {
+  padding-block: clamp(32px, 5vw, 64px);
+  border-top: 1px solid var(--linea);
+}
+.taller-cabecera {
+  display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.etiqueta-demo {
+  display: inline-flex; align-items: center; gap: 6px; padding: 4px 10px; border-radius: 4px;
+  font-family: var(--pixel); font-size: 11px; letter-spacing: 0.06em;
+  background: var(--acento-suave); color: var(--acento); border: 1px solid var(--acento);
+}
+
+.scene-scroll {
+  overflow-x: auto; -webkit-overflow-scrolling: touch; border-radius: 8px; border: 1px solid var(--linea);
+  background: var(--codigo-fondo); margin-bottom: 18px; box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+}
+.scene-scroll:focus-visible { outline: 3px solid var(--acento); }
+
+#escena-canvas {
+  display: block; width: 100%; max-width: 960px; height: auto; margin: 0 auto;
+  image-rendering: pixelated; image-rendering: crisp-edges;
+}
+
+.barra-transporte {
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 14px 18px;
+  padding: 12px 16px; background: var(--papel-2); border: 1px solid var(--linea); border-radius: 8px;
+  margin-bottom: 16px;
+}
+.transporte-botones { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.btn-icono {
+  display: inline-flex; align-items: center; justify-content: center; min-width: 44px; min-height: 44px;
+  border-radius: 6px; border: 1px solid var(--linea); background: var(--papel); color: var(--tinta);
+  font-size: 18px; cursor: pointer; transition: background 0.15s, border-color 0.15s;
+}
+.btn-icono:hover:not(:disabled) { background: var(--papel-2); border-color: var(--tinta-2); }
+.btn-icono:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-play {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-width: 120px; min-height: 44px;
+  padding: 0 16px; border-radius: 6px; border: 1px solid var(--acento); background: var(--acento);
+  color: var(--sobre-acento); font-weight: 700; font-size: 14px; cursor: pointer;
+  transition: filter 0.15s ease;
+}
+.btn-play:hover:not(:disabled) { filter: brightness(1.1); }
+.btn-play:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.contador-etapas {
+  font-family: var(--pixel); font-size: 13px; font-weight: 600; color: var(--acento);
+  padding: 8px 12px; background: var(--papel); border: 1px solid var(--linea); border-radius: 4px;
+}
+.estado-movimiento { font-size: 13.5px; color: var(--gris); margin: 0; font-style: italic; }
+
+/* Selector de etapas (pestañas) */
+.nav-etapas {
+  display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 8px; margin-bottom: 22px;
+}
+.btn-etapa {
+  display: flex; flex-direction: column; align-items: flex-start; justify-content: center;
+  min-height: 52px; padding: 8px 12px; border-radius: 6px; border: 1px solid var(--linea);
+  background: var(--papel); color: var(--tinta); cursor: pointer; text-align: left;
+  transition: border-color 0.15s, background 0.15s; font-family: var(--sans);
+}
+.btn-etapa:hover { border-color: var(--acento); background: var(--papel-2); }
+.btn-etapa[aria-current="step"], .btn-etapa.activa {
+  border-color: var(--acento); background: var(--acento-suave); font-weight: 700;
+}
+.btn-etapa .num { font-family: var(--pixel); font-size: 11px; color: var(--acento); margin-bottom: 2px; }
+.btn-etapa .nom { font-size: 13.5px; line-height: 1.25; }
+
+/* Panel de detalle de la etapa */
+.panel-etapa {
+  display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 0.95fr); gap: 24px;
+  margin-bottom: 20px;
+}
+.etapa-caja {
+  padding: 22px 24px; border-radius: 8px; border: 1px solid var(--linea); background: var(--papel);
+}
+.etapa-cabeza {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin-bottom: 12px; flex-wrap: wrap;
+}
+.etapa-caja h3 { margin: 0 0 12px; font-size: clamp(20px, 2.4vw, 26px); font-weight: 800; }
+.bajada-etapa { font-family: var(--serif); font-size: 17px; line-height: 1.6; color: var(--tinta-2); margin: 0 0 18px; }
+
+/* Comando copiable */
+.comando-copiable-box {
+  display: grid; gap: 8px; margin-bottom: 20px;
+}
+.comando-etiqueta { font-size: 12.5px; font-weight: 700; color: var(--gris); text-transform: uppercase; font-family: var(--pixel); }
+.comando-copiable {
+  display: flex; align-items: center; justify-content: space-between; gap: 10px;
+  background: var(--codigo-fondo); border: 1px solid var(--linea); border-radius: 6px; padding: 10px 14px;
+}
+.comando-copiable code {
+  color: var(--codigo-clave); font-size: 13.5px; line-height: 1.45; word-break: break-all;
+}
+.btn-copiar {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 36px; padding: 0 12px;
+  border-radius: 4px; border: 1px solid #33483E; background: #1C2B26; color: #DDE5E1;
+  font-size: 12.5px; font-weight: 600; cursor: pointer; flex-shrink: 0; font-family: var(--sans);
+  transition: background 0.15s;
+}
+.btn-copiar:hover { background: #283C35; color: #FFFFFF; }
+
+/* Ficha de artefactos */
+.artefactos-dl {
+  display: grid; grid-template-columns: auto 1fr; gap: 8px 16px; font-size: 14.5px;
+  padding: 14px 16px; background: var(--papel-2); border-radius: 6px; border: 1px solid var(--linea);
+  margin: 0;
+}
+.artefactos-dl dt { font-family: var(--pixel); font-size: 11px; color: var(--gris); align-self: baseline; }
+.artefactos-dl dd { margin: 0; color: var(--tinta-2); }
+
+/* Caja de límites y responsabilidades */
+.responsabilidad-caja {
+  padding: 22px 24px; border-radius: 8px; border: 1px solid var(--linea); background: var(--papel-2);
+  display: flex; flex-direction: column; gap: 14px;
+}
+.responsabilidad-caja h4 { margin: 0; font-size: 17px; font-weight: 800; }
+.responsabilidad-item { display: grid; gap: 4px; }
+.responsabilidad-item strong { font-size: 14px; color: var(--tinta); }
+.responsabilidad-item p { margin: 0; font-family: var(--serif); font-size: 15px; color: var(--tinta-2); line-height: 1.5; }
+
+.nota-simulacion {
+  padding: 12px 16px; border-radius: 6px; background: var(--papel-2); border: 1px dashed var(--linea);
+  font-size: 13.5px; color: var(--gris); line-height: 1.55; margin-top: 14px;
+}
+.nota-simulacion strong { color: var(--tinta-2); }
 
 /* ---------------------------------------------------------------- terminales y bloques */
 .terminal {
@@ -52,19 +193,14 @@
 .t-rojo { color: #FF8A7E; }
 .t-gris { color: #8C9E96; }
 
-/* ---------------------------------------------------------------- capítulos */
+/* ---------------------------------------------------------------- capítulos y tarjetas */
 .capitulo { padding-block: clamp(40px, 7vw, 84px); border-top: 1px solid var(--linea); }
-.capitulo-cabeza { max-width: 44rem; margin-bottom: 26px; }
-.capitulo h2 { font-size: clamp(26px, 3.4vw, 38px); font-weight: 800; letter-spacing: -0.025em; margin: 0; }
-.dos-columnas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 44px; max-width: none; }
-.dos-escenas {
-  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(24px, 4vw, 56px); align-items: start;
-}
-.dos-escenas.invertido > :first-child { order: 2; }
+.capitulo-cabeza { max-width: 48rem; margin-bottom: 26px; }
+.capitulo h2 { font-size: clamp(26px, 3.4vw, 38px); font-weight: 800; letter-spacing: -0.025em; margin: 0 0 10px; }
 
 /* ---------------------------------------------------------------- recorrido 60s */
 .paso-60s {
-  margin-bottom: 32px; border: 1px solid var(--linea); border-radius: 8px; background: var(--papel);
+  margin-bottom: 28px; border: 1px solid var(--linea); border-radius: 8px; background: var(--papel);
   padding: 20px 22px;
 }
 .paso-60s-cabeza { display: flex; align-items: baseline; gap: 12px; margin-bottom: 10px; flex-wrap: wrap; }
@@ -72,7 +208,20 @@
 .paso-60s p { margin: 0 0 12px; font-family: var(--serif); font-size: 16.5px; color: var(--tinta-2); }
 .paso-60s .terminal { margin: 0; }
 
-/* ---------------------------------------------------------------- tarjetas de características */
+/* ---------------------------------------------------------------- responsabilidades (4 columnas) */
+.cuatro-responsabilidades {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; margin-top: 24px;
+}
+.tarjeta-resp {
+  padding: 22px 20px; border: 1px solid var(--linea); border-radius: 8px; background: var(--papel);
+  display: grid; gap: 8px; align-content: start;
+}
+.tarjeta-resp strong { font-size: 18px; color: var(--tinta); }
+.tarjeta-resp p { font-family: var(--serif); font-size: 15px; color: var(--tinta-2); margin: 0; line-height: 1.55; }
+.tarjeta-resp ul { margin: 0; padding-left: 18px; font-size: 14.5px; color: var(--tinta-2); }
+.tarjeta-resp li { margin-bottom: 4px; }
+
+/* ---------------------------------------------------------------- tarjetas de arquitectura */
 .tarjetas-3 {
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 24px;
 }
@@ -104,23 +253,41 @@
 .pie a:hover { color: var(--acento); }
 
 /* ---------------------------------------------------------------- responsive */
-@media (max-width: 900px) {
-  .hero, .dos-escenas { grid-template-columns: minmax(0, 1fr); }
-  .dos-escenas.invertido > :first-child { order: 0; }
+@media (max-width: 960px) {
+  .hero { grid-template-columns: minmax(0, 1fr); }
+  .panel-etapa { grid-template-columns: minmax(0, 1fr); }
+  .cuatro-responsabilidades { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .tarjetas-3 { grid-template-columns: minmax(0, 1fr); }
   .recorridos { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .dos-columnas { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 760px) {
+  .nav-etapas { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .barra-transporte { flex-direction: column; align-items: stretch; }
+  .transporte-botones { justify-content: space-between; }
 }
 
 @media (max-width: 560px) {
+  .nav-etapas { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .recorridos { grid-template-columns: minmax(0, 1fr); }
+  .cuatro-responsabilidades { grid-template-columns: minmax(0, 1fr); }
   .paso-60s { padding: 14px 16px; }
+  .comando-copiable { flex-direction: column; align-items: stretch; }
+  .btn-copiar { width: 100%; }
 }
 
 @media (max-width: 440px) {
   :root { --gutter: 14px; }
-  .hero { padding-block: 28px 36px; }
+  .hero { padding-block: 24px 32px; }
   .acciones { flex-direction: column; align-items: stretch; }
   .boton { justify-content: center; }
   .terminal pre { padding: 12px 14px; font-size: 12.5px; }
+  .nav-etapas { grid-template-columns: minmax(0, 1fr); }
+}
+
+@media (max-width: 320px) {
+  :root { --gutter: 10px; }
+  .btn-icono { min-width: 40px; min-height: 40px; }
+  .btn-play { min-width: 100px; padding: 0 10px; font-size: 13px; }
+  .artefactos-dl { grid-template-columns: minmax(0, 1fr); }
 }

@@ -10,14 +10,22 @@ Cada tarea vive en su propia carpeta bajo `tareas/`, con un archivo central `TAR
 
 Oracle Task continúa Trackertast. El paquete nuevo es `oracle-task`, su módulo Python es `oracle_task` y conserva `tasks` como alias. Los archivos `tareas/`, `TAREA.md`, ids, consultas y hechos no cambian. El repositorio y la URL de la web siguen siendo `Segtem/trackertast` para conservar los enlaces existentes.
 
-`oracle-task==0.2.0` ya está publicado en PyPI. El retiro de `trackertast==0.1.0` está pendiente de publicar los consumidores migrados. Las versiones antiguas de Factory y MCP fijan la dependencia anterior y su instalación desde PyPI dejará de funcionar si se elimina. El [release histórico v0.1.0](https://github.com/Segtem/trackertast/releases/tag/v0.1.0) conserva sus artefactos para reproducir migraciones. Las importaciones Python nuevas usan `oracle_task`; el paquete nuevo no instala módulos `trackertast`, evitando sobrescribir el código del anterior.
+`oracle-task==0.2.0` ya está publicado en PyPI. La API oficial de PyPI confirmó el estado `project-status: archived` para `trackertast==0.1.0`: está archivado, NO borrado, por lo que las versiones históricas siguen siendo instalables para reproducir entornos o dependencias fijadas. Todas las nuevas instalaciones e instrucciones usan `oracle-task`. El [release histórico v0.1.0](https://github.com/Segtem/trackertast/releases/tag/v0.1.0) conserva sus artefactos para reproducir migraciones. Las importaciones Python nuevas usan `oracle_task`; el paquete nuevo no instala módulos `trackertast`, evitando sobrescribir el código del anterior.
 
 ## Instalación
 
-Requiere Python 3.11 o posterior y no tiene dependencias de runtime. Este corte está preparado en el release de GitHub; el mantenedor hará la publicación PyPI. Después de publicarlo:
+Requiere Python 3.11 o posterior y no tiene dependencias de runtime. Podés instalar la herramienta globalmente con `uv`:
 
 ```bash
 uv tool install oracle-task==0.2.0
+uv tool update-shell
+```
+
+Verificá la instalación del comando principal y su alias:
+
+```bash
+oracle-task --version
+tasks --version
 ```
 
 O desde el repositorio:
@@ -28,9 +36,9 @@ uv tool install .
 pip install .
 ```
 
-## Migración de una instalación con uv
+## Migración de una instalación previa con uv
 
-Si tenés Trackertast instalado como herramienta, reemplazá su instalación para evitar que ambos reclamen el ejecutable `tasks`:
+Si tenías la herramienta previa `trackertast` instalada, reemplazala para evitar que ambos reclamen el ejecutable `tasks`:
 
 ```bash
 uv tool uninstall trackertast
@@ -39,7 +47,7 @@ oracle-task --version
 tasks --version
 ```
 
-Esto cambia la herramienta instalada, no borra los directorios de tareas de tus proyectos. Evitá instalar ambos paquetes en el mismo entorno pip: aunque los módulos son distintos, comparten el ejecutable `tasks`. Los consumidores que fijan Trackertast deben actualizar su dependencia en su propia próxima versión.
+Esto cambia la herramienta instalada en tu sistema, sin tocar los directorios de tareas de tus proyectos. Evitá instalar ambos paquetes en el mismo entorno pip: aunque los módulos son distintos, comparten el ejecutable `tasks`. Los consumidores que fijan Trackertast deben actualizar su dependencia en su propia próxima versión.
 
 También podés instalar el wheel del [release v0.2.0](https://github.com/Segtem/trackertast/releases/tag/v0.2.0).
 
@@ -90,3 +98,5 @@ El proyecto de ejemplo en [`ejemplo/seguimiento-tareas`](ejemplo/seguimiento-tar
 - Que todo commit que nombra una tarea apunte a una tarea existente (`seguimiento.ningun_commit_nombra_una_tarea_inexistente`).
 - Que toda tarea cerrada cuente con su commit de cierre (`seguimiento.toda_tarea_cerrada_tiene_su_commit_de_cierre`).
 - Que ningún commit de cierre deje la tarea abierta (`seguimiento.ningun_cierre_deja_la_tarea_abierta`).
+
+Para comprobar navegación, teclado, copia, pausa, movimiento reducido, enlaces y tamaños de pantalla en Chromium, usá `node tools/test_site.cjs` con Playwright disponible y Chromium instalado (o definí `CHROMIUM_PATH`). No sustituye una auditoría completa de accesibilidad ni un piloto con una persona principiante.

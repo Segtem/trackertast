@@ -1,0 +1,17 @@
+{
+  "site": "task",
+  "checks": [
+    "canvas",
+    "all steps and boundaries",
+    "keyboard",
+    "copy matches command",
+    "autoplay and pause",
+    "reduced motion",
+    "local links, anchors and resources",
+    "responsive layout",
+    "guide clipboard",
+    "without JavaScript",
+    "no errors or external dependencies"
+  ],
+  "result": "OK"
+}
