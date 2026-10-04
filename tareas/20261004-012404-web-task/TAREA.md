@@ -1,6 +1,6 @@
 # Crear una web pixel art de Oracle Task con guía precisa
 
-- ESTADO: ABIERTA
+- ESTADO: CERRADA
 - PRIORIDAD: 60
 - ETIQUETAS:
 
@@ -30,6 +30,12 @@ agy1 entregó portada pixel art y guía; root corrigió: rótulos de IDs/salidas
 
 - Adjunto: [guia-mobile.png](guia-mobile.png)
 
+### Nota (2026-10-04 02:17:20 UTC)
+
+Publicado en main (075e29ce340807ffb935448ce3ee79ce302786c7) y Pages https://segtem.github.io/trackertast/. Despliegue exitoso: https://github.com/Segtem/trackertast/actions/runs/37170265904. Verificación HTTP de 10 archivos HTML/CSS/JS/SVG/JSON: todos 200 y SHA-256 idéntico a docs/. Evidencia pública adjunta. Se cierra el alcance documental pedido; versiones PyPI siguen iguales, sin corte nuevo. CI completo exitoso: https://github.com/Segtem/trackertast/actions/runs/37170266236.
+
+- Adjunto: [trackertast-web-public.json](trackertast-web-public.json)
+
 ## Próximo paso
 
-Integrar esta rama en main, empujar y verificar publicación real: Actions/Pages y bytes HTTP frente a docs/. Después registrar evidencia del despliegue y cerrar con commit del ID: done.
+Web publicada y verificada; no queda trabajo de este alcance. Nuevas mejoras y el piloto humano se registran como tareas separadas, sin presentar esta verificación técnica como experiencia de una persona principiante.
